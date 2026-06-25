@@ -105,10 +105,18 @@ backup/index_YYYYMMDD_HHMMSS_before_react_migration.html
 backup/README_YYYYMMDD_HHMMSS_before_react_migration.md
 ```
 
+## Notion 데이터 허브
+
+실제 데이터 연동은 Notion을 CMS처럼 사용하고, GitHub Actions가 Notion DB를 읽어 정적 JSON으로 변환하는 방향으로 설계했습니다.
+
+- Notion schema 문서: `docs/notion-data-schema.md`
+- Notion data source config: `config/notion-data-sources.json`
+
 ## 다음 단계 후보
 
-1. 팀원에게 React MVP 공유 후 화면/필터/기획안 포맷 피드백 수집
-2. 무료/저비용 정적 호스팅 배포 방식 결정
-3. 로그인 전 개인 찜 UX 검증
-4. 실제 모니터링 대상 경쟁사·채널·카테고리 확정
-5. Phase 2에서 API/DB/계정별 저장 구조 설계
+1. `scripts/sync-notion-trends.mjs`로 Notion DB → JSON 변환 구현
+2. 앱 시작 시 `public/data/trends/latest.json` fetch 구조로 변경
+3. GitHub Actions에 Notion sync workflow 추가
+4. 팀원에게 React MVP 공유 후 화면/필터/기획안 포맷 피드백 수집
+5. 로그인 전 개인 찜 UX 검증
+6. Phase 2에서 Supabase/Auth 기반 계정별 저장 구조 설계

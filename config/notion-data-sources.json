@@ -1,0 +1,16 @@
+{
+  "hub_page_id": "38a09436-3524-81f3-a1e4-d60bcb057e1b",
+  "hub_url": "https://app.notion.com/p/Promotion-Trend-AI-Planner-Data-Hub-38a09436352481f3a1e4d60bcb057e1b",
+  "parent_page_id": "31e09436-3524-8029-bd9d-e22ee4c1bf96",
+  "databases": {
+    "weeks": "38a09436-3524-81a3-9f07-edce398bc153",
+    "trends": "38a09436-3524-8127-9136-ed82c4b24295",
+    "evidence": "38a09436-3524-81fc-8dde-d506158ea93b",
+    "ideas": "38a09436-3524-81ef-8f8b-e10df8971ac3"
+  },
+  "seeded": {
+    "trends_created": 0,
+    "evidence_created": 0,
+    "ideas_created": 0
+  }
+}
