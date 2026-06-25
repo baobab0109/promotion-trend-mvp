@@ -131,15 +131,23 @@ print('HUB', hub['id'], hub.get('url'))
 
 
 def create_db(title, properties, config_key=None):
+    def ensure_properties(db):
+        missing = {name: definition for name, definition in properties.items() if name not in (db.get('properties') or {})}
+        if missing:
+            db = api('/databases/' + db['id'], 'PATCH', {'properties': missing})
+            print('DB_PATCHED', title, ','.join(missing.keys()))
+            time.sleep(0.4)
+        return db
+
     configured_id = (EXISTING_CONFIG.get('databases') or {}).get(config_key or '')
     if configured_id:
         db = api('/databases/' + configured_id)
         print('DB_CONFIG', title, db['id'])
-        return db
+        return ensure_properties(db)
     ex = search_exact(title, 'database')
     if ex:
         print('DB_EXISTS', title, ex[0]['id'])
-        return ex[0]
+        return ensure_properties(ex[0])
     db = api('/databases', 'POST', {
         'parent': {'page_id': hub['id']},
         'title': rich(title),
@@ -178,6 +186,9 @@ trend_db = create_db('[PTAI] Trend Topics', {
     'Momentum': {'number': {'format': 'number'}},
     'OnStyle Fit': {'number': {'format': 'number'}},
     'Risk': {'number': {'format': 'number'}},
+    'AI Consumer Insight': {'rich_text': {}},
+    'AI Opportunity': {'rich_text': {}},
+    'AI Caution': {'rich_text': {}},
     'Sort Order': {'number': {'format': 'number'}},
 }, 'trends')
 evidence_db = create_db('[PTAI] Evidence Items', {
@@ -276,11 +287,21 @@ for idx, t in enumerate(trends, start=1):
             'Momentum': num_prop(t['scores']['momentum']),
             'OnStyle Fit': num_prop(t['scores']['onstyleFit']),
             'Risk': num_prop(t['scores']['risk']),
+            'AI Consumer Insight': rt_prop(t.get('aiInterpretation', {}).get('consumerInsight', '')),
+            'AI Opportunity': rt_prop(t.get('aiInterpretation', {}).get('opportunity', '')),
+            'AI Caution': rt_prop(t.get('aiInterpretation', {}).get('caution', '')),
             'Sort Order': num_prop(idx),
         }})
         is_new = True
         created_trends += 1
         time.sleep(0.35)
+    else:
+        api('/pages/' + tp['id'], 'PATCH', {'properties': {
+            'AI Consumer Insight': rt_prop(t.get('aiInterpretation', {}).get('consumerInsight', '')),
+            'AI Opportunity': rt_prop(t.get('aiInterpretation', {}).get('opportunity', '')),
+            'AI Caution': rt_prop(t.get('aiInterpretation', {}).get('caution', '')),
+        }})
+        time.sleep(0.2)
     if is_new:
         for e in t.get('evidence', []):
             api('/pages', 'POST', {'parent': {'database_id': evidence_db['id']}, 'properties': {

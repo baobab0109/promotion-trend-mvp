@@ -1,0 +1,67 @@
+name: Sync Notion Trend Data
+
+on:
+  workflow_dispatch:
+    inputs:
+      week_id:
+        description: Optional Week ID to sync, e.g. 2026-W25. Empty means latest Published week.
+        required: false
+        type: string
+  schedule:
+    # 08:00 KST every weekday
+    - cron: '0 23 * * 0-4'
+
+permissions:
+  contents: write
+
+env:
+  NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+  NOTION_HUB_PAGE_ID: ${{ secrets.NOTION_HUB_PAGE_ID }}
+  NOTION_WEEKS_DATABASE_ID: ${{ secrets.NOTION_WEEKS_DATABASE_ID }}
+  NOTION_TRENDS_DATABASE_ID: ${{ secrets.NOTION_TRENDS_DATABASE_ID }}
+  NOTION_EVIDENCE_DATABASE_ID: ${{ secrets.NOTION_EVIDENCE_DATABASE_ID }}
+  NOTION_IDEAS_DATABASE_ID: ${{ secrets.NOTION_IDEAS_DATABASE_ID }}
+  WEEK_ID: ${{ github.event.inputs.week_id || '' }}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync Notion data to static JSON
+        run: |
+          if [ -n "$WEEK_ID" ]; then
+            npm run sync:notion -- --week="$WEEK_ID"
+          else
+            npm run sync:notion
+          fi
+
+      - name: Validate generated data and build
+        run: |
+          npm test -- --run
+          npm run build
+
+      - name: Commit generated JSON if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data
+          if git diff --cached --quiet; then
+            echo "No Notion data changes to commit."
+          else
+            git commit -m "chore: sync Notion trend data"
+            git push
+          fi

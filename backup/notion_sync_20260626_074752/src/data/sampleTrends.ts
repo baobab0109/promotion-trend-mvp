@@ -1,0 +1,88 @@
+import type { FilterOptions, SourceSummary, TrendTopic } from '../domain/types';
+
+export const sourceSummary: SourceSummary[] = [
+      { name: '뉴스/기사', count: 42, note: '커머스·유통·브랜드 기사' },
+      { name: 'SNS 공개 신호', count: 51, note: '해시태그/UGC 샘플' },
+      { name: '검색 키워드', count: 18, note: '상승 검색어 샘플' },
+      { name: '경쟁사 프로모션', count: 17, note: '이벤트/기획전 페이지' }
+    ];
+
+export const sampleTrends: TrendTopic[] = [
+      {
+        id: 'routine-benefit',
+        name: '초개인화 루틴 혜택',
+        summary: '소비자의 생활 루틴과 구매 맥락에 맞춰 혜택을 조합하는 프로모션 관심이 증가하고 있습니다.',
+        keywords: ['루틴', '개인화', 'AI추천', '정기혜택'],
+        channels: ['SNS', '검색', '기사'],
+        categories: ['뷰티', '리빙', '멤버십/CRM'],
+        promotionTypes: ['멤버십', '큐레이션', '체험/샘플'],
+        modeBias: 'stable',
+        scores: { momentum: 86, onstyleFit: 91, risk: 32 },
+        evidence: [
+          { type: '기사', title: '개인화 커머스와 루틴형 소비 증가 관련 기사', source: 'Sample News', date: '2026-06-20', url: '#', summary: '개인 맞춤 추천과 반복 구매를 연결한 커머스 사례가 증가하고 있다는 내용.' },
+          { type: '검색', title: '루틴·정기혜택 관련 검색 관심 상승', source: 'Sample Search Trend', date: '2026-06-22', url: '#', summary: '루틴, 정기혜택, 맞춤 추천 키워드의 주간 검색 관심이 동반 상승.' },
+          { type: 'SNS', title: '나만의 루틴 공유형 게시물 증가', source: 'Sample Social', date: '2026-06-21', url: '#', summary: '사용자들이 뷰티·리빙 루틴을 묶어 공유하는 콘텐츠가 확산.' }
+        ],
+        aiInterpretation: {
+          consumerInsight: '고객은 단순 할인보다 자신의 취향과 상황에 맞는 혜택 조합을 기대합니다.',
+          opportunity: '온스타일의 카테고리 큐레이션과 멤버십 혜택을 결합하기 좋습니다.',
+          caution: '개인화처럼 보이지만 실제 추천 정확도가 낮으면 반감이 생길 수 있습니다.'
+        },
+        ideas: {
+          stable: { title: '나만의 주간 루틴딜', concept: '고객 관심 카테고리 기반으로 매주 다른 혜택 세트를 제안하는 안정형 프로모션', target: '최근 90일 내 뷰티/리빙 반복 구매 고객', category: '뷰티·리빙·멤버십', benefit: '카테고리별 쿠폰 + 샘플 증정 + 멤버십 추가 적립', message: '이번 주 나에게 맞는 루틴 혜택을 확인하세요.', channels: ['앱홈', '푸시', '기획전'], expectedEffect: '반복 방문과 카테고리 교차 구매 유도', risk: '혜택 구조가 평이해 보일 수 있음', buzz: '중간', difficulty: '낮음', copy: { banner: '이번 주 나에게 맞춘 루틴 혜택', push: '고객님 취향에 맞춘 루틴딜이 열렸어요', live: '루틴을 바꾸는 한 주의 추천템' }, checklist: ['고객 관심 카테고리 세그먼트 정의', '쿠폰/샘플 재고 확인', '앱홈 개인화 영역 노출 가능성 확인'], teams: ['CRM', 'MD', '마케팅운영'] },
+          aggressive: { title: 'AI가 짜주는 7일 쇼핑 루틴 챌린지', concept: 'AI 추천과 참여형 챌린지를 결합해 SNS 공유를 유도하는 공격형 프로모션', target: '트렌드 민감도가 높은 2030 모바일 고객', category: '뷰티·패션·라이프스타일', benefit: '참여 미션 달성 시 한정 쿠폰/굿즈/랭킹 리워드', message: 'AI가 짠 나만의 7일 쇼핑 루틴, 오늘부터 시작해보세요.', channels: ['앱', 'SNS', '라이브', '인플루언서'], expectedEffect: '참여율과 바이럴 확산 기대', risk: '개발/운영 복잡도와 추천 품질 이슈', buzz: '높음', difficulty: '높음', copy: { banner: 'AI가 골라준 나의 7일 쇼핑 루틴', push: '오늘의 루틴 미션을 완료하고 한정 혜택을 받아보세요', live: 'AI 루틴 챌린지 라이브' }, checklist: ['추천 로직/문구 검수', '참여 미션 운영정책 정의', 'SNS 공유 이미지 템플릿 제작'], teams: ['서비스기획', 'CRM', '콘텐츠', '법무검토'] }
+        }
+      },
+      {
+        id: 'limited-goods', name: '한정판 굿즈 연계 구매', summary: '가격 할인보다 소장 가치가 있는 굿즈·패키지·콜라보 혜택을 구매 명분으로 삼는 흐름이 강합니다.', keywords: ['한정수량', '굿즈', '콜라보', '소장가치'], channels: ['SNS', '경쟁사', '기사'], categories: ['패션', '뷰티', '리빙'], promotionTypes: ['한정판', '사은품', '번들'], modeBias: 'aggressive', scores: { momentum: 92, onstyleFit: 84, risk: 58 }, evidence: [
+          { type: '경쟁사', title: '브랜드 굿즈 증정형 기획전', source: 'Competitor Sample', date: '2026-06-19', url: '#', summary: '구매 금액대별 굿즈를 차등 증정하며 조기 품절 메시지를 강조.' },
+          { type: 'SNS', title: '한정 굿즈 인증 게시물 확산', source: 'Sample Social', date: '2026-06-21', url: '#', summary: '굿즈 언박싱과 인증샷이 구매 후기 콘텐츠로 재확산.' }
+        ], aiInterpretation: { consumerInsight: '고객은 할인율보다 “지금 사야 하는 이유”와 소장 가치를 강하게 반응합니다.', opportunity: '온스타일 단독 구성/브랜드 협업 패키지로 기획전 차별화가 가능합니다.', caution: '재고·배송·품질 이슈 발생 시 부정 반응이 빠르게 확산될 수 있습니다.' }, ideas: {
+          stable: { title: '브랜드 굿즈 플러스딜', concept: '인기 브랜드 구매 고객에게 실용 굿즈를 증정하는 안정형 구매 유도 기획', target: '최근 브랜드 구매/관심 고객', category: '뷰티·패션', benefit: '금액대별 굿즈 + 브랜드 쿠폰 + 무료배송', message: '좋아하는 브랜드를 사면 한정 굿즈까지.', channels: ['앱기획전', '브랜드관', '푸시'], expectedEffect: '전환율과 객단가 상승', risk: '굿즈 매력도가 낮으면 차별성이 약함', buzz: '중간', difficulty: '중간', copy: { banner: '브랜드 굿즈까지 챙기는 이번 주 단독딜', push: '관심 브랜드 한정 굿즈가 준비됐어요', live: '굿즈 플러스 브랜드데이' }, checklist: ['굿즈 원가/수량 확정', '금액대별 혜택 기준 설정', '품절 시 대체 메시지 준비'], teams: ['MD', '브랜드영업', '물류'] },
+          aggressive: { title: '온스타일 드롭: 72시간 굿즈 래플', concept: '한정 시간 구매와 래플형 굿즈 당첨을 결합한 화제성 프로모션', target: '한정판과 드롭 문화에 반응하는 2030 고객', category: '패션·뷰티·리빙', benefit: '구매자 대상 래플 응모 + 선착순 굿즈 + 라이브 추가 혜택', message: '단 72시간, 온스타일에서만 열리는 굿즈 드롭.', channels: ['앱', 'SNS', '라이브'], expectedEffect: '방문 피크와 SNS 언급량 증가', risk: '래플 운영 공정성/고객문의 증가 가능성', buzz: '매우 높음', difficulty: '높음', copy: { banner: '72시간 한정 굿즈 드롭', push: '지금 구매하면 래플 응모권이 열려요', live: '드롭 마지막 1시간 라이브' }, checklist: ['래플 약관/고지 검토', '당첨자 발표 프로세스 설계', 'CS FAQ 준비'], teams: ['마케팅', '법무검토', 'CS', '콘텐츠'] }
+        }
+      },
+      {
+        id: 'ugc-review', name: '리뷰/UGC 참여형 프로모션', summary: '구매 이후 리뷰와 인증 콘텐츠를 다시 프로모션 자산으로 활용하는 참여형 구조가 확대되고 있습니다.', keywords: ['리뷰인증', 'UGC', '체험단', '챌린지'], channels: ['SNS', '검색', '경쟁사'], categories: ['뷰티', '식품', '리빙'], promotionTypes: ['리뷰/UGC', '체험/샘플', '참여형'], modeBias: 'stable', scores: { momentum: 78, onstyleFit: 88, risk: 40 }, evidence: [
+          { type: 'SNS', title: '인증샷 기반 참여 이벤트 다수 관찰', source: 'Sample Social', date: '2026-06-18', url: '#', summary: '구매 후기, 사용 전후, 루틴 인증 콘텐츠를 활용한 이벤트 반응이 높음.' },
+          { type: '경쟁사', title: '리뷰 작성 시 포인트 추가 적립', source: 'Competitor Sample', date: '2026-06-20', url: '#', summary: '사진 리뷰와 영상 리뷰의 보상 차등화 사례 확인.' }
+        ], aiInterpretation: { consumerInsight: '고객은 다른 고객의 실제 사용 맥락을 구매 전 검증 정보로 활용합니다.', opportunity: '리뷰 보상과 기획전 노출을 연결하면 콘텐츠와 구매 전환을 동시에 확보할 수 있습니다.', caution: '과도한 보상은 리뷰 신뢰도를 낮출 수 있어 투명한 고지가 필요합니다.' }, ideas: {
+          stable: { title: '사진 리뷰 더블 적립 위크', concept: '사진/영상 리뷰 작성 고객에게 추가 적립과 다음 구매 쿠폰을 제공', target: '최근 구매 고객 및 리뷰 미작성 고객', category: '뷰티·식품·리빙', benefit: '사진 리뷰 추가 적립 + 다음 구매 쿠폰', message: '리뷰를 남기면 다음 쇼핑 혜택이 커집니다.', channels: ['마이페이지', '푸시', '구매완료 페이지'], expectedEffect: '리뷰 수 증가와 재구매 유도', risk: '참여 품질 편차', buzz: '낮음~중간', difficulty: '낮음', copy: { banner: '사진 리뷰 쓰고 혜택 더블로', push: '구매하신 상품, 사진 리뷰 쓰면 추가 적립!', live: '리뷰가 말해주는 인기템' }, checklist: ['리뷰 보상 정책 확인', '대상 고객 추출', '부정 리뷰 방지 기준 설정'], teams: ['CRM', '서비스운영', 'CS'] },
+          aggressive: { title: '온스타일 실사용 챌린지', concept: '사용 전후/루틴 인증 UGC를 모아 고객 참여형 콘텐츠 캠페인으로 확장', target: 'SNS 공유에 적극적인 구매 고객', category: '뷰티·리빙', benefit: '우수 UGC 선정 리워드 + 기획전 메인 노출 + 브랜드 키트', message: '내가 써본 진짜 후기를 온스타일 메인에 소개하세요.', channels: ['SNS', '앱', '브랜드관'], expectedEffect: 'UGC 확보와 브랜드 신뢰 강화', risk: '콘텐츠 검수와 초상권/저작권 관리 필요', buzz: '높음', difficulty: '중~높음', copy: { banner: '실사용 챌린지에 참여하고 메인에 소개되세요', push: '내 리뷰가 기획전 콘텐츠가 될 수 있어요', live: '고객 리뷰로 검증된 리얼템' }, checklist: ['UGC 활용 동의 프로세스', '선정 기준/리워드 공지', '콘텐츠 검수 리소스 확보'], teams: ['콘텐츠', '법무검토', '브랜드영업'] }
+        }
+      },
+      {
+        id: 'membership-preview', name: '멤버십 전용 선공개', summary: '멤버십 고객에게 먼저 접근권을 주는 선공개/얼리버드 구조가 충성도와 구매 명분을 강화합니다.', keywords: ['멤버십', '선공개', '얼리버드', '전용혜택'], channels: ['검색', '경쟁사', '기사'], categories: ['멤버십/CRM', '패션', '뷰티'], promotionTypes: ['멤버십', '선공개', '할인'], modeBias: 'stable', scores: { momentum: 74, onstyleFit: 93, risk: 28 }, evidence: [
+          { type: '경쟁사', title: 'VIP 선공개 타임딜 운영 사례', source: 'Competitor Sample', date: '2026-06-17', url: '#', summary: '상위 등급 고객에게 인기 상품 선공개 후 일반 공개로 전환.' },
+          { type: '기사', title: '유료/등급 멤버십 혜택 경쟁 심화', source: 'Sample News', date: '2026-06-21', url: '#', summary: '가격 혜택 외 접근권과 독점 경험을 멤버십 가치로 활용하는 흐름.' }
+        ], aiInterpretation: { consumerInsight: '고객은 단순 할인보다 “내가 먼저 받는 혜택”에 멤버십 가치를 느낍니다.', opportunity: '온스타일 멤버십 고객의 재방문과 등급 유지 동기를 만들 수 있습니다.', caution: '비회원/일반 고객이 소외감을 느끼지 않도록 공개 전환 구조가 필요합니다.' }, ideas: {
+          stable: { title: '멤버십 프리뷰 데이', concept: '멤버십 고객에게 24시간 먼저 인기 딜을 공개하는 안정형 혜택', target: '멤버십 가입/상위 등급 고객', category: '멤버십·뷰티·패션', benefit: '24시간 선공개 + 추가 적립 + 무료배송 쿠폰', message: '멤버십 고객님께 먼저 공개합니다.', channels: ['앱홈', '푸시', '멤버십관'], expectedEffect: '멤버십 체감 가치와 재방문 증가', risk: '대상 상품 매력도가 낮으면 효과 제한', buzz: '중간', difficulty: '낮음', copy: { banner: '멤버십 고객 먼저 만나는 프리뷰 딜', push: '24시간 먼저 열리는 전용 혜택을 확인하세요', live: '멤버십 프리뷰 라이브' }, checklist: ['멤버십 대상 세그먼트 확인', '선공개 상품 수급 확정', '일반 공개 전환 시점 설정'], teams: ['CRM', 'MD', '서비스기획'] },
+          aggressive: { title: '멤버십 시크릿 오픈런', concept: '정해진 시간에만 열리는 시크릿 딜과 랭킹 리워드를 결합', target: '구매 빈도 높은 멤버십 핵심 고객', category: '멤버십·패션·뷰티', benefit: '타임락 딜 + 선착순 리워드 + 구매 랭킹 추가 쿠폰', message: '멤버십에게만 열리는 시크릿 오픈런.', channels: ['앱', '푸시', '라이브'], expectedEffect: '특정 시간대 트래픽과 구매 집중', risk: '서버/재고/CS 부담 증가', buzz: '높음', difficulty: '중~높음', copy: { banner: '멤버십 시크릿 오픈런', push: '곧 시크릿 딜이 열립니다. 먼저 입장하세요', live: '오픈런 카운트다운 라이브' }, checklist: ['트래픽 피크 대응 점검', '선착순 기준 고지', '품절/대체 안내 시나리오'], teams: ['서비스기획', '개발', 'CRM', 'CS'] }
+        }
+      },
+      {
+        id: 'ai-curation', name: 'AI 추천 기반 큐레이션 딜', summary: 'AI 추천을 전면 메시지로 활용해 상품 탐색 피로를 줄이고 큐레이션 신뢰를 높이려는 시도가 늘고 있습니다.', keywords: ['AI추천', '큐레이션', '취향분석', '추천딜'], channels: ['기사', '검색', 'SNS'], categories: ['뷰티', '패션', '디지털'], promotionTypes: ['큐레이션', '할인', '콘텐츠'], modeBias: 'aggressive', scores: { momentum: 89, onstyleFit: 87, risk: 52 }, evidence: [
+          { type: '기사', title: 'AI 큐레이션 커머스 도입 사례 증가', source: 'Sample News', date: '2026-06-19', url: '#', summary: '추천 알고리즘과 생성형 AI를 결합한 쇼핑 탐색 경험이 확대.' },
+          { type: '검색', title: 'AI 추천·취향분석 키워드 관심 상승', source: 'Sample Search Trend', date: '2026-06-22', url: '#', summary: 'AI 추천 상품, 취향 분석, 맞춤 큐레이션 관련 검색 증가.' }
+        ], aiInterpretation: { consumerInsight: '상품이 많을수록 고객은 탐색을 줄여주는 큐레이션을 선호합니다.', opportunity: '온스타일의 카테고리 전문성과 AI 추천 메시지를 결합하면 탐색 부담을 줄일 수 있습니다.', caution: 'AI 추천의 기준이 불명확하면 과장 인식이 생길 수 있습니다.' }, ideas: {
+          stable: { title: 'AI 추천 베스트 30', concept: '인기/관심/구매 데이터를 묶어 카테고리별 추천 딜로 제시', target: '탐색 시간이 짧은 모바일 고객', category: '뷰티·패션·디지털', benefit: '추천 상품 쿠폰 + 카테고리별 베스트 가격', message: 'AI가 고른 이번 주 놓치기 아까운 추천딜.', channels: ['앱홈', '검색결과', '기획전'], expectedEffect: '상품 탐색 효율과 클릭률 개선', risk: '추천 기준 설명 부족', buzz: '중간', difficulty: '중간', copy: { banner: 'AI 추천 베스트 30', push: '이번 주 관심사에 맞춘 추천딜을 확인하세요', live: 'AI가 고른 베스트딜' }, checklist: ['추천 기준 문구 정의', '카테고리별 대표 상품 선정', '가격/재고 검수'], teams: ['데이터', 'MD', '서비스기획'] },
+          aggressive: { title: '취향 분석 결과별 AI 딜룸', concept: '고객이 간단한 취향 질문에 답하면 결과 유형별 딜룸을 제공', target: '개인화 경험에 호기심이 높은 고객', category: '뷰티·패션·라이프스타일', benefit: '취향 유형별 전용 쿠폰 + 추천 세트 + 공유 리워드', message: '내 취향 결과에 맞는 딜룸이 열립니다.', channels: ['앱', 'SNS', '콘텐츠'], expectedEffect: '참여 데이터 확보와 공유 확산', risk: '진단 정확도와 개인정보/표현 검토 필요', buzz: '매우 높음', difficulty: '높음', copy: { banner: '내 취향을 분석하면 전용 딜룸 오픈', push: '3문항으로 내 취향 딜룸을 열어보세요', live: '취향별 추천딜 라이브' }, checklist: ['취향 질문/결과 문구 검수', '개인정보 수집 여부 확인', '공유 이미지/랜딩 제작'], teams: ['서비스기획', '데이터', '법무검토', '콘텐츠'] }
+        }
+      },
+      {
+        id: 'live-instant', name: '라이브 커머스 즉시 혜택', summary: '라이브 시청 중 즉시 받을 수 있는 쿠폰·재고·한정 혜택이 구매 결정을 빠르게 만듭니다.', keywords: ['라이브', '즉시쿠폰', '타임딜', '한정수량'], channels: ['SNS', '경쟁사', '검색'], categories: ['뷰티', '식품', '패션'], promotionTypes: ['라이브/콘텐츠', '할인', '한정판'], modeBias: 'stable', scores: { momentum: 82, onstyleFit: 89, risk: 45 }, evidence: [
+          { type: '경쟁사', title: '라이브 중 전용 쿠폰/사은품 제공', source: 'Competitor Sample', date: '2026-06-18', url: '#', summary: '방송 시간 내 구매 고객에게 추가 쿠폰과 사은품을 제공.' },
+          { type: 'SNS', title: '라이브 타임딜 알림 공유 증가', source: 'Sample Social', date: '2026-06-20', url: '#', summary: '방송 전 알림과 방송 중 구매 인증 콘텐츠가 관찰됨.' }
+        ], aiInterpretation: { consumerInsight: '고객은 방송 중 혜택이 사라진다는 명확한 시간 제한에 빠르게 반응합니다.', opportunity: '온스타일 라이브와 기획전/푸시를 연결해 시청→구매 전환을 강화할 수 있습니다.', caution: '방송 품질과 재고 운영이 맞지 않으면 고객 불만이 커질 수 있습니다.' }, ideas: {
+          stable: { title: '라이브 온리 즉시쿠폰', concept: '방송 시간 중에만 활성화되는 전용 쿠폰과 사은품 제공', target: '라이브 알림 수신 및 최근 시청 고객', category: '뷰티·식품·패션', benefit: '방송 중 10분 쿠폰 + 구매 사은품 + 무료배송', message: '라이브 보는 지금만 열리는 즉시 혜택.', channels: ['라이브', '앱푸시', '기획전'], expectedEffect: '라이브 시청 전환과 즉시 구매 증가', risk: '방송 외 고객의 혜택 접근 제한', buzz: '중간', difficulty: '중간', copy: { banner: '라이브 중에만 열리는 즉시쿠폰', push: '곧 라이브 전용 혜택이 시작됩니다', live: '지금 보는 분들께만 드리는 쿠폰' }, checklist: ['방송 시간/쿠폰 노출 동기화', '라이브 재고 확보', '푸시 발송 타이밍 설정'], teams: ['라이브커머스', 'CRM', 'MD'] },
+          aggressive: { title: '10분 타임어택 라이브 딜', concept: '방송 중 여러 차례 10분 한정 딜을 열어 체류와 구매를 동시에 유도', target: '라이브 이벤트 반응 고객', category: '뷰티·식품·패션', benefit: '10분 타임딜 + 채팅 참여 리워드 + 마지막 찬스 쿠폰', message: '10분마다 혜택이 바뀌는 라이브 타임어택.', channels: ['라이브', 'SNS', '앱'], expectedEffect: '시청 체류시간과 구매 피크 증가', risk: '운영 복잡도와 고객 혼선 가능성', buzz: '높음', difficulty: '높음', copy: { banner: '10분마다 바뀌는 라이브 타임어택', push: '지금 입장하면 첫 타임딜을 받을 수 있어요', live: '다음 혜택까지 10분 카운트다운' }, checklist: ['타임테이블/혜택 변경 로직 정의', '진행자 스크립트 준비', '채팅 이벤트 운영 기준 마련'], teams: ['라이브커머스', '콘텐츠', 'CS', 'MD'] }
+        }
+      }
+    ];
+
+export const filterOptions: FilterOptions = {
+      channels: ['전체', 'SNS', '검색', '기사', '경쟁사'],
+      categories: ['전체', '뷰티', '패션', '리빙', '식품', '디지털', '멤버십/CRM'],
+      types: ['전체', '할인', '사은품', '체험/샘플', '한정판', '리뷰/UGC', '라이브/콘텐츠', '멤버십', '큐레이션'],
+      modes: ['전체', '안정형 추천 강함', '공격형 추천 강함']
+    };

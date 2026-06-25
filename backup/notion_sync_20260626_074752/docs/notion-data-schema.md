@@ -61,9 +61,6 @@ Notion DB
 | Momentum | Number | 0~100 |
 | OnStyle Fit | Number | 0~100 |
 | Risk | Number | 0~100 |
-| AI Consumer Insight | Text | 고객 인사이트 해석 |
-| AI Opportunity | Text | 온스타일 적용 기회 |
-| AI Caution | Text | 운영/리스크 주의사항 |
 | Sort Order | Number | 표시 순서 |
 
 ## `[PTAI] Evidence Items`

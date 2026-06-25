@@ -111,26 +111,12 @@ backup/README_YYYYMMDD_HHMMSS_before_react_migration.md
 
 - Notion schema 문서: `docs/notion-data-schema.md`
 - Notion data source config: `config/notion-data-sources.json`
-- 수동 동기화: `npm run sync:notion`
-- 생성 JSON: `public/data/weeks.json`, `public/data/trends/latest.json`
-- 자동/수동 GitHub Actions: `.github/workflows/sync-notion-data.yml`
-
-운영 흐름:
-
-```text
-Notion에서 Status=Published로 정리
-  ↓
-Sync Notion Trend Data workflow 실행 또는 평일 08:00 KST 자동 실행
-  ↓
-public/data/trends/latest.json 갱신 commit
-  ↓
-GitHub Pages deploy workflow 자동 배포
-```
 
 ## 다음 단계 후보
 
-1. Notion CMS 데이터로 화면 QA 및 팀원 피드백 수집
-2. 실제 모니터링 대상 경쟁사·채널·카테고리 확정
-3. 필요 시 `sync-notion-data.yml` 스케줄/수동 운영 권한 조정
-4. 로그인 전 개인 찜 UX 검증
-5. Phase 2에서 Supabase/Auth 기반 계정별 저장 구조 설계
+1. `scripts/sync-notion-trends.mjs`로 Notion DB → JSON 변환 구현
+2. 앱 시작 시 `public/data/trends/latest.json` fetch 구조로 변경
+3. GitHub Actions에 Notion sync workflow 추가
+4. 팀원에게 React MVP 공유 후 화면/필터/기획안 포맷 피드백 수집
+5. 로그인 전 개인 찜 UX 검증
+6. Phase 2에서 Supabase/Auth 기반 계정별 저장 구조 설계

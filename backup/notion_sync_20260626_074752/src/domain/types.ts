@@ -64,16 +64,6 @@ export interface SourceSummary {
   note: string;
 }
 
-export interface TrendDataset {
-  weekId: string;
-  label: string;
-  status: 'Draft' | 'Published' | 'Archived' | string;
-  generatedAt: string;
-  source: 'sample' | 'notion';
-  sourceSummary: SourceSummary[];
-  trends: TrendTopic[];
-}
-
 export interface FilterOptions {
   channels: string[];
   categories: string[];

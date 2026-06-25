@@ -1,0 +1,11 @@
+[
+  {
+    "weekId": "2026-W25",
+    "label": "2026.06.17 - 2026.06.23",
+    "status": "Published",
+    "startDate": "2026-06-17",
+    "endDate": "2026-06-23",
+    "file": "./data/trends/2026-W25.json",
+    "isLatest": true
+  }
+]

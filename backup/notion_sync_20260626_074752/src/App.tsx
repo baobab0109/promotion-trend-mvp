@@ -6,12 +6,11 @@ import SummaryCards from './components/SummaryCards';
 import TrendDetail from './components/TrendDetail';
 import TrendExplorer from './components/TrendExplorer';
 import WeeklyOverview from './components/WeeklyOverview';
+import { filterOptions, sampleTrends, sourceSummary } from './data/sampleTrends';
 import { readBookmarks, removeBookmark, toggleBookmark, writeBookmarks } from './domain/bookmarks';
-import { loadTrendDataset } from './domain/dataLoader';
 import { filterTrends } from './domain/filters';
 import { getIdeaForMode } from './domain/ideas';
 import { buildDevelopmentPrompt } from './domain/prompts';
-import { buildFilterOptions, createSampleTrendDataset } from './domain/trendData';
 import type { FilterState, IdeaMode } from './domain/types';
 
 const initialFilters: FilterState = {
@@ -22,52 +21,20 @@ const initialFilters: FilterState = {
   mode: '전체'
 };
 
-const fallbackDataset = createSampleTrendDataset();
-
 export default function App() {
-  const [dataset, setDataset] = useState(fallbackDataset);
   const [filters, setFilters] = useState<FilterState>(initialFilters);
-  const [selectedId, setSelectedId] = useState(fallbackDataset.trends[0].id);
+  const [selectedId, setSelectedId] = useState(sampleTrends[0].id);
   const [selectedIdeaMode, setSelectedIdeaMode] = useState<IdeaMode>('stable');
   const [bookmarks, setBookmarks] = useState(() => readBookmarks());
   const [toast, setToast] = useState('');
-  const [loadState, setLoadState] = useState<'loading' | 'notion' | 'fallback'>('loading');
 
-  const trends = dataset.trends;
-  const sourceSummary = dataset.sourceSummary;
-  const filterOptions = useMemo(() => buildFilterOptions(trends), [trends]);
-  const dataSourceLabel = dataset.source === 'notion' ? 'NOTION CMS' : 'SAMPLE MVP';
-  const statusLabel = loadState === 'loading' ? '데이터 로드 중' : dataSourceLabel;
-
-  const filteredTrends = useMemo(() => filterTrends(trends, filters), [filters, trends]);
+  const filteredTrends = useMemo(() => filterTrends(sampleTrends, filters), [filters]);
   const selectedTrend = filteredTrends.find((trend) => trend.id === selectedId)
-    ?? trends.find((trend) => trend.id === selectedId)
+    ?? sampleTrends.find((trend) => trend.id === selectedId)
     ?? filteredTrends[0]
-    ?? trends[0];
+    ?? sampleTrends[0];
   const selectedIdea = getIdeaForMode(selectedTrend, selectedIdeaMode);
   const selectedPrompt = buildDevelopmentPrompt(selectedTrend, selectedIdea, selectedIdeaMode);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    loadTrendDataset()
-      .then((nextDataset) => {
-        if (cancelled) return;
-        setDataset(nextDataset);
-        setSelectedId(nextDataset.trends[0].id);
-        setSelectedIdeaMode(nextDataset.trends[0].modeBias);
-        setLoadState('notion');
-      })
-      .catch((error) => {
-        if (cancelled) return;
-        setLoadState('fallback');
-        setToast(`Notion 데이터 로드 실패로 샘플 데이터를 표시합니다: ${error instanceof Error ? error.message : 'unknown error'}`);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   useEffect(() => {
     if (filteredTrends.length > 0 && !filteredTrends.some((trend) => trend.id === selectedId)) {
@@ -79,7 +46,7 @@ export default function App() {
 
   useEffect(() => {
     if (!toast) return;
-    const timer = window.setTimeout(() => setToast(''), 4000);
+    const timer = window.setTimeout(() => setToast(''), 2200);
     return () => window.clearTimeout(timer);
   }, [toast]);
 
@@ -89,8 +56,8 @@ export default function App() {
 
   function handleReset() {
     setFilters(initialFilters);
-    setSelectedId(trends[0].id);
-    setSelectedIdeaMode(trends[0].modeBias);
+    setSelectedId(sampleTrends[0].id);
+    setSelectedIdeaMode('stable');
     showToast('필터를 초기화했습니다.');
   }
 
@@ -107,7 +74,7 @@ export default function App() {
   }
 
   function handleSelectTrend(id: string, jump = false) {
-    const trend = trends.find((item) => item.id === id);
+    const trend = sampleTrends.find((item) => item.id === id);
     setSelectedId(id);
     setSelectedIdeaMode(trend?.modeBias ?? 'stable');
     if (jump) {
@@ -153,9 +120,9 @@ export default function App() {
   return (
     <>
       <div className="app">
-        <Header sourceSummary={sourceSummary} weekLabel={dataset.label} dataSourceLabel={statusLabel} onReset={handleReset} />
-        <SummaryCards sourceSummary={sourceSummary} trends={trends} dataSourceLabel={dataSourceLabel} />
-        <WeeklyOverview trends={trends} sourceSummary={sourceSummary} onSelectTrend={handleSelectTrend} onKeyword={handleKeyword} />
+        <Header sourceSummary={sourceSummary} onReset={handleReset} />
+        <SummaryCards sourceSummary={sourceSummary} trends={sampleTrends} />
+        <WeeklyOverview trends={sampleTrends} sourceSummary={sourceSummary} onSelectTrend={handleSelectTrend} onKeyword={handleKeyword} />
 
         <main className="workspace">
           <TrendExplorer

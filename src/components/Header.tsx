@@ -2,14 +2,16 @@ import type { SourceSummary } from '../domain/types';
 
 interface HeaderProps {
   sourceSummary: SourceSummary[];
+  weekLabel: string;
+  dataSourceLabel: string;
   onReset: () => void;
 }
 
-export default function Header({ sourceSummary, onReset }: HeaderProps) {
+export default function Header({ sourceSummary, weekLabel, dataSourceLabel, onReset }: HeaderProps) {
   return (
     <header className="hero">
       <section className="hero-main">
-        <span className="eyebrow"><span className="dot" /> SAMPLE MVP · 2026.06.17 - 2026.06.23</span>
+        <span className="eyebrow"><span className="dot" /> {dataSourceLabel} · {weekLabel}</span>
         <h1>프로모션 트렌드를 근거와 기획안으로 연결하는 AI Planner</h1>
         <p className="hero-copy">SNS·검색·기사·경쟁사 신호를 한 화면에서 탐색하고, 온스타일에 맞춘 안정형/공격형 프로모션 기획안을 비교하는 React MVP입니다.</p>
         <div className="hero-actions">
@@ -28,7 +30,7 @@ export default function Header({ sourceSummary, onReset }: HeaderProps) {
             </div>
           ))}
         </div>
-        <div className="disclaimer">현재 화면은 샘플 데이터 기반입니다. 실제 운영 전에는 출처 검증, 플랫폼 약관, 사내 보안 기준 검토가 필요합니다.</div>
+        <div className="disclaimer">Notion CMS에서 Published 상태로 정리된 데이터를 정적 JSON으로 변환해 표시합니다. 실제 운영 전에는 출처 검증, 플랫폼 약관, 사내 보안 기준 검토가 필요합니다.</div>
       </aside>
     </header>
   );
