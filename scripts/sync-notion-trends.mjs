@@ -195,6 +195,14 @@ function validateDataset(dataset) {
   return errors;
 }
 
+function latestEditedAt(pages) {
+  return pages
+    .map((page) => page.last_edited_time)
+    .filter(Boolean)
+    .sort()
+    .at(-1) || new Date(0).toISOString();
+}
+
 async function main() {
   await loadDotEnv();
   const db = await loadConfig();
@@ -271,7 +279,7 @@ async function main() {
     weekId,
     label: richText(selectedWeek, 'Label'),
     status: select(selectedWeek, 'Status'),
-    generatedAt: new Date().toISOString(),
+    generatedAt: latestEditedAt([selectedWeek, ...allTrendPages, ...evidencePages, ...ideaPages]),
     source: 'notion',
     sourceSummary: buildSourceSummary(trends),
     trends
