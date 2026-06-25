@@ -1,0 +1,946 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Promotion Trend AI Planner MVP</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --surface-2: #f9fafb;
+      --ink: #111827;
+      --muted: #6b7280;
+      --faint: #9ca3af;
+      --border: #e5e7eb;
+      --border-strong: #d1d5db;
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --blue-border: #bfdbfe;
+      --orange: #f97316;
+      --orange-soft: #fff7ed;
+      --orange-border: #fed7aa;
+      --violet: #7c3aed;
+      --violet-soft: #f5f3ff;
+      --violet-border: #ddd6fe;
+      --slate-soft: #f1f5f9;
+      --green: #059669;
+      --green-soft: #ecfdf5;
+      --red: #dc2626;
+      --red-soft: #fef2f2;
+      --shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+      --shadow-soft: 0 10px 28px rgba(15, 23, 42, 0.06);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+      --max: 1480px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 0%, rgba(37, 99, 235, 0.10), transparent 26rem),
+        radial-gradient(circle at 85% 5%, rgba(249, 115, 22, 0.10), transparent 24rem),
+        var(--bg);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+
+    .app {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+      padding: 28px 0 64px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(360px, 0.6fr);
+      gap: 20px;
+      align-items: stretch;
+      margin-bottom: 20px;
+    }
+
+    .hero-main, .hero-side, .panel, .metric-card, .trend-card, .idea-card, .detail-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(229, 231, 235, 0.88);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-main {
+      border-radius: 30px;
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 260px;
+      height: 260px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(37, 99, 235, .16), rgba(124, 58, 237, .08));
+    }
+
+    .hero-side {
+      border-radius: 30px;
+      padding: 26px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid var(--blue-border);
+      border-radius: 999px;
+      color: #1d4ed8;
+      background: var(--blue-soft);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: currentColor;
+      display: inline-block;
+    }
+
+    h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(34px, 4vw, 58px);
+      letter-spacing: -0.055em;
+      line-height: 1.03;
+      max-width: 870px;
+    }
+
+    .hero-copy {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 780px;
+      margin: 0 0 24px;
+    }
+
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .btn {
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-weight: 800;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+      min-height: 44px;
+    }
+
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(15,23,42,.08); }
+    .btn.primary { background: #111827; color: white; border-color: #111827; }
+    .btn.blue { background: var(--blue); border-color: var(--blue); color: white; }
+    .btn.orange { background: var(--orange); border-color: var(--orange); color: white; }
+    .btn.ghost { background: transparent; }
+    .btn.small { padding: 8px 12px; min-height: 36px; font-size: 13px; }
+    .btn.active { border-color: #111827; background: #111827; color: white; }
+
+    .side-title { margin: 0 0 14px; font-size: 15px; color: var(--muted); font-weight: 900; }
+    .source-list { display: grid; gap: 10px; }
+    .source-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+    }
+    .source-row strong { font-size: 14px; }
+    .source-row span { color: var(--muted); font-size: 13px; }
+
+    .disclaimer {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--violet-border);
+      background: var(--violet-soft);
+      color: #4c1d95;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .metric-card {
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .metric-label { color: var(--muted); font-size: 13px; font-weight: 900; display: flex; align-items: center; gap: 8px; }
+    .metric-value { font-size: 34px; font-weight: 900; letter-spacing: -0.04em; margin: 8px 0 2px; }
+    .metric-sub { color: var(--muted); font-size: 13px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 900;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .badge.blue { color: #1d4ed8; background: var(--blue-soft); border-color: var(--blue-border); }
+    .badge.orange { color: #c2410c; background: var(--orange-soft); border-color: var(--orange-border); }
+    .badge.violet { color: #6d28d9; background: var(--violet-soft); border-color: var(--violet-border); }
+    .badge.green { color: #047857; background: var(--green-soft); border-color: #a7f3d0; }
+    .badge.red { color: #b91c1c; background: var(--red-soft); border-color: #fecaca; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 18px;
+      margin: 30px 0 14px;
+    }
+    .section-head h2 { margin: 0; font-size: 24px; letter-spacing: -0.035em; }
+    .section-head p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+
+    .overview {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel {
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .top-trend-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .mini-trend {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .mini-trend strong { display: block; margin-bottom: 6px; }
+    .mini-trend p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      border: 1px solid var(--border-strong);
+      background: white;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #374151;
+      transition: background .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
+    }
+    .chip:hover, .chip.active { background: #111827; border-color: #111827; color: white; transform: translateY(-1px); }
+
+    .bar-list { display: grid; gap: 12px; margin-top: 8px; }
+    .bar-row { display: grid; grid-template-columns: 82px 1fr 44px; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); font-weight: 800; }
+    .bar-track { height: 9px; background: #edf2f7; border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--blue), var(--violet)); }
+    .bar-fill.orange { background: linear-gradient(90deg, var(--orange), #fb7185); }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 420px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .explorer {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow: auto;
+    }
+
+    .search {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      padding: 0 14px;
+      background: #fff;
+      outline: none;
+      transition: box-shadow .18s ease, border-color .18s ease;
+    }
+    .search:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(37, 99, 235, .12); }
+
+    .filter-group { margin-top: 16px; }
+    .filter-title { color: var(--muted); font-size: 12px; font-weight: 900; margin-bottom: 8px; text-transform: uppercase; letter-spacing: .04em; }
+    .filter-buttons { display: flex; flex-wrap: wrap; gap: 7px; }
+    .filter-btn {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      border-radius: 999px;
+      padding: 7px 10px;
+      color: #374151;
+      font-size: 12px;
+      font-weight: 850;
+      min-height: 34px;
+    }
+    .filter-btn.active { background: #111827; color: white; border-color: #111827; }
+
+    .trend-list { display: grid; gap: 10px; margin-top: 18px; }
+    .trend-card {
+      width: 100%;
+      text-align: left;
+      border-radius: 18px;
+      padding: 15px;
+      transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+    }
+    .trend-card:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+    .trend-card.selected { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(37, 99, 235, .10); }
+    .trend-card h3 { margin: 8px 0 6px; font-size: 16px; letter-spacing: -0.02em; }
+    .trend-card p { margin: 0 0 10px; color: var(--muted); font-size: 13px; }
+    .score-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+    .score-pill { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 8px; }
+    .score-pill span { display: block; color: var(--muted); font-size: 11px; font-weight: 900; }
+    .score-pill strong { display: block; font-size: 15px; margin-top: 2px; }
+
+    .detail-stack { display: grid; gap: 16px; }
+    .detail-grid { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 16px; }
+    .detail-card {
+      border-radius: var(--radius-lg);
+      padding: 22px;
+    }
+    .detail-card h3 { margin: 0 0 8px; font-size: 22px; letter-spacing: -0.035em; }
+    .detail-card h4 { margin: 0 0 10px; font-size: 15px; }
+    .muted { color: var(--muted); }
+    .detail-card p { margin-top: 0; }
+
+    .evidence-list { display: grid; gap: 10px; }
+    .evidence-item {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      border-radius: 16px;
+      padding: 13px;
+    }
+    .evidence-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; margin-bottom: 8px; }
+    .evidence-item strong { display: block; margin-bottom: 4px; }
+    .evidence-item p { color: var(--muted); font-size: 13px; margin: 0 0 8px; }
+    .evidence-link { color: var(--blue); font-weight: 900; font-size: 13px; text-decoration: none; }
+    .label-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+
+    .interpretation {
+      border: 1px solid var(--violet-border);
+      background: var(--violet-soft);
+      border-radius: 18px;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+    .interpretation div strong { color: #4c1d95; display: block; margin-bottom: 4px; }
+    .interpretation div p { margin: 0; color: #5b21b6; font-size: 14px; }
+
+    .idea-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .idea-card {
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      border-width: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+    .idea-card.stable { border-color: var(--blue-border); background: linear-gradient(180deg, #fff, var(--blue-soft)); }
+    .idea-card.aggressive { border-color: var(--orange-border); background: linear-gradient(180deg, #fff, var(--orange-soft)); }
+    .idea-card h3 { margin: 10px 0 6px; font-size: 21px; letter-spacing: -0.035em; }
+    .idea-card p { color: var(--muted); margin: 0 0 14px; }
+    .idea-meta { display: grid; gap: 9px; }
+    .meta-row { display: grid; grid-template-columns: 86px 1fr; gap: 10px; font-size: 14px; }
+    .meta-row span { color: var(--muted); font-weight: 900; }
+    .meta-row strong { font-weight: 750; }
+    .idea-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+    }
+    .compare-table th, .compare-table td { padding: 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+    .compare-table th { background: var(--surface-2); color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+    .compare-table tr:last-child td { border-bottom: 0; }
+
+    .selected-detail {
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+      gap: 16px;
+    }
+    .copy-box {
+      border: 1px dashed var(--border-strong);
+      background: var(--surface-2);
+      border-radius: 16px;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+    .copy-line { display: grid; grid-template-columns: 84px 1fr; gap: 10px; font-size: 14px; }
+    .copy-line span { color: var(--muted); font-weight: 900; }
+    ul.clean { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
+    ul.clean li { padding-left: 20px; position: relative; color: #374151; }
+    ul.clean li::before { content: ""; width: 7px; height: 7px; border-radius: 999px; background: var(--blue); position: absolute; left: 1px; top: .65em; }
+
+    .empty {
+      border: 1px dashed var(--border-strong);
+      border-radius: 18px;
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      background: var(--surface-2);
+    }
+
+    .toast {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      background: #111827;
+      color: white;
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+      z-index: 50;
+      font-weight: 850;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    .risk-low { color: var(--green); }
+    .risk-mid { color: #b45309; }
+    .risk-high { color: var(--red); }
+
+    @media (max-width: 1180px) {
+      .hero, .overview, .workspace, .detail-grid, .selected-detail { grid-template-columns: 1fr; }
+      .explorer { position: static; max-height: none; }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .app { width: min(100% - 24px, var(--max)); padding-top: 14px; }
+      .hero-main, .hero-side, .panel, .detail-card { border-radius: 20px; padding: 18px; }
+      .metrics, .top-trend-grid, .idea-grid { grid-template-columns: 1fr; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+      .score-row { grid-template-columns: 1fr; }
+      .meta-row, .copy-line { grid-template-columns: 1fr; gap: 2px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="hero">
+      <section class="hero-main">
+        <span class="eyebrow"><span class="dot"></span> SAMPLE MVP · 2026.06.17 - 2026.06.23</span>
+        <h1>프로모션 트렌드를 근거와 기획안으로 연결하는 AI Planner</h1>
+        <p class="hero-copy">SNS·검색·기사·경쟁사 신호를 한 화면에서 탐색하고, 온스타일에 맞춘 안정형/공격형 프로모션 기획안을 비교하는 단일 HTML 프로토타입입니다.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#overview">이번 주 요약 보기</a>
+          <a class="btn" href="#compare">기획안 비교하기</a>
+          <button class="btn ghost" id="resetBtn">필터 초기화</button>
+        </div>
+      </section>
+      <aside class="hero-side">
+        <p class="side-title">데이터 소스 구성</p>
+        <div class="source-list" id="sourceList"></div>
+        <div class="disclaimer">현재 화면은 샘플 데이터 기반입니다. 실제 운영 전에는 출처 검증, 플랫폼 약관, 사내 보안 기준 검토가 필요합니다.</div>
+      </aside>
+    </header>
+
+    <section class="metrics" id="metrics"></section>
+
+    <section id="overview">
+      <div class="section-head">
+        <div>
+          <h2>Weekly Trend Overview</h2>
+          <p>이번 주 프로모션 기획 회의에서 먼저 볼 신호입니다.</p>
+        </div>
+        <span class="badge violet">근거 데이터와 AI 제안을 분리 표시</span>
+      </div>
+      <div class="overview">
+        <div class="panel">
+          <div class="section-head" style="margin-top:0">
+            <div>
+              <h2 style="font-size:18px">Top Trends</h2>
+              <p>Momentum와 OnStyle Fit이 높은 순서</p>
+            </div>
+          </div>
+          <div class="top-trend-grid" id="topTrendGrid"></div>
+        </div>
+        <div class="panel">
+          <h3 style="margin:0 0 14px">Rising Keywords</h3>
+          <div class="chips" id="keywordChips"></div>
+          <h3 style="margin:24px 0 10px">Channel Mix</h3>
+          <div class="bar-list" id="channelMix"></div>
+          <h3 style="margin:24px 0 10px">Promotion Type Mix</h3>
+          <div class="bar-list" id="typeMix"></div>
+        </div>
+      </div>
+    </section>
+
+    <main class="workspace">
+      <aside class="panel explorer" aria-label="Trend Explorer">
+        <div class="section-head" style="margin-top:0">
+          <div>
+            <h2>Trend Explorer</h2>
+            <p id="resultCount">0개 트렌드</p>
+          </div>
+        </div>
+        <input class="search" id="searchInput" placeholder="키워드, 카테고리, 혜택 유형 검색" />
+        <div class="filter-group">
+          <div class="filter-title">채널</div>
+          <div class="filter-buttons" id="channelFilters"></div>
+        </div>
+        <div class="filter-group">
+          <div class="filter-title">카테고리</div>
+          <div class="filter-buttons" id="categoryFilters"></div>
+        </div>
+        <div class="filter-group">
+          <div class="filter-title">프로모션 유형</div>
+          <div class="filter-buttons" id="typeFilters"></div>
+        </div>
+        <div class="filter-group">
+          <div class="filter-title">기획 성향</div>
+          <div class="filter-buttons" id="modeFilters"></div>
+        </div>
+        <div class="trend-list" id="trendList"></div>
+      </aside>
+
+      <section class="detail-stack">
+        <div class="detail-grid">
+          <article class="detail-card" id="trendDetail"></article>
+          <article class="detail-card" id="evidencePanel"></article>
+        </div>
+        <section class="detail-card" id="compare">
+          <div class="label-row">
+            <span class="badge blue">안정형</span>
+            <span class="badge orange">공격형</span>
+            <span class="badge violet">AI 제안 · 검토 필요</span>
+          </div>
+          <div class="idea-grid" id="ideaGrid"></div>
+          <div style="margin-top:16px; overflow:auto;" id="compareTable"></div>
+        </section>
+        <section class="detail-card" id="selectedIdeaDetail"></section>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const sourceSummary = [
+      { name: '뉴스/기사', count: 42, note: '커머스·유통·브랜드 기사' },
+      { name: 'SNS 공개 신호', count: 51, note: '해시태그/UGC 샘플' },
+      { name: '검색 키워드', count: 18, note: '상승 검색어 샘플' },
+      { name: '경쟁사 프로모션', count: 17, note: '이벤트/기획전 페이지' }
+    ];
+
+    const trendData = [
+      {
+        id: 'routine-benefit',
+        name: '초개인화 루틴 혜택',
+        summary: '소비자의 생활 루틴과 구매 맥락에 맞춰 혜택을 조합하는 프로모션 관심이 증가하고 있습니다.',
+        keywords: ['루틴', '개인화', 'AI추천', '정기혜택'],
+        channels: ['SNS', '검색', '기사'],
+        categories: ['뷰티', '리빙', '멤버십/CRM'],
+        promotionTypes: ['멤버십', '큐레이션', '체험/샘플'],
+        modeBias: 'stable',
+        scores: { momentum: 86, onstyleFit: 91, risk: 32 },
+        evidence: [
+          { type: '기사', title: '개인화 커머스와 루틴형 소비 증가 관련 기사', source: 'Sample News', date: '2026-06-20', url: '#', summary: '개인 맞춤 추천과 반복 구매를 연결한 커머스 사례가 증가하고 있다는 내용.' },
+          { type: '검색', title: '루틴·정기혜택 관련 검색 관심 상승', source: 'Sample Search Trend', date: '2026-06-22', url: '#', summary: '루틴, 정기혜택, 맞춤 추천 키워드의 주간 검색 관심이 동반 상승.' },
+          { type: 'SNS', title: '나만의 루틴 공유형 게시물 증가', source: 'Sample Social', date: '2026-06-21', url: '#', summary: '사용자들이 뷰티·리빙 루틴을 묶어 공유하는 콘텐츠가 확산.' }
+        ],
+        aiInterpretation: {
+          consumerInsight: '고객은 단순 할인보다 자신의 취향과 상황에 맞는 혜택 조합을 기대합니다.',
+          opportunity: '온스타일의 카테고리 큐레이션과 멤버십 혜택을 결합하기 좋습니다.',
+          caution: '개인화처럼 보이지만 실제 추천 정확도가 낮으면 반감이 생길 수 있습니다.'
+        },
+        ideas: {
+          stable: { title: '나만의 주간 루틴딜', concept: '고객 관심 카테고리 기반으로 매주 다른 혜택 세트를 제안하는 안정형 프로모션', target: '최근 90일 내 뷰티/리빙 반복 구매 고객', category: '뷰티·리빙·멤버십', benefit: '카테고리별 쿠폰 + 샘플 증정 + 멤버십 추가 적립', message: '이번 주 나에게 맞는 루틴 혜택을 확인하세요.', channels: ['앱홈', '푸시', '기획전'], expectedEffect: '반복 방문과 카테고리 교차 구매 유도', risk: '혜택 구조가 평이해 보일 수 있음', buzz: '중간', difficulty: '낮음', copy: { banner: '이번 주 나에게 맞춘 루틴 혜택', push: '고객님 취향에 맞춘 루틴딜이 열렸어요', live: '루틴을 바꾸는 한 주의 추천템' }, checklist: ['고객 관심 카테고리 세그먼트 정의', '쿠폰/샘플 재고 확인', '앱홈 개인화 영역 노출 가능성 확인'], teams: ['CRM', 'MD', '마케팅운영'] },
+          aggressive: { title: 'AI가 짜주는 7일 쇼핑 루틴 챌린지', concept: 'AI 추천과 참여형 챌린지를 결합해 SNS 공유를 유도하는 공격형 프로모션', target: '트렌드 민감도가 높은 2030 모바일 고객', category: '뷰티·패션·라이프스타일', benefit: '참여 미션 달성 시 한정 쿠폰/굿즈/랭킹 리워드', message: 'AI가 짠 나만의 7일 쇼핑 루틴, 오늘부터 시작해보세요.', channels: ['앱', 'SNS', '라이브', '인플루언서'], expectedEffect: '참여율과 바이럴 확산 기대', risk: '개발/운영 복잡도와 추천 품질 이슈', buzz: '높음', difficulty: '높음', copy: { banner: 'AI가 골라준 나의 7일 쇼핑 루틴', push: '오늘의 루틴 미션을 완료하고 한정 혜택을 받아보세요', live: 'AI 루틴 챌린지 라이브' }, checklist: ['추천 로직/문구 검수', '참여 미션 운영정책 정의', 'SNS 공유 이미지 템플릿 제작'], teams: ['서비스기획', 'CRM', '콘텐츠', '법무검토'] }
+        }
+      },
+      {
+        id: 'limited-goods', name: '한정판 굿즈 연계 구매', summary: '가격 할인보다 소장 가치가 있는 굿즈·패키지·콜라보 혜택을 구매 명분으로 삼는 흐름이 강합니다.', keywords: ['한정수량', '굿즈', '콜라보', '소장가치'], channels: ['SNS', '경쟁사', '기사'], categories: ['패션', '뷰티', '리빙'], promotionTypes: ['한정판', '사은품', '번들'], modeBias: 'aggressive', scores: { momentum: 92, onstyleFit: 84, risk: 58 }, evidence: [
+          { type: '경쟁사', title: '브랜드 굿즈 증정형 기획전', source: 'Competitor Sample', date: '2026-06-19', url: '#', summary: '구매 금액대별 굿즈를 차등 증정하며 조기 품절 메시지를 강조.' },
+          { type: 'SNS', title: '한정 굿즈 인증 게시물 확산', source: 'Sample Social', date: '2026-06-21', url: '#', summary: '굿즈 언박싱과 인증샷이 구매 후기 콘텐츠로 재확산.' }
+        ], aiInterpretation: { consumerInsight: '고객은 할인율보다 “지금 사야 하는 이유”와 소장 가치를 강하게 반응합니다.', opportunity: '온스타일 단독 구성/브랜드 협업 패키지로 기획전 차별화가 가능합니다.', caution: '재고·배송·품질 이슈 발생 시 부정 반응이 빠르게 확산될 수 있습니다.' }, ideas: {
+          stable: { title: '브랜드 굿즈 플러스딜', concept: '인기 브랜드 구매 고객에게 실용 굿즈를 증정하는 안정형 구매 유도 기획', target: '최근 브랜드 구매/관심 고객', category: '뷰티·패션', benefit: '금액대별 굿즈 + 브랜드 쿠폰 + 무료배송', message: '좋아하는 브랜드를 사면 한정 굿즈까지.', channels: ['앱기획전', '브랜드관', '푸시'], expectedEffect: '전환율과 객단가 상승', risk: '굿즈 매력도가 낮으면 차별성이 약함', buzz: '중간', difficulty: '중간', copy: { banner: '브랜드 굿즈까지 챙기는 이번 주 단독딜', push: '관심 브랜드 한정 굿즈가 준비됐어요', live: '굿즈 플러스 브랜드데이' }, checklist: ['굿즈 원가/수량 확정', '금액대별 혜택 기준 설정', '품절 시 대체 메시지 준비'], teams: ['MD', '브랜드영업', '물류'] },
+          aggressive: { title: '온스타일 드롭: 72시간 굿즈 래플', concept: '한정 시간 구매와 래플형 굿즈 당첨을 결합한 화제성 프로모션', target: '한정판과 드롭 문화에 반응하는 2030 고객', category: '패션·뷰티·리빙', benefit: '구매자 대상 래플 응모 + 선착순 굿즈 + 라이브 추가 혜택', message: '단 72시간, 온스타일에서만 열리는 굿즈 드롭.', channels: ['앱', 'SNS', '라이브'], expectedEffect: '방문 피크와 SNS 언급량 증가', risk: '래플 운영 공정성/고객문의 증가 가능성', buzz: '매우 높음', difficulty: '높음', copy: { banner: '72시간 한정 굿즈 드롭', push: '지금 구매하면 래플 응모권이 열려요', live: '드롭 마지막 1시간 라이브' }, checklist: ['래플 약관/고지 검토', '당첨자 발표 프로세스 설계', 'CS FAQ 준비'], teams: ['마케팅', '법무검토', 'CS', '콘텐츠'] }
+        }
+      },
+      {
+        id: 'ugc-review', name: '리뷰/UGC 참여형 프로모션', summary: '구매 이후 리뷰와 인증 콘텐츠를 다시 프로모션 자산으로 활용하는 참여형 구조가 확대되고 있습니다.', keywords: ['리뷰인증', 'UGC', '체험단', '챌린지'], channels: ['SNS', '검색', '경쟁사'], categories: ['뷰티', '식품', '리빙'], promotionTypes: ['리뷰/UGC', '체험/샘플', '참여형'], modeBias: 'stable', scores: { momentum: 78, onstyleFit: 88, risk: 40 }, evidence: [
+          { type: 'SNS', title: '인증샷 기반 참여 이벤트 다수 관찰', source: 'Sample Social', date: '2026-06-18', url: '#', summary: '구매 후기, 사용 전후, 루틴 인증 콘텐츠를 활용한 이벤트 반응이 높음.' },
+          { type: '경쟁사', title: '리뷰 작성 시 포인트 추가 적립', source: 'Competitor Sample', date: '2026-06-20', url: '#', summary: '사진 리뷰와 영상 리뷰의 보상 차등화 사례 확인.' }
+        ], aiInterpretation: { consumerInsight: '고객은 다른 고객의 실제 사용 맥락을 구매 전 검증 정보로 활용합니다.', opportunity: '리뷰 보상과 기획전 노출을 연결하면 콘텐츠와 구매 전환을 동시에 확보할 수 있습니다.', caution: '과도한 보상은 리뷰 신뢰도를 낮출 수 있어 투명한 고지가 필요합니다.' }, ideas: {
+          stable: { title: '사진 리뷰 더블 적립 위크', concept: '사진/영상 리뷰 작성 고객에게 추가 적립과 다음 구매 쿠폰을 제공', target: '최근 구매 고객 및 리뷰 미작성 고객', category: '뷰티·식품·리빙', benefit: '사진 리뷰 추가 적립 + 다음 구매 쿠폰', message: '리뷰를 남기면 다음 쇼핑 혜택이 커집니다.', channels: ['마이페이지', '푸시', '구매완료 페이지'], expectedEffect: '리뷰 수 증가와 재구매 유도', risk: '참여 품질 편차', buzz: '낮음~중간', difficulty: '낮음', copy: { banner: '사진 리뷰 쓰고 혜택 더블로', push: '구매하신 상품, 사진 리뷰 쓰면 추가 적립!', live: '리뷰가 말해주는 인기템' }, checklist: ['리뷰 보상 정책 확인', '대상 고객 추출', '부정 리뷰 방지 기준 설정'], teams: ['CRM', '서비스운영', 'CS'] },
+          aggressive: { title: '온스타일 실사용 챌린지', concept: '사용 전후/루틴 인증 UGC를 모아 고객 참여형 콘텐츠 캠페인으로 확장', target: 'SNS 공유에 적극적인 구매 고객', category: '뷰티·리빙', benefit: '우수 UGC 선정 리워드 + 기획전 메인 노출 + 브랜드 키트', message: '내가 써본 진짜 후기를 온스타일 메인에 소개하세요.', channels: ['SNS', '앱', '브랜드관'], expectedEffect: 'UGC 확보와 브랜드 신뢰 강화', risk: '콘텐츠 검수와 초상권/저작권 관리 필요', buzz: '높음', difficulty: '중~높음', copy: { banner: '실사용 챌린지에 참여하고 메인에 소개되세요', push: '내 리뷰가 기획전 콘텐츠가 될 수 있어요', live: '고객 리뷰로 검증된 리얼템' }, checklist: ['UGC 활용 동의 프로세스', '선정 기준/리워드 공지', '콘텐츠 검수 리소스 확보'], teams: ['콘텐츠', '법무검토', '브랜드영업'] }
+        }
+      },
+      {
+        id: 'membership-preview', name: '멤버십 전용 선공개', summary: '멤버십 고객에게 먼저 접근권을 주는 선공개/얼리버드 구조가 충성도와 구매 명분을 강화합니다.', keywords: ['멤버십', '선공개', '얼리버드', '전용혜택'], channels: ['검색', '경쟁사', '기사'], categories: ['멤버십/CRM', '패션', '뷰티'], promotionTypes: ['멤버십', '선공개', '할인'], modeBias: 'stable', scores: { momentum: 74, onstyleFit: 93, risk: 28 }, evidence: [
+          { type: '경쟁사', title: 'VIP 선공개 타임딜 운영 사례', source: 'Competitor Sample', date: '2026-06-17', url: '#', summary: '상위 등급 고객에게 인기 상품 선공개 후 일반 공개로 전환.' },
+          { type: '기사', title: '유료/등급 멤버십 혜택 경쟁 심화', source: 'Sample News', date: '2026-06-21', url: '#', summary: '가격 혜택 외 접근권과 독점 경험을 멤버십 가치로 활용하는 흐름.' }
+        ], aiInterpretation: { consumerInsight: '고객은 단순 할인보다 “내가 먼저 받는 혜택”에 멤버십 가치를 느낍니다.', opportunity: '온스타일 멤버십 고객의 재방문과 등급 유지 동기를 만들 수 있습니다.', caution: '비회원/일반 고객이 소외감을 느끼지 않도록 공개 전환 구조가 필요합니다.' }, ideas: {
+          stable: { title: '멤버십 프리뷰 데이', concept: '멤버십 고객에게 24시간 먼저 인기 딜을 공개하는 안정형 혜택', target: '멤버십 가입/상위 등급 고객', category: '멤버십·뷰티·패션', benefit: '24시간 선공개 + 추가 적립 + 무료배송 쿠폰', message: '멤버십 고객님께 먼저 공개합니다.', channels: ['앱홈', '푸시', '멤버십관'], expectedEffect: '멤버십 체감 가치와 재방문 증가', risk: '대상 상품 매력도가 낮으면 효과 제한', buzz: '중간', difficulty: '낮음', copy: { banner: '멤버십 고객 먼저 만나는 프리뷰 딜', push: '24시간 먼저 열리는 전용 혜택을 확인하세요', live: '멤버십 프리뷰 라이브' }, checklist: ['멤버십 대상 세그먼트 확인', '선공개 상품 수급 확정', '일반 공개 전환 시점 설정'], teams: ['CRM', 'MD', '서비스기획'] },
+          aggressive: { title: '멤버십 시크릿 오픈런', concept: '정해진 시간에만 열리는 시크릿 딜과 랭킹 리워드를 결합', target: '구매 빈도 높은 멤버십 핵심 고객', category: '멤버십·패션·뷰티', benefit: '타임락 딜 + 선착순 리워드 + 구매 랭킹 추가 쿠폰', message: '멤버십에게만 열리는 시크릿 오픈런.', channels: ['앱', '푸시', '라이브'], expectedEffect: '특정 시간대 트래픽과 구매 집중', risk: '서버/재고/CS 부담 증가', buzz: '높음', difficulty: '중~높음', copy: { banner: '멤버십 시크릿 오픈런', push: '곧 시크릿 딜이 열립니다. 먼저 입장하세요', live: '오픈런 카운트다운 라이브' }, checklist: ['트래픽 피크 대응 점검', '선착순 기준 고지', '품절/대체 안내 시나리오'], teams: ['서비스기획', '개발', 'CRM', 'CS'] }
+        }
+      },
+      {
+        id: 'ai-curation', name: 'AI 추천 기반 큐레이션 딜', summary: 'AI 추천을 전면 메시지로 활용해 상품 탐색 피로를 줄이고 큐레이션 신뢰를 높이려는 시도가 늘고 있습니다.', keywords: ['AI추천', '큐레이션', '취향분석', '추천딜'], channels: ['기사', '검색', 'SNS'], categories: ['뷰티', '패션', '디지털'], promotionTypes: ['큐레이션', '할인', '콘텐츠'], modeBias: 'aggressive', scores: { momentum: 89, onstyleFit: 87, risk: 52 }, evidence: [
+          { type: '기사', title: 'AI 큐레이션 커머스 도입 사례 증가', source: 'Sample News', date: '2026-06-19', url: '#', summary: '추천 알고리즘과 생성형 AI를 결합한 쇼핑 탐색 경험이 확대.' },
+          { type: '검색', title: 'AI 추천·취향분석 키워드 관심 상승', source: 'Sample Search Trend', date: '2026-06-22', url: '#', summary: 'AI 추천 상품, 취향 분석, 맞춤 큐레이션 관련 검색 증가.' }
+        ], aiInterpretation: { consumerInsight: '상품이 많을수록 고객은 탐색을 줄여주는 큐레이션을 선호합니다.', opportunity: '온스타일의 카테고리 전문성과 AI 추천 메시지를 결합하면 탐색 부담을 줄일 수 있습니다.', caution: 'AI 추천의 기준이 불명확하면 과장 인식이 생길 수 있습니다.' }, ideas: {
+          stable: { title: 'AI 추천 베스트 30', concept: '인기/관심/구매 데이터를 묶어 카테고리별 추천 딜로 제시', target: '탐색 시간이 짧은 모바일 고객', category: '뷰티·패션·디지털', benefit: '추천 상품 쿠폰 + 카테고리별 베스트 가격', message: 'AI가 고른 이번 주 놓치기 아까운 추천딜.', channels: ['앱홈', '검색결과', '기획전'], expectedEffect: '상품 탐색 효율과 클릭률 개선', risk: '추천 기준 설명 부족', buzz: '중간', difficulty: '중간', copy: { banner: 'AI 추천 베스트 30', push: '이번 주 관심사에 맞춘 추천딜을 확인하세요', live: 'AI가 고른 베스트딜' }, checklist: ['추천 기준 문구 정의', '카테고리별 대표 상품 선정', '가격/재고 검수'], teams: ['데이터', 'MD', '서비스기획'] },
+          aggressive: { title: '취향 분석 결과별 AI 딜룸', concept: '고객이 간단한 취향 질문에 답하면 결과 유형별 딜룸을 제공', target: '개인화 경험에 호기심이 높은 고객', category: '뷰티·패션·라이프스타일', benefit: '취향 유형별 전용 쿠폰 + 추천 세트 + 공유 리워드', message: '내 취향 결과에 맞는 딜룸이 열립니다.', channels: ['앱', 'SNS', '콘텐츠'], expectedEffect: '참여 데이터 확보와 공유 확산', risk: '진단 정확도와 개인정보/표현 검토 필요', buzz: '매우 높음', difficulty: '높음', copy: { banner: '내 취향을 분석하면 전용 딜룸 오픈', push: '3문항으로 내 취향 딜룸을 열어보세요', live: '취향별 추천딜 라이브' }, checklist: ['취향 질문/결과 문구 검수', '개인정보 수집 여부 확인', '공유 이미지/랜딩 제작'], teams: ['서비스기획', '데이터', '법무검토', '콘텐츠'] }
+        }
+      },
+      {
+        id: 'live-instant', name: '라이브 커머스 즉시 혜택', summary: '라이브 시청 중 즉시 받을 수 있는 쿠폰·재고·한정 혜택이 구매 결정을 빠르게 만듭니다.', keywords: ['라이브', '즉시쿠폰', '타임딜', '한정수량'], channels: ['SNS', '경쟁사', '검색'], categories: ['뷰티', '식품', '패션'], promotionTypes: ['라이브/콘텐츠', '할인', '한정판'], modeBias: 'stable', scores: { momentum: 82, onstyleFit: 89, risk: 45 }, evidence: [
+          { type: '경쟁사', title: '라이브 중 전용 쿠폰/사은품 제공', source: 'Competitor Sample', date: '2026-06-18', url: '#', summary: '방송 시간 내 구매 고객에게 추가 쿠폰과 사은품을 제공.' },
+          { type: 'SNS', title: '라이브 타임딜 알림 공유 증가', source: 'Sample Social', date: '2026-06-20', url: '#', summary: '방송 전 알림과 방송 중 구매 인증 콘텐츠가 관찰됨.' }
+        ], aiInterpretation: { consumerInsight: '고객은 방송 중 혜택이 사라진다는 명확한 시간 제한에 빠르게 반응합니다.', opportunity: '온스타일 라이브와 기획전/푸시를 연결해 시청→구매 전환을 강화할 수 있습니다.', caution: '방송 품질과 재고 운영이 맞지 않으면 고객 불만이 커질 수 있습니다.' }, ideas: {
+          stable: { title: '라이브 온리 즉시쿠폰', concept: '방송 시간 중에만 활성화되는 전용 쿠폰과 사은품 제공', target: '라이브 알림 수신 및 최근 시청 고객', category: '뷰티·식품·패션', benefit: '방송 중 10분 쿠폰 + 구매 사은품 + 무료배송', message: '라이브 보는 지금만 열리는 즉시 혜택.', channels: ['라이브', '앱푸시', '기획전'], expectedEffect: '라이브 시청 전환과 즉시 구매 증가', risk: '방송 외 고객의 혜택 접근 제한', buzz: '중간', difficulty: '중간', copy: { banner: '라이브 중에만 열리는 즉시쿠폰', push: '곧 라이브 전용 혜택이 시작됩니다', live: '지금 보는 분들께만 드리는 쿠폰' }, checklist: ['방송 시간/쿠폰 노출 동기화', '라이브 재고 확보', '푸시 발송 타이밍 설정'], teams: ['라이브커머스', 'CRM', 'MD'] },
+          aggressive: { title: '10분 타임어택 라이브 딜', concept: '방송 중 여러 차례 10분 한정 딜을 열어 체류와 구매를 동시에 유도', target: '라이브 이벤트 반응 고객', category: '뷰티·식품·패션', benefit: '10분 타임딜 + 채팅 참여 리워드 + 마지막 찬스 쿠폰', message: '10분마다 혜택이 바뀌는 라이브 타임어택.', channels: ['라이브', 'SNS', '앱'], expectedEffect: '시청 체류시간과 구매 피크 증가', risk: '운영 복잡도와 고객 혼선 가능성', buzz: '높음', difficulty: '높음', copy: { banner: '10분마다 바뀌는 라이브 타임어택', push: '지금 입장하면 첫 타임딜을 받을 수 있어요', live: '다음 혜택까지 10분 카운트다운' }, checklist: ['타임테이블/혜택 변경 로직 정의', '진행자 스크립트 준비', '채팅 이벤트 운영 기준 마련'], teams: ['라이브커머스', '콘텐츠', 'CS', 'MD'] }
+        }
+      }
+    ];
+
+    const filterOptions = {
+      channels: ['전체', 'SNS', '검색', '기사', '경쟁사'],
+      categories: ['전체', '뷰티', '패션', '리빙', '식품', '디지털', '멤버십/CRM'],
+      types: ['전체', '할인', '사은품', '체험/샘플', '한정판', '리뷰/UGC', '라이브/콘텐츠', '멤버십', '큐레이션'],
+      modes: ['전체', '안정형 추천 강함', '공격형 추천 강함']
+    };
+
+    const state = {
+      query: '', channel: '전체', category: '전체', type: '전체', mode: '전체', selectedId: trendData[0].id, selectedIdeaMode: 'stable'
+    };
+
+    const $ = (id) => document.getElementById(id);
+    const riskClass = (score) => score < 40 ? 'risk-low' : score < 60 ? 'risk-mid' : 'risk-high';
+    const riskLabel = (score) => score < 40 ? '낮음' : score < 60 ? '중간' : '높음';
+    const unique = (arr) => [...new Set(arr)];
+
+    function showToast(message) {
+      const toast = $('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function selectedTrend() {
+      return trendData.find(t => t.id === state.selectedId) || trendData[0];
+    }
+
+    function ideaForMode(trend, mode = state.selectedIdeaMode) {
+      if (mode === 'mixed') return buildMixedIdea(trend);
+      return trend.ideas[mode];
+    }
+
+    function buildMixedIdea(trend) {
+      const stable = trend.ideas.stable;
+      const aggressive = trend.ideas.aggressive;
+      return {
+        title: `${stable.title} + ${aggressive.title.split(':')[0]} 혼합안`,
+        concept: `안정형 혜택 구조를 기본으로 두고, ${trend.keywords[0]} 트렌드를 활용한 참여/화제성 요소만 선택적으로 더합니다.`,
+        target: stable.target,
+        category: stable.category,
+        benefit: `${stable.benefit} + 선택 참여 고객 대상 ${aggressive.benefit.split('+')[0].trim()}`,
+        message: `${stable.message} ${aggressive.message}`,
+        channels: unique([...stable.channels, ...aggressive.channels]).slice(0, 5),
+        expectedEffect: '실행 안정성과 화제성 사이의 균형 확보',
+        risk: '메시지가 복잡해지지 않도록 핵심 CTA를 하나로 정리해야 함',
+        buzz: '중~높음', difficulty: '중간',
+        copy: { banner: `${trend.keywords[0]} 트렌드를 담은 이번 주 추천 혜택`, push: '안정적인 혜택에 특별 참여 리워드까지 확인하세요', live: `${trend.name} 하이브리드 딜` },
+        checklist: unique([...stable.checklist, ...aggressive.checklist]).slice(0, 5),
+        teams: unique([...stable.teams, ...aggressive.teams]).slice(0, 5)
+      };
+    }
+
+    function renderSources() {
+      $('sourceList').innerHTML = sourceSummary.map(s => `
+        <div class="source-row"><div><strong>${s.name}</strong><br><span>${s.note}</span></div><span class="badge">${s.count}건</span></div>
+      `).join('');
+    }
+
+    function renderMetrics() {
+      const total = sourceSummary.reduce((a, b) => a + b.count, 0);
+      const competitor = sourceSummary.find(s => s.name.includes('경쟁사')).count;
+      const ideas = trendData.length * 2;
+      const metrics = [
+        { label: '수집 신호', value: `${total}건`, sub: '뉴스 42 / SNS 51 / 검색 18 / 경쟁사 17' },
+        { label: '상승 트렌드', value: `${trendData.length}개`, sub: 'Momentum 평균 ' + Math.round(trendData.reduce((a,t)=>a+t.scores.momentum,0)/trendData.length) + '점' },
+        { label: '경쟁사 프로모션', value: `${competitor}건`, sub: '사은품·한정·멤버십 집중' },
+        { label: '추천 기획안', value: `${ideas}개`, sub: `안정형 ${trendData.length} / 공격형 ${trendData.length}` }
+      ];
+      $('metrics').innerHTML = metrics.map(m => `
+        <article class="metric-card">
+          <div class="metric-label">${m.label} <span class="badge">sample</span></div>
+          <div class="metric-value">${m.value}</div>
+          <div class="metric-sub">${m.sub}</div>
+        </article>
+      `).join('');
+    }
+
+    function renderOverview() {
+      const top = [...trendData].sort((a,b) => (b.scores.momentum + b.scores.onstyleFit) - (a.scores.momentum + a.scores.onstyleFit)).slice(0,4);
+      $('topTrendGrid').innerHTML = top.map(t => `
+        <button class="mini-trend" onclick="selectTrend('${t.id}', true)">
+          <strong>${t.name}</strong>
+          <p>${t.summary}</p>
+          <div class="chips" style="margin-top:10px">${t.keywords.slice(0,3).map(k => `<span class="badge">${k}</span>`).join('')}</div>
+        </button>
+      `).join('');
+      const keywords = unique(trendData.flatMap(t => t.keywords)).slice(0, 16);
+      $('keywordChips').innerHTML = keywords.map(k => `<button class="chip" onclick="applyKeyword('${k}')">${k}</button>`).join('');
+      renderMix('channelMix', sourceSummary.map(s => ({ name: s.name.replace('/기사',''), value: s.count })), false);
+      const typeCounts = {};
+      trendData.flatMap(t => t.promotionTypes).forEach(type => typeCounts[type] = (typeCounts[type] || 0) + 1);
+      renderMix('typeMix', Object.entries(typeCounts).map(([name, value]) => ({ name, value })).sort((a,b)=>b.value-a.value).slice(0,5), true);
+    }
+
+    function renderMix(id, rows, orange) {
+      const max = Math.max(...rows.map(r => r.value));
+      $(id).innerHTML = rows.map(r => `
+        <div class="bar-row"><span>${r.name}</span><div class="bar-track"><div class="bar-fill ${orange ? 'orange' : ''}" style="width:${Math.round(r.value/max*100)}%"></div></div><strong>${r.value}</strong></div>
+      `).join('');
+    }
+
+    function renderFilterButtons(containerId, options, key) {
+      $(containerId).innerHTML = options.map(opt => `<button class="filter-btn ${state[key] === opt ? 'active' : ''}" onclick="setFilter('${key}', '${opt}')">${opt}</button>`).join('');
+    }
+
+    function renderFilters() {
+      renderFilterButtons('channelFilters', filterOptions.channels, 'channel');
+      renderFilterButtons('categoryFilters', filterOptions.categories, 'category');
+      renderFilterButtons('typeFilters', filterOptions.types, 'type');
+      renderFilterButtons('modeFilters', filterOptions.modes, 'mode');
+    }
+
+    function filteredTrends() {
+      const q = state.query.trim().toLowerCase();
+      return trendData.filter(t => {
+        const haystack = [t.name, t.summary, ...t.keywords, ...t.channels, ...t.categories, ...t.promotionTypes].join(' ').toLowerCase();
+        const queryOk = !q || haystack.includes(q);
+        const channelOk = state.channel === '전체' || t.channels.includes(state.channel);
+        const categoryOk = state.category === '전체' || t.categories.includes(state.category);
+        const typeOk = state.type === '전체' || t.promotionTypes.includes(state.type);
+        const modeOk = state.mode === '전체' || (state.mode.includes('안정형') ? t.modeBias === 'stable' : t.modeBias === 'aggressive');
+        return queryOk && channelOk && categoryOk && typeOk && modeOk;
+      });
+    }
+
+    function renderTrendList() {
+      const rows = filteredTrends();
+      $('resultCount').textContent = `${rows.length}개 트렌드`;
+      if (!rows.length) {
+        $('trendList').innerHTML = '<div class="empty">조건에 맞는 트렌드가 없습니다. 필터를 초기화해보세요.</div>';
+        return;
+      }
+      if (!rows.find(t => t.id === state.selectedId)) state.selectedId = rows[0].id;
+      $('trendList').innerHTML = rows.map(t => `
+        <button class="trend-card ${state.selectedId === t.id ? 'selected' : ''}" onclick="selectTrend('${t.id}')">
+          <div class="label-row" style="margin-bottom:0">
+            ${t.channels.map(c => `<span class="badge ${c==='경쟁사'?'orange':c==='기사'?'green':'blue'}">${c}</span>`).join('')}
+            <span class="badge">근거 ${t.evidence.length}</span>
+          </div>
+          <h3>${t.name}</h3>
+          <p>${t.summary}</p>
+          <div class="chips" style="margin-bottom:10px">${t.keywords.slice(0,4).map(k => `<span class="badge">${k}</span>`).join('')}</div>
+          <div class="score-row">
+            <div class="score-pill"><span>Momentum</span><strong>${t.scores.momentum}</strong></div>
+            <div class="score-pill"><span>Fit</span><strong>${t.scores.onstyleFit}</strong></div>
+            <div class="score-pill"><span>Risk</span><strong class="${riskClass(t.scores.risk)}">${riskLabel(t.scores.risk)}</strong></div>
+          </div>
+        </button>
+      `).join('');
+    }
+
+    function renderDetail() {
+      const t = selectedTrend();
+      $('trendDetail').innerHTML = `
+        <div class="label-row">
+          <span class="badge blue">Trend Summary</span>
+          <span class="badge ${riskClass(t.scores.risk).replace('risk-', '')}">Risk ${riskLabel(t.scores.risk)}</span>
+        </div>
+        <h3>${t.name}</h3>
+        <p class="muted">${t.summary}</p>
+        <div class="chips" style="margin:14px 0">${t.keywords.map(k => `<span class="badge">${k}</span>`).join('')}</div>
+        <div class="bar-list">
+          <div class="bar-row"><span>Momentum</span><div class="bar-track"><div class="bar-fill" style="width:${t.scores.momentum}%"></div></div><strong>${t.scores.momentum}</strong></div>
+          <div class="bar-row"><span>Fit</span><div class="bar-track"><div class="bar-fill" style="width:${t.scores.onstyleFit}%"></div></div><strong>${t.scores.onstyleFit}</strong></div>
+          <div class="bar-row"><span>Risk</span><div class="bar-track"><div class="bar-fill orange" style="width:${t.scores.risk}%"></div></div><strong>${t.scores.risk}</strong></div>
+        </div>
+        <h4 style="margin-top:20px">AI 해석</h4>
+        <div class="interpretation">
+          <div><strong>소비자 관심 포인트</strong><p>${t.aiInterpretation.consumerInsight}</p></div>
+          <div><strong>프로모션 기회</strong><p>${t.aiInterpretation.opportunity}</p></div>
+          <div><strong>주의할 점</strong><p>${t.aiInterpretation.caution}</p></div>
+        </div>
+      `;
+
+      $('evidencePanel').innerHTML = `
+        <div class="label-row"><span class="badge green">근거 데이터</span><span class="badge">AI 생성 아님 · 원천 요약</span></div>
+        <h3>Evidence</h3>
+        <p class="muted">기획안 생성에 사용된 샘플 근거입니다. 실제 운영 시 원문 링크와 수집 시각을 저장합니다.</p>
+        <div class="evidence-list">
+          ${t.evidence.map(e => `
+            <div class="evidence-item">
+              <div class="evidence-top"><span class="badge ${e.type==='경쟁사'?'orange':e.type==='기사'?'green':'blue'}">${e.type}</span><span class="badge">${e.date}</span></div>
+              <strong>${e.title}</strong>
+              <p>${e.source} · ${e.summary}</p>
+              <a class="evidence-link" href="${e.url}" onclick="event.preventDefault(); showToast('MVP 샘플 링크입니다. 실제 버전에서는 원문으로 이동합니다.')">근거 링크 보기</a>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function renderIdeas() {
+      const t = selectedTrend();
+      $('ideaGrid').innerHTML = ['stable','aggressive'].map(mode => {
+        const idea = t.ideas[mode];
+        const isStable = mode === 'stable';
+        return `
+          <article class="idea-card ${mode}">
+            <span class="badge ${isStable ? 'blue' : 'orange'}">${isStable ? '안정형 기획안' : '공격형 기획안'}</span>
+            <h3>${idea.title}</h3>
+            <p>${idea.concept}</p>
+            <div class="idea-meta">
+              <div class="meta-row"><span>타깃</span><strong>${idea.target}</strong></div>
+              <div class="meta-row"><span>혜택</span><strong>${idea.benefit}</strong></div>
+              <div class="meta-row"><span>메시지</span><strong>${idea.message}</strong></div>
+              <div class="meta-row"><span>채널</span><strong>${idea.channels.join(' · ')}</strong></div>
+              <div class="meta-row"><span>리스크</span><strong>${idea.risk}</strong></div>
+            </div>
+            <div class="idea-actions"><button class="btn small ${state.selectedIdeaMode === mode ? 'active' : ''}" onclick="selectIdeaMode('${mode}')">${isStable ? '안정형으로 디벨롭' : '공격형으로 디벨롭'}</button></div>
+          </article>
+        `;
+      }).join('');
+
+      $('compareTable').innerHTML = `
+        <table class="compare-table">
+          <thead><tr><th>비교 항목</th><th>안정형</th><th>공격형</th></tr></thead>
+          <tbody>
+            <tr><td>실행 난이도</td><td>${t.ideas.stable.difficulty}</td><td>${t.ideas.aggressive.difficulty}</td></tr>
+            <tr><td>화제성</td><td>${t.ideas.stable.buzz}</td><td>${t.ideas.aggressive.buzz}</td></tr>
+            <tr><td>매출 직결성</td><td>중~높음</td><td>중간</td></tr>
+            <tr><td>운영 리스크</td><td>${t.ideas.stable.risk}</td><td>${t.ideas.aggressive.risk}</td></tr>
+            <tr><td>추천 상황</td><td>단기 실행/안정적 전환 목표</td><td>캠페인화/이슈화 목표</td></tr>
+          </tbody>
+        </table>
+        <div class="idea-actions"><button class="btn small ${state.selectedIdeaMode === 'mixed' ? 'active' : ''}" onclick="selectIdeaMode('mixed')">두 안을 섞어서 디벨롭</button></div>
+      `;
+    }
+
+    function renderSelectedIdeaDetail() {
+      const t = selectedTrend();
+      const idea = ideaForMode(t);
+      const modeLabel = state.selectedIdeaMode === 'stable' ? '안정형' : state.selectedIdeaMode === 'aggressive' ? '공격형' : '혼합형';
+      $('selectedIdeaDetail').innerHTML = `
+        <div class="label-row"><span class="badge violet">Selected Idea Detail</span><span class="badge">${modeLabel}</span></div>
+        <div class="selected-detail">
+          <div>
+            <h3>${idea.title}</h3>
+            <p class="muted">${idea.concept}</p>
+            <div class="idea-meta" style="margin-top:14px">
+              <div class="meta-row"><span>기획 목적</span><strong>${idea.expectedEffect}</strong></div>
+              <div class="meta-row"><span>타깃 고객</span><strong>${idea.target}</strong></div>
+              <div class="meta-row"><span>카테고리</span><strong>${idea.category}</strong></div>
+              <div class="meta-row"><span>혜택 구조</span><strong>${idea.benefit}</strong></div>
+              <div class="meta-row"><span>협업 부서</span><strong>${idea.teams.join(' · ')}</strong></div>
+              <div class="meta-row"><span>리스크</span><strong>${idea.risk}</strong></div>
+            </div>
+            <div class="idea-actions">
+              <button class="btn blue" onclick="copySelectedIdea()">기획안 텍스트 복사</button>
+              <button class="btn" onclick="showToast('MVP에서는 저장 동작을 토스트로만 표현합니다.')">회의 안건으로 저장</button>
+            </div>
+          </div>
+          <div>
+            <h4>메시지/카피 초안</h4>
+            <div class="copy-box">
+              <div class="copy-line"><span>배너</span><strong>${idea.copy.banner}</strong></div>
+              <div class="copy-line"><span>앱푸시</span><strong>${idea.copy.push}</strong></div>
+              <div class="copy-line"><span>라이브</span><strong>${idea.copy.live}</strong></div>
+            </div>
+            <h4 style="margin-top:18px">실행 체크리스트</h4>
+            <ul class="clean">${idea.checklist.map(item => `<li>${item}</li>`).join('')}</ul>
+            <h4 style="margin-top:18px">다음 액션</h4>
+            <ul class="clean">
+              <li>근거 링크를 실제 원천으로 교체하고 수치 정의를 확정합니다.</li>
+              <li>MD/CRM/콘텐츠 담당자와 실행 가능성을 1차 검토합니다.</li>
+              <li>선택안 기준으로 혜택 예산과 예상 성과 가설을 추가합니다.</li>
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAll() {
+      renderSources(); renderMetrics(); renderOverview(); renderFilters(); renderTrendList(); renderDetail(); renderIdeas(); renderSelectedIdeaDetail();
+    }
+
+    function setFilter(key, value) { state[key] = value; renderFilters(); renderTrendList(); renderDetail(); renderIdeas(); renderSelectedIdeaDetail(); }
+    function selectTrend(id, jump=false) { state.selectedId = id; state.selectedIdeaMode = trendData.find(t => t.id === id)?.modeBias || 'stable'; renderTrendList(); renderDetail(); renderIdeas(); renderSelectedIdeaDetail(); if (jump) document.querySelector('.workspace').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    function selectIdeaMode(mode) { state.selectedIdeaMode = mode; renderIdeas(); renderSelectedIdeaDetail(); $('selectedIdeaDetail').scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+    function applyKeyword(keyword) { state.query = keyword; $('searchInput').value = keyword; renderTrendList(); renderDetail(); renderIdeas(); renderSelectedIdeaDetail(); }
+
+    function copySelectedIdea() {
+      const t = selectedTrend(); const idea = ideaForMode(t); const modeLabel = state.selectedIdeaMode === 'stable' ? '안정형' : state.selectedIdeaMode === 'aggressive' ? '공격형' : '혼합형';
+      const text = `[${modeLabel}] ${idea.title}\n\n트렌드: ${t.name}\n컨셉: ${idea.concept}\n타깃: ${idea.target}\n혜택: ${idea.benefit}\n메시지: ${idea.message}\n채널: ${idea.channels.join(', ')}\n기대 효과: ${idea.expectedEffect}\n리스크: ${idea.risk}\n체크리스트:\n- ${idea.checklist.join('\n- ')}`;
+      navigator.clipboard?.writeText(text).then(() => showToast('기획안 텍스트를 복사했습니다.')).catch(() => showToast('클립보드 복사 권한이 없어 실패했습니다.'));
+    }
+
+    $('searchInput').addEventListener('input', (event) => { state.query = event.target.value; renderTrendList(); renderDetail(); renderIdeas(); renderSelectedIdeaDetail(); });
+    $('resetBtn').addEventListener('click', () => { state.query = ''; state.channel = '전체'; state.category = '전체'; state.type = '전체'; state.mode = '전체'; state.selectedId = trendData[0].id; state.selectedIdeaMode = 'stable'; $('searchInput').value = ''; renderAll(); showToast('필터를 초기화했습니다.'); });
+
+    renderAll();
+    window.__prototypeState = state;
+    window.__trendData = trendData;
+  </script>
+</body>
+</html>
