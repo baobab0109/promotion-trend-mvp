@@ -6,6 +6,11 @@ SNS·검색·기사·경쟁사 프로모션 신호를 샘플 데이터로 구성
 
 기존 단일 HTML 프로토타입을 Vite + React + TypeScript 구조로 전환했습니다. UI/업무 흐름은 유지하면서 데이터, 도메인 로직, 컴포넌트를 분리했습니다.
 
+## 접속 URL
+
+- 배포 URL: https://baobab0109.github.io/promotion-trend-mvp/
+- GitHub repo: https://github.com/baobab0109/promotion-trend-mvp
+
 ## 실행 방법
 
 처음 한 번 의존성을 설치합니다.
