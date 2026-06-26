@@ -206,33 +206,25 @@
     },
     {
       "kind": "competitor",
-      "name": "현대Hmall 홈/혜택",
-      "url": "https://www.hmall.com/md/dpl/index",
+      "name": "현대Hmall 이벤트",
+      "url": "https://www.hmall.com/p/dpa/searchSectItem.do?sectId=1772327",
       "type": "경쟁사",
-      "description": "현대홈쇼핑/Hmall 공개 홈·혜택·프로모션 노출 영역",
+      "description": "현대홈쇼핑/Hmall 공개 이벤트·프로모션 페이지",
       "lookbackDays": 1,
       "maxItems": 1,
       "keywords": [
         "홈쇼핑",
         "Hmall",
-        "현대홈쇼핑",
         "혜택",
         "쿠폰",
-        "프로모션",
-        "특가"
+        "프로모션"
       ],
       "observationMode": "page-snapshot",
       "dedupeKeys": [
         "canonicalUrl",
         "sourceTitleFingerprint"
       ],
-      "dedupeWindowDays": 7,
-      "invalidContentPatterns": [
-        "매장 준비중입니다",
-        "페이지를 찾을 수 없습니다",
-        "404"
-      ],
-      "titleOverride": "현대Hmall 홈/혜택 프로모션"
+      "dedupeWindowDays": 7
     },
     {
       "kind": "competitor",
@@ -371,7 +363,7 @@
       "name": "11번가 쇼킹딜",
       "url": "https://www.11st.co.kr/browsing/DealAction.tmall?method=getShockingDealMain",
       "type": "경쟁사",
-      "description": "11번가 공개 쇼킹딜/타임딜/특가 페이지. EUC-KR 페이지이므로 charset 기반 디코딩을 적용합니다.",
+      "description": "11번가 공개 쇼킹딜/특가 페이지",
       "lookbackDays": 1,
       "maxItems": 1,
       "keywords": [
@@ -386,16 +378,7 @@
         "canonicalUrl",
         "sourceTitleFingerprint"
       ],
-      "dedupeWindowDays": 7,
-      "expectedTitlePatterns": [
-        "쇼킹딜",
-        "11번가"
-      ],
-      "invalidContentPatterns": [
-        "서비스 이용에 불편을 드려 죄송합니다",
-        "페이지를 찾을 수 없습니다"
-      ],
-      "titleOverride": "쇼킹딜 | 11번가"
+      "dedupeWindowDays": 7
     },
     {
       "kind": "competitor",

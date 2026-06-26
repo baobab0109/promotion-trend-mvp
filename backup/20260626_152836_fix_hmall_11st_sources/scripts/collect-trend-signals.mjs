@@ -217,32 +217,6 @@ async function loadStaticContext() {
   };
 }
 
-function charsetFromContentType(contentType = '') {
-  const match = String(contentType).match(/charset\s*=\s*([^;\s]+)/i);
-  return match ? match[1].trim().replace(/^['"]|['"]$/g, '').toLowerCase() : '';
-}
-
-function charsetFromHtmlHead(buffer) {
-  const head = new TextDecoder('latin1').decode(buffer.slice(0, 4096));
-  const match = head.match(/charset\s*=\s*['"]?([^\s"'>;]+)/i);
-  return match ? match[1].trim().toLowerCase() : '';
-}
-
-function normalizeCharset(charset = '') {
-  const normalized = charset.toLowerCase().replace(/_/g, '-');
-  if (['ks-c-5601', 'ks-c-5601-1987', 'x-windows-949', 'cp949'].includes(normalized)) return 'euc-kr';
-  return normalized || 'utf-8';
-}
-
-function decodeResponseBody(buffer, contentType = '') {
-  const charset = normalizeCharset(charsetFromContentType(contentType) || charsetFromHtmlHead(buffer));
-  try {
-    return new TextDecoder(charset).decode(buffer);
-  } catch {
-    return new TextDecoder('utf-8').decode(buffer);
-  }
-}
-
 async function fetchText(url) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 15000);
@@ -254,8 +228,7 @@ async function fetchText(url) {
         Accept: 'text/html,application/rss+xml,application/xml,text/xml;q=0.9,*/*;q=0.8'
       }
     });
-    const buffer = new Uint8Array(await response.arrayBuffer());
-    const text = decodeResponseBody(buffer, response.headers.get('content-type') || '');
+    const text = await response.text();
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return text;
   } finally {
@@ -297,33 +270,15 @@ function htmlMatch(html, pattern) {
   return match ? stripHtml(match[1]) : '';
 }
 
-function assertValidHtmlSignal(html, source, title, description) {
-  const haystack = [title, description, stripHtml(html).slice(0, 3000)].filter(Boolean).join(' ');
-  const invalidPattern = (source.invalidContentPatterns || []).find((pattern) => haystack.includes(pattern));
-  if (invalidPattern) throw new Error(`invalid landing content matched "${invalidPattern}"`);
-
-  if (source.expectedTitlePatterns?.length) {
-    const matched = source.expectedTitlePatterns.some((pattern) => haystack.includes(pattern));
-    if (!matched) throw new Error(`landing title/content did not match expected patterns: ${source.expectedTitlePatterns.join(', ')}`);
-  }
-
-  if (/�{2,}/.test(title) || /\ufffd{2,}/u.test(title)) {
-    throw new Error('decoded landing title contains replacement characters');
-  }
-}
-
 function parseHtmlSignal(html, source) {
-  const parsedTitle = htmlMatch(html, /<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']+)["'][^>]*>/i)
+  const title = htmlMatch(html, /<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']+)["'][^>]*>/i)
     || htmlMatch(html, /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:title["'][^>]*>/i)
     || htmlMatch(html, /<title[^>]*>([\s\S]*?)<\/title>/i)
     || source.name;
-  const title = source.titleOverride || parsedTitle;
   const description = htmlMatch(html, /<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["'][^>]*>/i)
     || htmlMatch(html, /<meta[^>]+property=["']og:description["'][^>]+content=["']([^"']+)["'][^>]*>/i)
     || source.description
     || `${source.name} 공개 프로모션 페이지`;
-
-  assertValidHtmlSignal(html, source, title, description);
 
   const canonicalUrl = canonicalizeUrl(source.url);
   return {

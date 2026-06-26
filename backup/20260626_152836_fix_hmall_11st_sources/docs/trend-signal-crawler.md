@@ -47,7 +47,7 @@ npm run collect:signals -- --dry-run --limit=5 --json
   - 대형 이커머스: 쿠팡, 네이버쇼핑, G마켓, 11번가, 컬리, SSG, 카카오쇼핑/톡딜
   - 기존 버티컬/인접 경쟁사: 무신사, 올리브영, W컨셉
 
-경쟁사 페이지는 로그인, 우회, 세션 조작 없이 공개 HTML의 `title`/meta title/meta description만 읽습니다. 각 RSS feed의 `maxItems`는 2개, 경쟁사 page는 1개 신호로 제한해 초반 `--limit`이 특정 feed에 과도하게 쏠리지 않도록 했습니다. 개별 fetch 실패나 랜딩 품질 실패는 `sourceResults[].error`로 남기고 전체 실행은 계속합니다. EUC-KR/CP949 랜딩은 `Content-Type`/HTML charset 기준으로 디코딩하고, `invalidContentPatterns`/`expectedTitlePatterns`로 준비중·오류·깨진 랜딩을 차단합니다. 사이트 title이 너무 일반적인 page-snapshot은 `titleOverride`로 리뷰용 근거명을 고정합니다.
+경쟁사 페이지는 로그인, 우회, 세션 조작 없이 공개 HTML의 `title`/meta title/meta description만 읽습니다. 각 RSS feed의 `maxItems`는 2개, 경쟁사 page는 1개 신호로 제한해 초반 `--limit`이 특정 feed에 과도하게 쏠리지 않도록 했습니다. 개별 fetch 실패는 `sourceResults[].error`로 남기고 전체 실행은 계속합니다.
 
 ## 기간 조건
 
