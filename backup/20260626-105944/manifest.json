@@ -1,0 +1,22 @@
+{
+  "createdAt": "2026-06-26T10:59:44+09:00",
+  "reason": "Before implementing trend signal crawler MVP",
+  "backedUp": [
+    "package.json",
+    "README.md",
+    "docs/notion-data-schema.md"
+  ],
+  "plannedCreated": [
+    "scripts/lib/trend-signal-utils.mjs",
+    "tests/trend-signal-utils.test.mjs",
+    "scripts/collect-trend-signals.mjs",
+    "config/trend-signal-sources.json",
+    ".github/workflows/collect-trend-signals.yml",
+    "docs/trend-signal-crawler.md"
+  ],
+  "plannedModified": [
+    "package.json",
+    "README.md",
+    "docs/notion-data-schema.md"
+  ]
+}

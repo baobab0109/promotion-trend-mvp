@@ -13,11 +13,8 @@
 브라우저에서 Notion API를 직접 호출하지 않습니다. Notion API token은 GitHub Secrets에만 저장하고, GitHub Actions가 Notion DB를 읽어 정적 JSON을 생성합니다.
 
 ```text
-외부 공개 신호(뉴스 RSS + 경쟁사 공개 프로모션 페이지)
-  → 07:00 KST collect-trend-signals workflow
-  → Notion Evidence Items DB에 Status=Draft로 upsert
-  → 사람이 검토 후 Published 선택
-  → 08:00 KST sync-notion-data workflow
+Notion DB
+  → GitHub Actions sync script
   → public/data/trends/latest.json
   → GitHub Pages React app fetch
 ```
@@ -84,22 +81,6 @@
 | Summary | Text | 근거 요약 |
 | Status | Select | `Draft`, `Published`, `Archived` |
 
-### Crawler/upsert 정책
-
-1차 크롤러 MVP(`scripts/collect-trend-signals.mjs`)는 Evidence Items DB만 생성/수정합니다. Trend Topics/Weeks/Promotion Ideas는 자동 생성하지 않습니다.
-
-- 수집 대상: `config/trend-signal-sources.json`의 Google News RSS keyword feeds와 로그인 없이 접근 가능한 경쟁사 공개 프로모션 페이지입니다.
-- 기본 상태: 신규/갱신 Evidence Item은 `Status = Draft`가 기본값입니다. 웹 반영은 운영자가 Notion에서 검토 후 `Published`로 변경한 항목만 대상입니다.
-- Trend relation: 최신 `Published` Week에 속한 `Published` Trend Topics를 조회하고, 제목/요약/키워드/hints 기반 점수로 가장 적절한 Trend 후보에 연결합니다.
-- 중복 기준: URL canonicalization 결과를 기준으로 upsert합니다. `utm_*`, `fbclid`, `gclid` 등 tracking query와 hash는 제거합니다.
-- 기존 page 처리:
-  - 같은 URL이 없으면 `create`.
-  - 같은 URL의 기존 Evidence Item이 `Draft`이면 최신 title/source/date/summary/trend relation으로 `update`.
-  - 같은 URL의 기존 Evidence Item이 `Published`이면 `Draft`로 다운그레이드하지 않도록 `skip`합니다.
-  - 같은 URL의 기존 Evidence Item이 `Archived`이면 재노출 방지를 위해 `skip`합니다.
-- Dry-run: `--dry-run` 옵션은 Notion write 없이 create/update/skip 계획과 샘플을 출력합니다.
-- 실패 정책: 개별 RSS/경쟁사 source fetch 실패는 source error로 기록하고 전체 수집은 계속합니다.
-
 ## `[PTAI] Promotion Ideas`
 
 안정형/공격형 기획안입니다. 혼합형은 웹에서 stable/aggressive를 조합해 생성합니다.
@@ -148,10 +129,8 @@
 
 ## 운영 조건
 
-1. `scripts/collect-trend-signals.mjs`가 매일 07:00 KST 외부 공개 신호를 Evidence Items DB에 `Draft`로 upsert합니다.
-2. 운영자가 Notion에서 근거를 검토하고 웹에 반영할 항목만 `Published`로 변경합니다.
-3. `scripts/sync-notion-trends.mjs`가 Notion DB query 결과를 `public/data/trends/latest.json`으로 변환합니다.
-4. 앱은 시작 시 `latest.json`을 fetch해 Published 주차 데이터를 표시합니다.
-5. GitHub Actions `sync-notion-data.yml`은 매일 08:00 KST에 1회 자동 실행됩니다.
-6. GitHub Actions `workflow_dispatch` 수동 실행 버튼을 제공하며, 필요 시 `week_id` input으로 특정 주차를 동기화할 수 있습니다.
-7. 수동 실행/스케줄 실행 후 변경된 정적 JSON은 commit되고 Pages deploy workflow로 자동 배포됩니다.
+1. `scripts/sync-notion-trends.mjs`가 Notion DB query 결과를 `public/data/trends/latest.json`으로 변환합니다.
+2. 앱은 시작 시 `latest.json`을 fetch해 Published 주차 데이터를 표시합니다.
+3. GitHub Actions `sync-notion-data.yml`은 매일 08:00 KST에 1회 자동 실행됩니다.
+4. GitHub Actions `workflow_dispatch` 수동 실행 버튼을 제공하며, 필요 시 `week_id` input으로 특정 주차를 동기화할 수 있습니다.
+5. 수동 실행/스케줄 실행 후 변경된 정적 JSON은 commit되고 Pages deploy workflow로 자동 배포됩니다.

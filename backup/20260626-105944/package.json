@@ -5,8 +5,7 @@
     "preview": "vite preview --host 127.0.0.1",
     "test": "vitest",
     "test:run": "vitest --run",
-    "sync:notion": "node scripts/sync-notion-trends.mjs",
-    "collect:signals": "node scripts/collect-trend-signals.mjs"
+    "sync:notion": "node scripts/sync-notion-trends.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

@@ -111,48 +111,26 @@ backup/README_YYYYMMDD_HHMMSS_before_react_migration.md
 
 - Notion schema 문서: `docs/notion-data-schema.md`
 - Notion data source config: `config/notion-data-sources.json`
-- 외부 신호 수집 config: `config/trend-signal-sources.json`
 - 수동 동기화: `npm run sync:notion`
-- 외부 신호 dry-run: `npm run collect:signals -- --dry-run --limit=5 --json`
 - 생성 JSON: `public/data/weeks.json`, `public/data/trends/latest.json`
-- 자동/수동 GitHub Actions:
-  - `.github/workflows/collect-trend-signals.yml`: 매일 07:00 KST 외부 신호를 Notion Evidence Items에 `Draft`로 수집
-  - `.github/workflows/sync-notion-data.yml`: 매일 08:00 KST Published Notion 데이터를 정적 JSON으로 동기화
+- 자동/수동 GitHub Actions: `.github/workflows/sync-notion-data.yml` (`workflow_dispatch` 수동 실행 버튼 제공)
 
 운영 흐름:
 
 ```text
-07:00 KST Collect Trend Signals workflow
+Notion에서 Status=Published로 정리
   ↓
-뉴스 RSS + 경쟁사 공개 프로모션 페이지를 Evidence Items DB에 Status=Draft로 upsert
-  ↓
-사람이 Notion에서 근거를 검토하고 웹 반영할 항목만 Status=Published 선택
-  ↓
-08:00 KST Sync Notion Trend Data workflow 또는 수동 실행
+Sync Notion Trend Data workflow 수동 실행 버튼 또는 매일 08:00 KST 자동 실행
   ↓
 public/data/trends/latest.json 갱신 commit
   ↓
 GitHub Pages deploy workflow 자동 배포
 ```
 
-### 외부 신호 수집 MVP
-
-`collect:signals`는 최신 Published Week와 해당 Week의 Published Trend Topics를 읽고, 수집한 기사/경쟁사 공개 페이지를 가장 적절한 Trend에 relation으로 연결합니다.
-
-```bash
-npm run collect:signals -- --dry-run --limit=5 --json
-```
-
-- 기본 상태값은 `Draft`입니다. 운영자는 Notion에서 검토 후 필요한 Evidence Item만 `Published`로 변경합니다.
-- URL canonicalization으로 `utm_*`, `fbclid`, `gclid` 등 tracking query를 제거한 URL을 기준으로 upsert합니다.
-- 기존 Evidence Item이 `Published`이면 dry-run/write 계획에서 `Draft`로 다운그레이드하지 않고 skip합니다.
-- 경쟁사 수집은 로그인/우회 없이 공개 페이지의 `title`/meta 정보만 읽는 MVP입니다. 개별 source fetch 실패는 source error로 기록하고 전체 실행은 계속합니다.
-- 자세한 내용: `docs/trend-signal-crawler.md`
-
 ## 다음 단계 후보
 
 1. Notion CMS 데이터로 화면 QA 및 팀원 피드백 수집
-2. 실제 모니터링 대상 경쟁사·채널·카테고리 확정 및 `config/trend-signal-sources.json` 보정
-3. `collect-trend-signals.yml` 07:00 KST 수집 → 사람이 Published 선택 → `sync-notion-data.yml` 08:00 KST 반영 운영 점검
+2. 실제 모니터링 대상 경쟁사·채널·카테고리 확정
+3. 필요 시 `sync-notion-data.yml` 매일 08:00 KST 자동 실행 및 수동 실행 버튼 운영 권한 점검
 4. 로그인 전 개인 찜 UX 검증
 5. Phase 2에서 Supabase/Auth 기반 계정별 저장 구조 설계

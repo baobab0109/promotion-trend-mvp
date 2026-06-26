@@ -1,0 +1,70 @@
+{
+  "rssFeeds": [
+    {
+      "name": "Google News · 커머스 멤버십",
+      "query": "(커머스 OR 쇼핑) (멤버십 OR VIP OR 혜택) 프로모션 when:30d",
+      "type": "기사",
+      "lookbackDays": 45,
+      "maxItems": 3,
+      "keywords": ["멤버십", "VIP", "혜택", "프리뷰"]
+    },
+    {
+      "name": "Google News · 라이브커머스 숏폼",
+      "query": "(라이브커머스 OR 쇼핑라이브 OR 숏폼커머스) 프로모션 when:30d",
+      "type": "기사",
+      "lookbackDays": 45,
+      "maxItems": 3,
+      "keywords": ["라이브", "숏폼", "콘텐츠", "쇼핑라이브"]
+    },
+    {
+      "name": "Google News · 뷰티 패션 기획전",
+      "query": "(뷰티 OR 패션) (기획전 OR 할인 OR 프로모션) when:30d",
+      "type": "기사",
+      "lookbackDays": 45,
+      "maxItems": 3,
+      "keywords": ["뷰티", "패션", "기획전", "할인"]
+    },
+    {
+      "name": "Google News · 리테일 큐레이션",
+      "query": "(리테일 OR 커머스) (큐레이션 OR 개인화 OR AI추천) 프로모션 when:30d",
+      "type": "기사",
+      "lookbackDays": 45,
+      "maxItems": 3,
+      "keywords": ["큐레이션", "개인화", "추천", "리테일"]
+    }
+  ],
+  "competitorPages": [
+    {
+      "kind": "competitor",
+      "name": "무신사 이벤트",
+      "url": "https://www.musinsa.com/events",
+      "type": "경쟁사",
+      "description": "무신사 공개 이벤트/프로모션 페이지",
+      "keywords": ["패션", "한정", "기획전", "할인"]
+    },
+    {
+      "kind": "competitor",
+      "name": "올리브영 이벤트",
+      "url": "https://www.oliveyoung.co.kr/store/main/getEventList.do",
+      "type": "경쟁사",
+      "description": "올리브영 공개 이벤트/프로모션 페이지",
+      "keywords": ["뷰티", "쿠폰", "멤버십", "기획전"]
+    },
+    {
+      "kind": "competitor",
+      "name": "W컨셉 이벤트",
+      "url": "https://www.wconcept.co.kr/Event",
+      "type": "경쟁사",
+      "description": "W컨셉 공개 이벤트/프로모션 페이지",
+      "keywords": ["패션", "브랜드", "기획전", "프리미엄"]
+    },
+    {
+      "kind": "competitor",
+      "name": "SSG 이벤트",
+      "url": "https://www.ssg.com/event/eventMain.ssg",
+      "type": "경쟁사",
+      "description": "SSG 공개 이벤트/프로모션 페이지",
+      "keywords": ["리빙", "장보기", "혜택", "쿠폰"]
+    }
+  ]
+}
