@@ -2,27 +2,27 @@
   "weekId": "2026-W25",
   "label": "2026.06.17 - 2026.06.23",
   "status": "Published",
-  "generatedAt": "2026-06-25T22:52:00.000Z",
+  "generatedAt": "2026-06-26T09:23:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
       "name": "뉴스/기사",
-      "count": 3,
+      "count": 8,
       "note": "커머스·유통·브랜드 기사"
     },
     {
       "name": "SNS 공개 신호",
-      "count": 4,
+      "count": 0,
       "note": "해시태그/UGC 샘플"
     },
     {
       "name": "검색 키워드",
-      "count": 2,
+      "count": 0,
       "note": "상승 검색어 샘플"
     },
     {
       "name": "경쟁사 프로모션",
-      "count": 4,
+      "count": 8,
       "note": "이벤트/기획전 페이지"
     }
   ],
@@ -30,7 +30,7 @@
     {
       "id": "routine-benefit",
       "name": "초개인화 루틴 혜택",
-      "summary": "소비자의 생활 루틴과 구매 맥락에 맞춰 혜택을 조합하는 프로모션 관심이 증가하고 있습니다.",
+      "summary": "혜택을 쿠폰함에만 두지 않고 고객 루틴·앱 방문·미션·혜택 허브로 묶는 흐름. Hmall/SSG/무신사/카카오 베네핏 신호에서 쿠폰·적립·참여형 혜택의 상시화가 관찰됨.",
       "keywords": [
         "루틴",
         "개인화",
@@ -54,40 +54,48 @@
       ],
       "modeBias": "stable",
       "scores": {
-        "momentum": 86,
-        "onstyleFit": 91,
-        "risk": 32
+        "momentum": 82,
+        "onstyleFit": 84,
+        "risk": 35
       },
       "evidence": [
         {
-          "type": "SNS",
-          "title": "나만의 루틴 공유형 게시물 증가",
-          "source": "Sample Social",
-          "date": "2026-06-21",
-          "url": "",
-          "summary": "사용자들이 뷰티·리빙 루틴을 묶어 공유하는 콘텐츠가 확산."
+          "type": "경쟁사",
+          "title": "현대Hmall 홈/혜택 프로모션",
+          "source": "현대Hmall 홈/혜택",
+          "date": "2026-06-26",
+          "url": "https://www.hmall.com/md/dpl/index",
+          "summary": "Hmall 홈 혜택 영역에서 쿠폰·적립·카드혜택·특가성 프로모션을 상시 노출하는 혜택 허브 사례. 온스타일 혜택 탭/개인화 루틴 혜택 기획의 비교 근거."
         },
         {
-          "type": "검색",
-          "title": "루틴·정기혜택 관련 검색 관심 상승",
-          "source": "Sample Search Trend",
-          "date": "2026-06-22",
-          "url": "",
-          "summary": "루틴, 정기혜택, 맞춤 추천 키워드의 주간 검색 관심이 동반 상승."
+          "type": "경쟁사",
+          "title": "이벤트/쿠폰, 믿고 사는 즐거움 SSG.COM",
+          "source": "SSG 이벤트",
+          "date": "2026-06-26",
+          "url": "https://www.ssg.com/event/eventMain.ssg",
+          "summary": "SSG 이벤트/쿠폰 페이지는 쿠폰·적립금·이벤트 참여를 한곳에 모은 혜택 허브 사례. 앱 내 혜택 탐색 구조와 CRM 미션 설계 참고."
+        },
+        {
+          "type": "경쟁사",
+          "title": "매일매일 돈 되는 무신사 혜택 쌓기!",
+          "source": "무신사 이벤트",
+          "date": "2026-06-26",
+          "url": "https://www.musinsa.com/events",
+          "summary": "무신사의 출석·퀴즈·래플 등 매일 혜택 쌓기 구조. 구매 전 방문/체류/미션 행동을 보상하는 CRM 루틴 설계 참고."
         },
         {
           "type": "기사",
-          "title": "개인화 커머스와 루틴형 소비 증가 관련 기사",
-          "source": "Sample News",
-          "date": "2026-06-20",
-          "url": "",
-          "summary": "개인 맞춤 추천과 반복 구매를 연결한 커머스 사례가 증가하고 있다는 내용."
+          "title": "케이앤웍스 광고사업파트, 카카오 '커머스 카탈로그 연동 베네핏 프로모션' 확산 지원 - 전자신문",
+          "source": "전자신문",
+          "date": "2026-06-25",
+          "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9oaHNyN1RsRGhXQ2VPalVsMmhSZFl1TXA2bW9taDVDSmVTYjUtS2lJZWphaEh6dERuYjZUdUU0ejB2cmVPVWhQdlRUQ2pNUQ?oc=5",
+          "summary": "카카오 커머스 카탈로그 연동 베네핏 프로모션 확산 사례. 상품 카탈로그/광고와 혜택을 연결해 개인화·성과형 프로모션의 근거로 활용 가능."
         }
       ],
       "aiInterpretation": {
-        "consumerInsight": "고객은 단순 할인보다 자신의 취향과 상황에 맞는 혜택 조합을 기대합니다.",
-        "opportunity": "온스타일의 카테고리 큐레이션과 멤버십 혜택을 결합하기 좋습니다.",
-        "caution": "개인화처럼 보이지만 실제 추천 정확도가 낮으면 반감이 생길 수 있습니다."
+        "consumerInsight": "고객은 단발 할인보다 “내가 받을 수 있는 혜택이 어디에 있고, 오늘 무엇을 하면 더 받는지”를 쉽게 확인하려는 니즈가 커지고 있다.",
+        "opportunity": "온스타일은 혜택 탭을 개인화 루틴 허브로 재정의하고, 출석·찜·라이브 알림·리뷰 같은 행동을 소액 리워드와 연결해 재방문을 만든다.",
+        "caution": "미션형 리워드는 체리피커 유입과 비용 누수가 생길 수 있어 월 한도, 구매 연계 조건, 등급별 차등 지급이 필요하다."
       },
       "ideas": {
         "aggressive": {
@@ -161,7 +169,7 @@
     {
       "id": "limited-goods",
       "name": "한정판 굿즈 연계 구매",
-      "summary": "가격 할인보다 소장 가치가 있는 굿즈·패키지·콜라보 혜택을 구매 명분으로 삼는 흐름이 강합니다.",
+      "summary": "무신사 ROKA 협업, W컨셉 신규 브랜드 하이라이트처럼 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 흐름.",
       "keywords": [
         "한정수량",
         "굿즈",
@@ -185,32 +193,32 @@
       ],
       "modeBias": "aggressive",
       "scores": {
-        "momentum": 92,
-        "onstyleFit": 84,
-        "risk": 58
+        "momentum": 70,
+        "onstyleFit": 78,
+        "risk": 50
       },
       "evidence": [
         {
-          "type": "SNS",
-          "title": "한정 굿즈 인증 게시물 확산",
-          "source": "Sample Social",
-          "date": "2026-06-21",
-          "url": "",
-          "summary": "굿즈 언박싱과 인증샷이 구매 후기 콘텐츠로 재확산."
+          "type": "기사",
+          "title": "무신사, 육군본부와 협업해 로카(ROKA) 에디션 선봬 - 이투데이",
+          "source": "이투데이",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFBTdXNsYVdUUFpyMmJJbWdLbzMzTWZzTXFSTDR6T1BmWElKc1pYRml3UU1LOVNZdm5QYTlUcFNhRXN1Q2FwSzFfVUhiX0lPZm5VVkFoMg?oc=5",
+          "summary": "무신사와 육군본부 ROKA 협업 사례. 가격 할인보다 콜라보·소속감·한정 에디션을 구매 명분으로 만드는 브랜드 스토리형 프로모션 근거."
         },
         {
-          "type": "경쟁사",
-          "title": "브랜드 굿즈 증정형 기획전",
-          "source": "Competitor Sample",
-          "date": "2026-06-19",
-          "url": "",
-          "summary": "구매 금액대별 굿즈를 차등 증정하며 조기 품절 메시지를 강조."
+          "type": "기사",
+          "title": "에이내추럴, W컨셉 신규 브랜드 하이라이트 참여… 온라인 고객 접점 확대 본격화 - knpp.co.kr",
+          "source": "knpp.co.kr",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE1nek4yVzc4WUJ2SXNDN0dPOHVsQzVuejVraFFUc01KRElrdFluUlp3VEgtSXVQcWdiNDNRd2I3eHlPNFk?oc=5",
+          "summary": "W컨셉 신규 브랜드 하이라이트 사례. 버티컬 커머스가 신진/특정 브랜드를 큐레이션해 접점을 확대하는 방식으로, 온스타일 브랜드 위크/단독 구성 기획 참고."
         }
       ],
       "aiInterpretation": {
-        "consumerInsight": "고객은 할인율보다 “지금 사야 하는 이유”와 소장 가치를 강하게 반응합니다.",
-        "opportunity": "온스타일 단독 구성/브랜드 협업 패키지로 기획전 차별화가 가능합니다.",
-        "caution": "재고·배송·품질 이슈 발생 시 부정 반응이 빠르게 확산될 수 있습니다."
+        "consumerInsight": "가격 혜택만으로는 차별화가 어려워지면서 고객은 “여기서만 살 수 있는 이유”와 브랜드 맥락을 함께 기대한다.",
+        "opportunity": "온스타일 단독 드롭, 브랜드 위크, 라이브 전용 사은품을 묶어 패션/뷰티 카테고리에서 가격 외 구매 명분을 강화한다.",
+        "caution": "한정 수량·사은품 지급 조건·품절 고지가 불명확하면 CS/불만 리스크가 커진다."
       },
       "ideas": {
         "aggressive": {
@@ -283,7 +291,7 @@
     {
       "id": "ugc-review",
       "name": "리뷰/UGC 참여형 프로모션",
-      "summary": "구매 이후 리뷰와 인증 콘텐츠를 다시 프로모션 자산으로 활용하는 참여형 구조가 확대되고 있습니다.",
+      "summary": "이번 크롤링에서는 신규 UGC 신호가 강하지 않아 기존 보조 트렌드로 유지. 라이브딜/한정 굿즈 구매 후 인증·리뷰 참여로 연결하는 후속 장치로 적합.",
       "keywords": [
         "리뷰인증",
         "UGC",
@@ -307,32 +315,15 @@
       ],
       "modeBias": "stable",
       "scores": {
-        "momentum": 78,
-        "onstyleFit": 88,
+        "momentum": 45,
+        "onstyleFit": 65,
         "risk": 40
       },
-      "evidence": [
-        {
-          "type": "경쟁사",
-          "title": "리뷰 작성 시 포인트 추가 적립",
-          "source": "Competitor Sample",
-          "date": "2026-06-20",
-          "url": "",
-          "summary": "사진 리뷰와 영상 리뷰의 보상 차등화 사례 확인."
-        },
-        {
-          "type": "SNS",
-          "title": "인증샷 기반 참여 이벤트 다수 관찰",
-          "source": "Sample Social",
-          "date": "2026-06-18",
-          "url": "",
-          "summary": "구매 후기, 사용 전후, 루틴 인증 콘텐츠를 활용한 이벤트 반응이 높음."
-        }
-      ],
+      "evidence": [],
       "aiInterpretation": {
-        "consumerInsight": "고객은 다른 고객의 실제 사용 맥락을 구매 전 검증 정보로 활용합니다.",
-        "opportunity": "리뷰 보상과 기획전 노출을 연결하면 콘텐츠와 구매 전환을 동시에 확보할 수 있습니다.",
-        "caution": "과도한 보상은 리뷰 신뢰도를 낮출 수 있어 투명한 고지가 필요합니다."
+        "consumerInsight": "구매 전에는 타인의 사용 경험과 인증 콘텐츠를 참고하고, 구매 후에는 보상 조건이 명확할 때 리뷰/UGC 참여가 늘어난다.",
+        "opportunity": "라이브 구매자 또는 한정 굿즈 수령 고객에게 리뷰·인증샷 미션을 부여해 다음 구매 쿠폰/적립으로 연결한다.",
+        "caution": "허위 리뷰, 과도한 보상성 콘텐츠, 개인정보 노출을 막기 위한 가이드와 검수 기준이 필요하다."
       },
       "ideas": {
         "aggressive": {
@@ -404,7 +395,7 @@
     {
       "id": "membership-preview",
       "name": "멤버십 전용 선공개",
-      "summary": "멤버십 고객에게 먼저 접근권을 주는 선공개/얼리버드 구조가 충성도와 구매 명분을 강화합니다.",
+      "summary": "쿠팡 로켓와우, 홈앤쇼핑 클럽, 현대이지웰 복지몰처럼 멤버십/클럽/폐쇄형 채널에서 배송·반품·추가혜택·접근권을 묶어 효용을 제시하는 흐름.",
       "keywords": [
         "멤버십",
         "선공개",
@@ -428,32 +419,40 @@
       ],
       "modeBias": "stable",
       "scores": {
-        "momentum": 74,
-        "onstyleFit": 93,
-        "risk": 28
+        "momentum": 76,
+        "onstyleFit": 82,
+        "risk": 45
       },
       "evidence": [
         {
-          "type": "기사",
-          "title": "유료/등급 멤버십 혜택 경쟁 심화",
-          "source": "Sample News",
-          "date": "2026-06-21",
-          "url": "",
-          "summary": "가격 혜택 외 접근권과 독점 경험을 멤버십 가치로 활용하는 흐름."
+          "type": "경쟁사",
+          "title": "로켓배송으로 빠르게, 로켓와우 멤버십으로 할인과 무료 반품까지 | 쿠팡",
+          "source": "쿠팡 기획전",
+          "date": "2026-06-26",
+          "url": "https://www.coupang.com/",
+          "summary": "쿠팡 로켓와우는 할인·무료배송·무료반품을 묶은 멤버십 효용 사례. 온스타일은 물류 효용 대신 선공개·단독 구성·방송 혜택으로 차별화 필요."
         },
         {
           "type": "경쟁사",
-          "title": "VIP 선공개 타임딜 운영 사례",
-          "source": "Competitor Sample",
-          "date": "2026-06-17",
-          "url": "",
-          "summary": "상위 등급 고객에게 인기 상품 선공개 후 일반 공개로 전환."
+          "title": "홈앤쇼핑",
+          "source": "홈앤쇼핑 이벤트",
+          "date": "2026-06-26",
+          "url": "https://www.hnsmall.com/",
+          "summary": "홈앤쇼핑 앱/클럽 혜택 사례. 앱 방문·TV쇼핑·클럽 추가혜택을 결합한 홈쇼핑형 멤버십/CRM 운영 참고."
+        },
+        {
+          "type": "기사",
+          "title": "현대이지웰 복지몰 최대 할인전…‘이지 세일 페스타’로 쇼핑 혜택 강화 - 스마트경제",
+          "source": "스마트경제",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBvZmRWb0lEdm81bWcxeURzNXBISkg3d1pPOTNqdnV2UThHSVpWZHdTWkZOd1hDcVBqN3BYNHFWLXRCckRxb0VzWGdURlhqemZKTDlfU3dRMXJQQ0EyRTJraFk3QV9hUFFPX1p3UU1idDg?oc=5",
+          "summary": "현대이지웰 복지몰 할인전 사례. 특정 회원/복지몰 이용자에게 접근 가능한 폐쇄형 혜택과 단기 세일을 결합한 멤버십형 근거."
         }
       ],
       "aiInterpretation": {
-        "consumerInsight": "고객은 단순 할인보다 “내가 먼저 받는 혜택”에 멤버십 가치를 느낍니다.",
-        "opportunity": "온스타일 멤버십 고객의 재방문과 등급 유지 동기를 만들 수 있습니다.",
-        "caution": "비회원/일반 고객이 소외감을 느끼지 않도록 공개 전환 구조가 필요합니다."
+        "consumerInsight": "회원은 단순 쿠폰팩보다 “먼저 보고, 더 받고, 놓치지 않는” 접근권과 편의 혜택을 멤버십 가치로 인식한다.",
+        "opportunity": "온스타일은 VIP/멤버십 고객에게 방송 전 선공개, 단독 구성, 라이브 전용 사은품, 추가 적립을 묶은 선공개 프로그램을 테스트한다.",
+        "caution": "회원 전용 혜택을 과도하게 닫으면 비회원 소외감이 생길 수 있으므로 선공개 후 전체 공개 구조가 안전하다."
       },
       "ideas": {
         "aggressive": {
@@ -526,7 +525,7 @@
     {
       "id": "ai-curation",
       "name": "AI 추천 기반 큐레이션 딜",
-      "summary": "AI 추천을 전면 메시지로 활용해 상품 탐색 피로를 줄이고 큐레이션 신뢰를 높이려는 시도가 늘고 있습니다.",
+      "summary": "알리익스프레스 빅데이터 어워즈처럼 데이터·랭킹·베스트 상품을 큐레이션 메시지로 전환해 할인전의 탐색 피로를 줄이는 흐름.",
       "keywords": [
         "AI추천",
         "큐레이션",
@@ -550,32 +549,24 @@
       ],
       "modeBias": "aggressive",
       "scores": {
-        "momentum": 89,
-        "onstyleFit": 87,
-        "risk": 52
+        "momentum": 62,
+        "onstyleFit": 76,
+        "risk": 42
       },
       "evidence": [
         {
-          "type": "검색",
-          "title": "AI 추천·취향분석 키워드 관심 상승",
-          "source": "Sample Search Trend",
-          "date": "2026-06-22",
-          "url": "",
-          "summary": "AI 추천 상품, 취향 분석, 맞춤 큐레이션 관련 검색 증가."
-        },
-        {
           "type": "기사",
-          "title": "AI 큐레이션 커머스 도입 사례 증가",
-          "source": "Sample News",
-          "date": "2026-06-19",
-          "url": "",
-          "summary": "추천 알고리즘과 생성형 AI를 결합한 쇼핑 탐색 경험이 확대."
+          "title": "알리익스프레스, 빅데이터 기반 ‘알급날 2026 상반기 어워즈’ 개최…최대 60% 할인 - 데일리포스트",
+          "source": "데일리포스트",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFB5UlhZeWk1YnVtdXc0YjUyWjVDaG5EWTRORnd5bXNrN0QzbGxZYTk5THJFUF9vNWpPOHRCUndkM09Ma1RPa1ZfSXo3a3Y4eEtxXzVhaXI5UVU2QlAxMU5xZksydHdBWVZEYU1WN1JDUdIBc0FVX3lxTFBiSlNralBKUTRKQlluanZFMW04bWd2ZGstSlhHRzUtanR3aHY2bFZzWjBSUnpRSEpiYUVUbGdEMUVtd0JJVS11bkNSM2VqQVpQYy01Uy1xU3gta1p6aDVHTE5BdlFNVWpYd1BtOTR0dVZRWXc?oc=5",
+          "summary": "알리익스프레스 빅데이터 기반 상반기 어워즈 사례. 베스트/랭킹/데이터 기반 큐레이션을 할인전 메시지로 전환한 근거."
         }
       ],
       "aiInterpretation": {
-        "consumerInsight": "상품이 많을수록 고객은 탐색을 줄여주는 큐레이션을 선호합니다.",
-        "opportunity": "온스타일의 카테고리 전문성과 AI 추천 메시지를 결합하면 탐색 부담을 줄일 수 있습니다.",
-        "caution": "AI 추천의 기준이 불명확하면 과장 인식이 생길 수 있습니다."
+        "consumerInsight": "고객은 많은 상품을 직접 비교하기보다 검증된 랭킹/취향 기반 추천을 통해 빠르게 선택하려는 경향이 있다.",
+        "opportunity": "온스타일은 카테고리별 베스트, 재구매 주기, 최근 관심 상품을 결합해 “데이터로 고른 오늘의 딜” 형태의 큐레이션을 제공한다.",
+        "caution": "AI 표현을 과장하기보다 추천 기준을 설명 가능한 언어로 제시해야 신뢰 리스크를 줄일 수 있다."
       },
       "ideas": {
         "aggressive": {
@@ -648,7 +639,7 @@
     {
       "id": "live-instant",
       "name": "라이브 커머스 즉시 혜택",
-      "summary": "라이브 시청 중 즉시 받을 수 있는 쿠폰·재고·한정 혜택이 구매 결정을 빠르게 만듭니다.",
+      "summary": "쇼킹딜·톡딜·쇼핑라이브·반값창고처럼 시간 제한, 방송/현장감, 단독 딜을 결합해 즉시 구매를 압박하는 프로모션이 가장 강하게 포착됨.",
       "keywords": [
         "라이브",
         "즉시쿠폰",
@@ -672,32 +663,64 @@
       ],
       "modeBias": "stable",
       "scores": {
-        "momentum": 82,
-        "onstyleFit": 89,
-        "risk": 45
+        "momentum": 88,
+        "onstyleFit": 88,
+        "risk": 55
       },
       "evidence": [
         {
-          "type": "SNS",
-          "title": "라이브 타임딜 알림 공유 증가",
-          "source": "Sample Social",
-          "date": "2026-06-20",
-          "url": "",
-          "summary": "방송 전 알림과 방송 중 구매 인증 콘텐츠가 관찰됨."
+          "type": "기사",
+          "title": "한국레노버, 네이버 쇼핑라이브서 인기 AI PC 최대 22.6% 혜택 제공한다 - elec4",
+          "source": "elec4",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9IVk1ETzRCRWxFbjNXenBVd0VxZTl4c016aXhfY0llUlJGSVVjTkJPUHJObmk4d1JzMjZUY2FtVWIydk9CWXMtdmV4NVRSN2JpWlh5MlVILS1ER3dRSUd0bWJEUks1cnZLaVlITkd3?oc=5",
+          "summary": "네이버 쇼핑라이브에서 인기 AI PC를 최대 22.6% 혜택으로 판매한 사례. 라이브 편성+시간 제한 혜택으로 즉시 구매를 유도하는 대표 근거."
+        },
+        {
+          "type": "기사",
+          "title": "NS홈쇼핑 '반값창고', 도매가 혜택·현장 중계로 소비자 사로잡았다 - 컨슈머타임스",
+          "source": "컨슈머타임스",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1wa3B3dFpGcmVodk5CVFhPYXNwdWROMk1hZmE1X1JGUUNnMDFSa0JzWFpKNmplQTBIcWNjSktiOHpvb2g4YUozc19nOEVadUtBRTQtbC1nQlREWFJNZEhDeF9HSERTVG5ITWc?oc=5",
+          "summary": "NS홈쇼핑 반값창고는 도매가 혜택과 현장 중계를 결합한 사례. 방송/현장감/가격 메리트를 묶어 즉시 구매를 유도하는 홈쇼핑형 신호."
         },
         {
           "type": "경쟁사",
-          "title": "라이브 중 전용 쿠폰/사은품 제공",
-          "source": "Competitor Sample",
-          "date": "2026-06-18",
-          "url": "",
-          "summary": "방송 시간 내 구매 고객에게 추가 쿠폰과 사은품을 제공."
+          "title": "톡딜",
+          "source": "카카오쇼핑 톡딜",
+          "date": "2026-06-26",
+          "url": "https://store.kakao.com/home/hotdeal",
+          "summary": "카카오쇼핑 톡딜은 공동구매/핫딜형 즉시 혜택 사례. 온스타일 라이브딜·친구공유·한정수량 메시지 설계 참고."
+        },
+        {
+          "type": "경쟁사",
+          "title": "쇼킹딜 | 11번가",
+          "source": "11번가 쇼킹딜",
+          "date": "2026-06-26",
+          "url": "https://www.11st.co.kr/browsing/DealAction.tmall?method=getShockingDealMain",
+          "summary": "11번가 쇼킹딜은 타임딜·특가 중심의 상시 딜 허브. 오늘/지금/한정 메시지와 카테고리별 딜 탐색 구조의 비교 근거."
+        },
+        {
+          "type": "경쟁사",
+          "title": "NS홈쇼핑- 건강한 아이디어",
+          "source": "NS홈쇼핑 이벤트",
+          "date": "2026-06-26",
+          "url": "https://www.nsmall.com/customer/event/list",
+          "summary": "NS홈쇼핑 공개 이벤트 페이지. 방송상품·앱 이벤트·즉시 혜택형 프로모션을 한곳에서 노출하는 홈쇼핑 경쟁사 page-snapshot."
+        },
+        {
+          "type": "기사",
+          "title": "글라스락, ‘카카오쎈딜’ 단독 기획전…대규모 프로모션 돌입 - 아시아투데이",
+          "source": "아시아투데이",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFB4SmpqT2VzdktVMjV4dDNBTHJXbHU0ME9oaEZBMW41RHprM29CcnRuaEZ5a2F2UUFPbEZxQTRQX1ZZMFFDNXdTMnhJc3IzWWZ2NGxydjllMlhoV0sxanBfNjVJZ3h2T1hTNVJMd3pR?oc=5",
+          "summary": "카카오쎈딜 단독 기획전 사례. 플랫폼 단독 딜과 대규모 프로모션을 결합해 단기 구매 전환을 만드는 근거."
         }
       ],
       "aiInterpretation": {
-        "consumerInsight": "고객은 방송 중 혜택이 사라진다는 명확한 시간 제한에 빠르게 반응합니다.",
-        "opportunity": "온스타일 라이브와 기획전/푸시를 연결해 시청→구매 전환을 강화할 수 있습니다.",
-        "caution": "방송 품질과 재고 운영이 맞지 않으면 고객 불만이 커질 수 있습니다."
+        "consumerInsight": "고객은 “지금 사면 더 받는다”는 명확한 이유가 있을 때 라이브/딜 페이지에서 빠르게 전환한다.",
+        "opportunity": "온스타일은 방송 전 알림 신청, 방송 중 전용 쿠폰/사은품, 방송 후 미구매자 리마인드 쿠폰으로 라이브 전후 CRM 퍼널을 설계한다.",
+        "caution": "상시 타임딜화는 할인 피로와 마진 훼손을 만들 수 있어 단독 구성·콘텐츠·세그먼트별 혜택을 함께 설계해야 한다."
       },
       "ideas": {
         "aggressive": {
