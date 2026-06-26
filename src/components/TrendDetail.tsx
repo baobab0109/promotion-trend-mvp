@@ -27,7 +27,7 @@ export default function TrendDetail({ trend }: { trend: TrendTopic }) {
       <article className="detail-card">
         <div className="label-row"><span className="badge green">근거 데이터</span><span className="badge">AI 생성 아님 · 원천 요약</span></div>
         <h3>Evidence</h3>
-        <p className="muted">기획안 생성에 사용된 샘플 근거입니다. 실제 운영 시 원문 링크와 수집 시각을 저장합니다.</p>
+        <p className="muted">기획안 생성에 사용된 Published 근거입니다. 실제 운영 시 원문 링크와 수집 시각을 함께 확인합니다.</p>
         <div className="evidence-list">
           {trend.evidence.map((evidence) => (
             <div className="evidence-item" key={`${evidence.type}-${evidence.title}`}>

@@ -2,7 +2,7 @@
   "weekId": "2026-W25",
   "label": "2026.06.17 - 2026.06.23",
   "status": "Published",
-  "generatedAt": "2026-06-26T10:04:00.000Z",
+  "generatedAt": "2026-06-26T13:00:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
@@ -13,12 +13,12 @@
     {
       "name": "SNS 공개 신호",
       "count": 0,
-      "note": "해시태그/UGC 샘플"
+      "note": "해시태그/UGC 공개 신호"
     },
     {
       "name": "검색 키워드",
       "count": 0,
-      "note": "상승 검색어 샘플"
+      "note": "상승 검색어/키워드"
     },
     {
       "name": "경쟁사 프로모션",
@@ -50,7 +50,7 @@
       "promotionTypes": [
         "멤버십",
         "큐레이션",
-        "체험/샘플"
+        "체험/시딩"
       ],
       "modeBias": "stable",
       "scores": {

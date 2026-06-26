@@ -3,8 +3,8 @@ import type { EvidenceItem, FilterOptions, SourceSummary, TrendDataset, TrendTop
 
 const SOURCE_SUMMARY_META: Record<EvidenceItem['type'], { name: string; note: string }> = {
   기사: { name: '뉴스/기사', note: '커머스·유통·브랜드 기사' },
-  SNS: { name: 'SNS 공개 신호', note: '해시태그/UGC 샘플' },
-  검색: { name: '검색 키워드', note: '상승 검색어 샘플' },
+  SNS: { name: 'SNS 공개 신호', note: '해시태그/UGC 공개 신호' },
+  검색: { name: '검색 키워드', note: '상승 검색어/키워드' },
   경쟁사: { name: '경쟁사 프로모션', note: '이벤트/기획전 페이지' }
 };
 

@@ -11,7 +11,7 @@
   ↓
 collect:signals가 Evidence Items DB에 Status=Draft로 upsert
   ↓
-curate:trends가 대표 근거 Published, 샘플/노이즈/중복 Archived, Trend Topic + Promotion Ideas 갱신
+curate:trends가 대표 근거 Published, 테스트/노이즈/중복 Archived, Trend Topic + Promotion Ideas 갱신
   ↓
 sync:notion이 Published 데이터만 정적 JSON으로 반영
   ↓
