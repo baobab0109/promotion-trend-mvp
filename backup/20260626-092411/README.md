@@ -113,14 +113,14 @@ backup/README_YYYYMMDD_HHMMSS_before_react_migration.md
 - Notion data source config: `config/notion-data-sources.json`
 - 수동 동기화: `npm run sync:notion`
 - 생성 JSON: `public/data/weeks.json`, `public/data/trends/latest.json`
-- 자동/수동 GitHub Actions: `.github/workflows/sync-notion-data.yml` (`workflow_dispatch` 수동 실행 버튼 제공)
+- 자동/수동 GitHub Actions: `.github/workflows/sync-notion-data.yml`
 
 운영 흐름:
 
 ```text
 Notion에서 Status=Published로 정리
   ↓
-Sync Notion Trend Data workflow 수동 실행 버튼 또는 매일 08:00 KST 자동 실행
+Sync Notion Trend Data workflow 실행 또는 평일 08:00 KST 자동 실행
   ↓
 public/data/trends/latest.json 갱신 commit
   ↓
@@ -131,6 +131,6 @@ GitHub Pages deploy workflow 자동 배포
 
 1. Notion CMS 데이터로 화면 QA 및 팀원 피드백 수집
 2. 실제 모니터링 대상 경쟁사·채널·카테고리 확정
-3. 필요 시 `sync-notion-data.yml` 매일 08:00 KST 자동 실행 및 수동 실행 버튼 운영 권한 점검
+3. 필요 시 `sync-notion-data.yml` 스케줄/수동 운영 권한 조정
 4. 로그인 전 개인 찜 UX 검증
 5. Phase 2에서 Supabase/Auth 기반 계정별 저장 구조 설계

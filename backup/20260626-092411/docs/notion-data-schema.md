@@ -127,10 +127,10 @@ Notion DB
 - `NOTION_EVIDENCE_DATABASE_ID`
 - `NOTION_IDEAS_DATABASE_ID`
 
-## 운영 조건
+## 다음 구현 단계
 
-1. `scripts/sync-notion-trends.mjs`가 Notion DB query 결과를 `public/data/trends/latest.json`으로 변환합니다.
-2. 앱은 시작 시 `latest.json`을 fetch해 Published 주차 데이터를 표시합니다.
-3. GitHub Actions `sync-notion-data.yml`은 매일 08:00 KST에 1회 자동 실행됩니다.
-4. GitHub Actions `workflow_dispatch` 수동 실행 버튼을 제공하며, 필요 시 `week_id` input으로 특정 주차를 동기화할 수 있습니다.
-5. 수동 실행/스케줄 실행 후 변경된 정적 JSON은 commit되고 Pages deploy workflow로 자동 배포됩니다.
+1. `scripts/sync-notion-trends.mjs` 작성
+2. Notion DB query → `public/data/trends/latest.json` 변환
+3. 앱 시작 시 `latest.json` fetch
+4. GitHub Actions `sync-notion-data.yml` 추가
+5. 수동 실행/스케줄 실행 후 Pages 자동 배포

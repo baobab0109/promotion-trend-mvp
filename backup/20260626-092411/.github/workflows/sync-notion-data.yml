@@ -8,8 +8,8 @@ on:
         required: false
         type: string
   schedule:
-    # 08:00 KST every day (23:00 UTC on the previous day)
-    - cron: '0 23 * * *'
+    # 08:00 KST every weekday
+    - cron: '0 23 * * 0-4'
 
 permissions:
   contents: write
