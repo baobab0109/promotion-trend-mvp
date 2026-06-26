@@ -14,11 +14,12 @@
 
 ```text
 외부 공개 신호(뉴스 RSS + 홈쇼핑형/대형 이커머스 경쟁사 공개 프로모션 페이지)
-  → 07:00 KST daily-trend-update workflow
+  → 07:00 KST collect-trend-signals workflow
   → Notion Evidence Items DB에 Status=Draft로 upsert
-  → 자동 큐레이션: 대표 근거 Published, 샘플/노이즈/중복 Archived, Trend Topic + Promotion Ideas 갱신
-  → sync-notion-data logic으로 public/data/trends/latest.json 생성
-  → 같은 workflow 안에서 테스트/빌드/commit/Pages 배포
+  → 사람이 검토 후 Published 선택
+  → 08:00 KST sync-notion-data workflow
+  → public/data/trends/latest.json
+  → GitHub Pages React app fetch
 ```
 
 ## Databases
@@ -85,10 +86,10 @@
 
 ### Crawler/upsert 정책
 
-1차 크롤러 MVP(`scripts/collect-trend-signals.mjs`)는 Evidence Items DB를 생성/수정합니다. 일일 자동 운영에서는 후속 `scripts/curate-trend-content.mjs`가 최신 Published Week의 Evidence를 기준으로 대표 근거를 `Published`, 샘플/노이즈/중복 근거를 `Archived`로 정리하고 Trend Topics/Promotion Ideas 문구를 갱신합니다.
+1차 크롤러 MVP(`scripts/collect-trend-signals.mjs`)는 Evidence Items DB만 생성/수정합니다. Trend Topics/Weeks/Promotion Ideas는 자동 생성하지 않습니다.
 
 - 수집 대상: `config/trend-signal-sources.json`의 Google News RSS keyword feeds와 로그인 없이 접근 가능한 경쟁사 공개 프로모션 페이지입니다. 현재 source scope는 홈쇼핑형 커머스 경쟁사(GS SHOP, 현대Hmall/현대홈쇼핑, 롯데홈쇼핑, NS홈쇼핑, 홈앤쇼핑), 국내 대형 이커머스(쿠팡, 네이버쇼핑, G마켓, 11번가, 컬리, SSG, 무신사, 카카오쇼핑/톡딜), 기존 버티컬/인접 경쟁사(올리브영, W컨셉) 및 중소·D2C·브랜드몰·전문몰을 발견하기 위한 행사/혜택/쿠폰/프로모션/기획전 keyword discovery feed를 포함합니다.
-- 기본 상태: 신규/갱신 Evidence Item은 `Status = Draft`가 기본값입니다. 일일 자동 운영에서는 `curate-trend-content.mjs`가 대표 근거를 `Published`로 전환하고, 샘플/노이즈/중복 근거를 `Archived`로 정리합니다. 수동 운영 시에는 운영자가 Notion에서 직접 상태값을 조정할 수 있습니다.
+- 기본 상태: 신규/갱신 Evidence Item은 `Status = Draft`가 기본값입니다. 웹 반영은 운영자가 Notion에서 검토 후 `Published`로 변경한 항목만 대상입니다.
 - Trend relation: 최신 `Published` Week에 속한 `Published` Trend Topics를 조회하고, 제목/요약/키워드/hints 기반 점수로 가장 적절한 Trend 후보에 연결합니다.
 - 중복 기준: URL canonicalization 결과를 기준으로 upsert합니다. `utm_*`, `fbclid`, `gclid` 등 tracking query와 hash는 제거합니다.
 - 기존 page 처리:
@@ -148,10 +149,10 @@
 
 ## 운영 조건
 
-1. `scripts/collect-trend-signals.mjs`가 일일 자동 workflow 안에서 외부 공개 신호를 Evidence Items DB에 `Draft`로 upsert합니다.
-2. `scripts/curate-trend-content.mjs`가 대표 Evidence를 `Published`, 샘플/노이즈/중복 Evidence를 `Archived`로 정리하고 Trend Topics/Promotion Ideas를 최신 신호 기준으로 갱신합니다.
+1. `scripts/collect-trend-signals.mjs`가 매일 07:00 KST 외부 공개 신호를 Evidence Items DB에 `Draft`로 upsert합니다.
+2. 운영자가 Notion에서 근거를 검토하고 웹에 반영할 항목만 `Published`로 변경합니다.
 3. `scripts/sync-notion-trends.mjs`가 Notion DB query 결과를 `public/data/trends/latest.json`으로 변환합니다.
 4. 앱은 시작 시 `latest.json`을 fetch해 Published 주차 데이터를 표시합니다.
-5. GitHub Actions `daily-trend-update.yml`은 매일 07:00 KST에 수집→큐레이션→sync→테스트/빌드→commit→Pages 배포를 한 번에 실행합니다.
-6. `collect-trend-signals.yml`과 `sync-notion-data.yml`은 수동 진단/복구용 workflow로 유지합니다.
-7. 수동 sync workflow도 정적 JSON commit 후 같은 workflow 안에서 Pages를 배포합니다.
+5. GitHub Actions `sync-notion-data.yml`은 매일 08:00 KST에 1회 자동 실행됩니다.
+6. GitHub Actions `workflow_dispatch` 수동 실행 버튼을 제공하며, 필요 시 `week_id` input으로 특정 주차를 동기화할 수 있습니다.
+7. 수동 실행/스케줄 실행 후 변경된 정적 JSON은 commit되고 Pages deploy workflow로 자동 배포됩니다.

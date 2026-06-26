@@ -1,21 +1,21 @@
 # Trend Signal Crawler MVP
 
-`collect:signals`는 외부 공개 신호를 수집해 Notion `[PTAI] Evidence Items` DB에 Draft 근거로 쌓는 1차 MVP입니다. 일일 자동 운영에서는 `daily-trend-update.yml`이 수집 후 `curate:trends`로 대표 근거를 Published 처리하고 Trend Topic/Promotion Ideas를 갱신한 뒤 정적 JSON과 GitHub Pages까지 반영합니다.
+`collect:signals`는 외부 공개 신호를 수집해 Notion `[PTAI] Evidence Items` DB에 Draft 근거로 쌓는 1차 MVP입니다. 기존 Notion → 정적 JSON → GitHub Pages 반영 파이프라인은 그대로 두고, 사람이 검토할 후보 근거만 자동 생성합니다.
 
 ## 운영 흐름
 
 ```text
-07:00 KST daily-trend-update.yml
+07:00 KST collect-trend-signals.yml
   ↓
-외부 공개 신호 수집
+뉴스 RSS + 홈쇼핑형/대형 이커머스 경쟁사 공개 프로모션 페이지 수집
   ↓
-collect:signals가 Evidence Items DB에 Status=Draft로 upsert
+최신 Published Week의 Published Trend Topics 중 가장 적합한 Trend에 relation 연결
   ↓
-curate:trends가 대표 근거 Published, 샘플/노이즈/중복 Archived, Trend Topic + Promotion Ideas 갱신
+Evidence Items DB에 Status=Draft로 URL + 제목/source fingerprint 기준 upsert
   ↓
-sync:notion이 Published 데이터만 정적 JSON으로 반영
+운영자가 Notion에서 검토 후 Published 선택
   ↓
-같은 workflow에서 테스트/빌드/commit/Pages 배포
+08:00 KST sync-notion-data.yml이 Published 데이터만 정적 JSON으로 반영
 ```
 
 ## 로컬 실행
@@ -83,10 +83,9 @@ URL canonicalization 결과를 중복 key로 사용합니다.
 
 ## GitHub Actions
 
-`.github/workflows/daily-trend-update.yml`
+`.github/workflows/collect-trend-signals.yml`
 
 - schedule: `0 22 * * *` (매일 07:00 KST)
-- 단계: `collect:signals` → `curate:trends` → `sync:notion` → test/build → `public/data` commit → GitHub Pages deploy
-- `workflow_dispatch` inputs: `collect_limit`, `dry_run`
-- Notion secrets: `NOTION_API_KEY`, `NOTION_HUB_PAGE_ID`, `NOTION_WEEKS_DATABASE_ID`, `NOTION_TRENDS_DATABASE_ID`, `NOTION_EVIDENCE_DATABASE_ID`, `NOTION_IDEAS_DATABASE_ID`
-- `collect-trend-signals.yml`, `sync-notion-data.yml`은 수동 진단/복구용 workflow로 유지합니다.
+- `workflow_dispatch` inputs: `dry_run`, `status`, `limit`
+- Notion secrets: `NOTION_API_KEY`, `NOTION_WEEKS_DATABASE_ID`, `NOTION_TRENDS_DATABASE_ID`, `NOTION_EVIDENCE_DATABASE_ID`
+- Pages deploy는 수행하지 않습니다. 정적 JSON 반영은 기존 `sync-notion-data.yml`이 담당합니다.

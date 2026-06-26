@@ -1,12 +1,21 @@
-name: Sync Notion Trend Data
+name: Daily Trend Update
 
 on:
   workflow_dispatch:
     inputs:
-      week_id:
-        description: Optional Week ID to sync, e.g. 2026-W25. Empty means latest Published week.
+      collect_limit:
+        description: Maximum collected items to plan/write before curation
         required: false
-        type: string
+        type: number
+        default: 24
+      dry_run:
+        description: Run collect/curate without writing to Notion or committing data
+        required: false
+        type: boolean
+        default: false
+  schedule:
+    # 07:00 KST every day (22:00 UTC on the previous day)
+    - cron: '0 22 * * *'
 
 permissions:
   contents: write
@@ -20,16 +29,15 @@ env:
   NOTION_TRENDS_DATABASE_ID: ${{ secrets.NOTION_TRENDS_DATABASE_ID }}
   NOTION_EVIDENCE_DATABASE_ID: ${{ secrets.NOTION_EVIDENCE_DATABASE_ID }}
   NOTION_IDEAS_DATABASE_ID: ${{ secrets.NOTION_IDEAS_DATABASE_ID }}
-  WEEK_ID: ${{ github.event.inputs.week_id || '' }}
 
 concurrency:
-  group: sync-notion-data-main
+  group: daily-trend-update-main
   cancel-in-progress: false
 
 jobs:
-  sync:
+  update:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -48,13 +56,30 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Sync Notion data to static JSON
+      - name: Collect external trend signals
+        env:
+          INPUT_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          INPUT_LIMIT: ${{ github.event.inputs.collect_limit || '24' }}
         run: |
-          if [ -n "$WEEK_ID" ]; then
-            npm run sync:notion -- --week="$WEEK_ID"
-          else
-            npm run sync:notion
+          ARGS="--status=Draft --limit=${INPUT_LIMIT} --json"
+          if [ "${INPUT_DRY_RUN}" = "true" ]; then
+            ARGS="--dry-run ${ARGS}"
           fi
+          npm run collect:signals -- ${ARGS}
+
+      - name: Curate trend content and promotion ideas
+        env:
+          INPUT_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: |
+          ARGS="--json"
+          if [ "${INPUT_DRY_RUN}" = "true" ]; then
+            ARGS="--dry-run ${ARGS}"
+          fi
+          npm run curate:trends -- ${ARGS}
+
+      - name: Sync Notion data to static JSON
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: npm run sync:notion
 
       - name: Validate generated data and build
         run: |
@@ -62,6 +87,7 @@ jobs:
           npm run build
 
       - name: Commit generated JSON if changed
+        if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -69,15 +95,17 @@ jobs:
           if git diff --cached --quiet; then
             echo "No Notion data changes to commit."
           else
-            git commit -m "chore: sync Notion trend data"
+            git commit -m "chore: daily trend data sync"
             git push
           fi
 
       - name: Upload GitHub Pages artifact
+        if: ${{ github.event.inputs.dry_run != 'true' }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
       - name: Deploy to GitHub Pages
+        if: ${{ github.event.inputs.dry_run != 'true' }}
         id: deployment
         uses: actions/deploy-pages@v4

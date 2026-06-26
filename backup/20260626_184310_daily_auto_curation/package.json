@@ -6,8 +6,7 @@
     "test": "vitest",
     "test:run": "vitest --run",
     "sync:notion": "node scripts/sync-notion-trends.mjs",
-    "collect:signals": "node scripts/collect-trend-signals.mjs",
-    "curate:trends": "node scripts/curate-trend-content.mjs"
+    "collect:signals": "node scripts/collect-trend-signals.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

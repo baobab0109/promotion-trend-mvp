@@ -7,11 +7,12 @@ on:
         description: Optional Week ID to sync, e.g. 2026-W25. Empty means latest Published week.
         required: false
         type: string
+  schedule:
+    # 08:00 KST every day (23:00 UTC on the previous day)
+    - cron: '0 23 * * *'
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 env:
   NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
@@ -22,17 +23,9 @@ env:
   NOTION_IDEAS_DATABASE_ID: ${{ secrets.NOTION_IDEAS_DATABASE_ID }}
   WEEK_ID: ${{ github.event.inputs.week_id || '' }}
 
-concurrency:
-  group: sync-notion-data-main
-  cancel-in-progress: false
-
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -72,12 +65,3 @@ jobs:
             git commit -m "chore: sync Notion trend data"
             git push
           fi
-
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
