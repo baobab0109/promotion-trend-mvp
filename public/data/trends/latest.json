@@ -2,12 +2,12 @@
   "weekId": "2026-W25",
   "label": "2026.06.17 - 2026.06.23",
   "status": "Published",
-  "generatedAt": "2026-06-26T09:55:00.000Z",
+  "generatedAt": "2026-06-26T10:04:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
       "name": "뉴스/기사",
-      "count": 8,
+      "count": 9,
       "note": "커머스·유통·브랜드 기사"
     },
     {
@@ -692,6 +692,14 @@
         "risk": 55
       },
       "evidence": [
+        {
+          "type": "기사",
+          "title": "NS홈쇼핑, ‘반값창고’ 라이브 커머스… “도매가로 산다” - 소년한국일보",
+          "source": "소년한국일보",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1xd3NhYmxHeHZYeTYxLWRCaWdLWVA5RVZoajh0QUx5bjMxWk9HYmhEN28xcTJnMk9wMTJIMkljSWV4eG5VbUNTUV9LaGFsdi1qcGZTa3VCRHRPWWJkOGpkaFlTOVFSRDNteDhmYdIBcEFVX3lxTE9KNjdkaVRlaUtOOXRuU011TTFGMGZxM2NfRFMzam5RTzhteklLVTlzN09ZMmc0OGMzQWM1bTVhalBWT3JMVW5leENXNEwzZE9fcjdCS2pXTUd1RzNuWVotbUxLMFUwaDh4LUlROEZrYlA?oc=5",
+          "summary": "소년한국일보 사례. 시간 제한, 라이브/현장감, 단독 딜을 결합해 즉시 구매를 유도하는 프로모션 근거."
+        },
         {
           "type": "기사",
           "title": "한국레노버, 네이버 쇼핑라이브서 인기 AI PC 최대 22.6% 혜택 제공한다 - elec4",
