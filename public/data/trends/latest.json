@@ -2,12 +2,12 @@
   "weekId": "2026-W25",
   "label": "2026.06.17 - 2026.06.23",
   "status": "Published",
-  "generatedAt": "2026-06-26T13:00:00.000Z",
+  "generatedAt": "2026-06-26T22:34:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
       "name": "뉴스/기사",
-      "count": 9,
+      "count": 11,
       "note": "커머스·유통·브랜드 기사"
     },
     {
@@ -200,6 +200,14 @@
         "risk": 50
       },
       "evidence": [
+        {
+          "type": "기사",
+          "title": "에이내추럴, W컨셉 신규 브랜드 하이라이트 참여… 온라인 고객 접점 확대 본격화 - 유스연합",
+          "source": "유스연합",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBtekVOZXBBaXRZSUE1VUplVHhHNVpPSEJONWhWd1JiNE4yV2diZGx5ZzdDcVFyZmRIWmIwdWFLVmpZSzJNSnAwV1l5MDJ3NUhoTkE?oc=5",
+          "summary": "유스연합 사례. 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
+        },
         {
           "type": "기사",
           "title": "무신사, 육군본부와 협업해 로카(ROKA) 에디션 선봬 - 이투데이",
@@ -582,6 +590,14 @@
         "risk": 55
       },
       "evidence": [
+        {
+          "type": "기사",
+          "title": "레노버 AI PC, 오늘 저녁 네이버 쇼핑라이브서 최대 22.6% 혜택 - 뉴스탭",
+          "source": "뉴스탭",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5Wa09Kdjlya0FxTjBiSDVheDFhR0tmWVdmaUxqbnhsNjhJLVhBYUU3S084SE5aM0c0bGpjdFN4bHo0em1NUVA2OGY0eURtZzhPWmhRNzloVnNtdHpwb0Y1SVUyZ1pDMjhzYXVjOQ?oc=5",
+          "summary": "뉴스탭 사례. 시간 제한, 라이브/현장감, 단독 딜을 결합해 즉시 구매를 유도하는 프로모션 근거."
+        },
         {
           "type": "기사",
           "title": "NS홈쇼핑, ‘반값창고’ 라이브 커머스… “도매가로 산다” - 소년한국일보",
