@@ -44,8 +44,8 @@ npm run collect:signals -- --dry-run --limit=5 --json
   - 기존 모니터링 축: 커머스 멤버십, 라이브커머스/숏폼, 뷰티·패션 기획전, 리테일 큐레이션
 - 경쟁사 공개 프로모션/event 페이지 15개
   - 홈쇼핑형 커머스: GS SHOP, 현대Hmall, 롯데홈쇼핑, NS홈쇼핑, 홈앤쇼핑
-  - 대형 이커머스: 쿠팡, 네이버쇼핑, G마켓, 11번가, 컬리, SSG, 카카오쇼핑/톡딜
-  - 기존 버티컬/인접 경쟁사: 무신사, 올리브영, W컨셉
+  - 대형 이커머스: 쿠팡, 네이버쇼핑, G마켓, 11번가, 컬리, 카카오쇼핑/톡딜
+  - 기존 버티컬/인접 경쟁사: 무신사, 올리브영, W컨셉, SSG
 
 경쟁사 페이지는 로그인, 우회, 세션 조작 없이 공개 HTML의 `title`/meta title/meta description만 읽습니다. 각 RSS feed의 `maxItems`는 2개, 경쟁사 page는 1개 신호로 제한해 초반 `--limit`이 특정 feed에 과도하게 쏠리지 않도록 했습니다. 개별 fetch 실패는 `sourceResults[].error`로 남기고 전체 실행은 계속합니다.
 

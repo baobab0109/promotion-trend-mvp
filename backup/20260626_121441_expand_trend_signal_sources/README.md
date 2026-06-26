@@ -124,7 +124,7 @@ backup/README_YYYYMMDD_HHMMSS_before_react_migration.md
 ```text
 07:00 KST Collect Trend Signals workflow
   ↓
-뉴스 RSS + 홈쇼핑형/대형 이커머스 경쟁사 공개 프로모션 페이지를 Evidence Items DB에 Status=Draft로 upsert
+뉴스 RSS + 경쟁사 공개 프로모션 페이지를 Evidence Items DB에 Status=Draft로 upsert
   ↓
 사람이 Notion에서 근거를 검토하고 웹 반영할 항목만 Status=Published 선택
   ↓
@@ -137,7 +137,7 @@ GitHub Pages deploy workflow 자동 배포
 
 ### 외부 신호 수집 MVP
 
-`collect:signals`는 최신 Published Week와 해당 Week의 Published Trend Topics를 읽고, 수집한 기사/경쟁사 공개 페이지를 가장 적절한 Trend에 relation으로 연결합니다. 1차 source scope에는 온스타일과 유사한 홈쇼핑형 커머스 경쟁사(GS SHOP, 현대Hmall/현대홈쇼핑, 롯데홈쇼핑, NS홈쇼핑, 홈앤쇼핑), 국내 대형 이커머스(쿠팡, 네이버쇼핑, G마켓, 11번가, 컬리, SSG, 무신사, 카카오쇼핑/톡딜), 기존 버티컬/인접 경쟁사(올리브영, W컨셉)와 중소·D2C·브랜드몰·전문몰을 키워드로 발견하는 discovery RSS feed가 포함됩니다.
+`collect:signals`는 최신 Published Week와 해당 Week의 Published Trend Topics를 읽고, 수집한 기사/경쟁사 공개 페이지를 가장 적절한 Trend에 relation으로 연결합니다.
 
 ```bash
 npm run collect:signals -- --dry-run --limit=5 --json
@@ -146,7 +146,7 @@ npm run collect:signals -- --dry-run --limit=5 --json
 - 기본 상태값은 `Draft`입니다. 운영자는 Notion에서 검토 후 필요한 Evidence Item만 `Published`로 변경합니다.
 - URL canonicalization으로 `utm_*`, `fbclid`, `gclid` 등 tracking query를 제거한 URL을 기준으로 upsert합니다.
 - 기존 Evidence Item이 `Published`이면 dry-run/write 계획에서 `Draft`로 다운그레이드하지 않고 skip합니다.
-- 경쟁사 수집은 로그인/우회 없이 공개 페이지의 `title`/meta 정보만 읽는 MVP입니다. RSS는 source별 `maxItems=2`, 경쟁사 페이지는 source별 1개 신호로 제한해 초반 limit이 특정 feed에 쏠리지 않게 운영합니다. 개별 source fetch 실패는 source error로 기록하고 전체 실행은 계속합니다.
+- 경쟁사 수집은 로그인/우회 없이 공개 페이지의 `title`/meta 정보만 읽는 MVP입니다. 개별 source fetch 실패는 source error로 기록하고 전체 실행은 계속합니다.
 - 자세한 내용: `docs/trend-signal-crawler.md`
 
 ## 다음 단계 후보

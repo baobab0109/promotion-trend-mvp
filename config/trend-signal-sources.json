@@ -1,45 +1,206 @@
 {
   "rssFeeds": [
     {
+      "name": "Google News · 홈쇼핑형 커머스 행사/혜택",
+      "query": "(GS샵 OR GS SHOP OR 현대홈쇼핑 OR Hmall OR 롯데홈쇼핑 OR NS홈쇼핑 OR 홈앤쇼핑 OR CJ온스타일) (혜택 OR 프로모션 OR 쿠폰 OR 이벤트 OR 기획전) when:30d",
+      "type": "기사",
+      "description": "온스타일과 유사한 홈쇼핑 기반 이커머스 경쟁사의 공개 행사·혜택·쿠폰 신호를 뉴스 RSS에서 모니터링합니다.",
+      "lookbackDays": 45,
+      "maxItems": 2,
+      "keywords": ["홈쇼핑", "TV쇼핑", "혜택", "쿠폰", "이벤트", "기획전"]
+    },
+    {
+      "name": "Google News · TV쇼핑/라이브커머스 프로모션",
+      "query": "(TV쇼핑 OR 홈쇼핑 OR 라이브커머스 OR 쇼핑라이브) (프로모션 OR 혜택 OR 쿠폰 OR 이벤트) when:30d",
+      "type": "기사",
+      "description": "홈쇼핑·TV쇼핑·라이브커머스 기반 프로모션 실행 사례를 포착합니다.",
+      "lookbackDays": 45,
+      "maxItems": 2,
+      "keywords": ["TV쇼핑", "라이브", "쇼핑라이브", "프로모션", "혜택"]
+    },
+    {
+      "name": "Google News · 대형 이커머스 행사/멤버십",
+      "query": "(쿠팡 OR 네이버쇼핑 OR G마켓 OR 11번가 OR 컬리 OR SSG OR 무신사) (프로모션 OR 혜택 OR 쿠폰 OR 멤버십 OR 할인) when:30d",
+      "type": "기사",
+      "description": "국내 대형 이커머스의 행사·멤버십·쿠폰·할인 신호를 폭넓게 모니터링합니다.",
+      "lookbackDays": 45,
+      "maxItems": 2,
+      "keywords": ["대형 이커머스", "멤버십", "쿠폰", "혜택", "할인"]
+    },
+    {
+      "name": "Google News · 버티컬 커머스 기획전",
+      "query": "(무신사 OR 올리브영 OR W컨셉 OR 지그재그 OR 에이블리 OR 오늘의집) (기획전 OR 쿠폰 OR 혜택 OR 프로모션 OR 할인) when:30d",
+      "type": "기사",
+      "description": "패션·뷰티·리빙 등 버티컬 커머스의 카테고리별 행사와 혜택 패턴을 수집합니다.",
+      "lookbackDays": 45,
+      "maxItems": 2,
+      "keywords": ["버티컬커머스", "패션", "뷰티", "리빙", "기획전", "쿠폰"]
+    },
+    {
+      "name": "Google News · 중소/브랜드몰 행사 discovery",
+      "query": "(온라인몰 OR 쇼핑몰 OR D2C OR 브랜드몰 OR 전문몰 OR 버티컬커머스) (행사 OR 혜택 OR 쿠폰 OR 프로모션 OR 기획전) when:30d",
+      "type": "기사",
+      "description": "명시 경쟁사 리스트에 없는 중소규모·D2C·전문몰의 행사/혜택 뉴스를 키워드 기반으로 발견합니다.",
+      "lookbackDays": 45,
+      "maxItems": 2,
+      "keywords": ["중소 커머스", "D2C", "브랜드몰", "전문몰", "행사", "혜택", "기획전"]
+    },
+    {
       "name": "Google News · 커머스 멤버십",
       "query": "(커머스 OR 쇼핑) (멤버십 OR VIP OR 혜택) 프로모션 when:30d",
       "type": "기사",
+      "description": "커머스 멤버십·VIP·프리뷰 혜택 신호를 기존 모니터링 축으로 유지합니다.",
       "lookbackDays": 45,
-      "maxItems": 3,
+      "maxItems": 2,
       "keywords": ["멤버십", "VIP", "혜택", "프리뷰"]
     },
     {
       "name": "Google News · 라이브커머스 숏폼",
       "query": "(라이브커머스 OR 쇼핑라이브 OR 숏폼커머스) 프로모션 when:30d",
       "type": "기사",
+      "description": "라이브커머스·쇼핑라이브·숏폼 기반 프로모션 트렌드를 수집합니다.",
       "lookbackDays": 45,
-      "maxItems": 3,
+      "maxItems": 2,
       "keywords": ["라이브", "숏폼", "콘텐츠", "쇼핑라이브"]
     },
     {
       "name": "Google News · 뷰티 패션 기획전",
       "query": "(뷰티 OR 패션) (기획전 OR 할인 OR 프로모션) when:30d",
       "type": "기사",
+      "description": "온스타일 핵심 카테고리와 인접한 뷰티·패션 기획전/할인 신호를 유지 수집합니다.",
       "lookbackDays": 45,
-      "maxItems": 3,
+      "maxItems": 2,
       "keywords": ["뷰티", "패션", "기획전", "할인"]
     },
     {
       "name": "Google News · 리테일 큐레이션",
       "query": "(리테일 OR 커머스) (큐레이션 OR 개인화 OR AI추천) 프로모션 when:30d",
       "type": "기사",
+      "description": "개인화·AI추천·큐레이션형 프로모션 기획 단서를 모니터링합니다.",
       "lookbackDays": 45,
-      "maxItems": 3,
+      "maxItems": 2,
       "keywords": ["큐레이션", "개인화", "추천", "리테일"]
     }
   ],
   "competitorPages": [
     {
       "kind": "competitor",
+      "name": "GS SHOP 이벤트",
+      "url": "https://www.gsshop.com/shop/eventMain.gs",
+      "type": "경쟁사",
+      "description": "GS SHOP 공개 이벤트/혜택 페이지",
+      "lookbackDays": 1,
+      "maxItems": 1,
+      "keywords": ["홈쇼핑", "TV쇼핑", "혜택", "쿠폰", "이벤트"]
+    },
+    {
+      "kind": "competitor",
+      "name": "현대Hmall 이벤트",
+      "url": "https://www.hmall.com/p/dpa/searchSectItem.do?sectId=1772327",
+      "type": "경쟁사",
+      "description": "현대홈쇼핑/Hmall 공개 이벤트·프로모션 페이지",
+      "lookbackDays": 1,
+      "maxItems": 1,
+      "keywords": ["홈쇼핑", "Hmall", "혜택", "쿠폰", "프로모션"]
+    },
+    {
+      "kind": "competitor",
+      "name": "롯데홈쇼핑 이벤트",
+      "url": "https://www.lotteimall.com/event/viewEventZone.lotte",
+      "type": "경쟁사",
+      "description": "롯데홈쇼핑/롯데아이몰 공개 이벤트 페이지",
+      "lookbackDays": 1,
+      "maxItems": 1,
+      "keywords": ["홈쇼핑", "롯데홈쇼핑", "혜택", "쿠폰", "이벤트"]
+    },
+    {
+      "kind": "competitor",
+      "name": "NS홈쇼핑 이벤트",
+      "url": "https://www.nsmall.com/customer/event/list",
+      "type": "경쟁사",
+      "description": "NS홈쇼핑 공개 이벤트/혜택 페이지",
+      "lookbackDays": 1,
+      "maxItems": 1,
+      "keywords": ["홈쇼핑", "NS홈쇼핑", "혜택", "이벤트", "쿠폰"]
+    },
+    {
+      "kind": "competitor",
+      "name": "홈앤쇼핑 이벤트",
+      "url": "https://www.hnsmall.com/",
+      "type": "경쟁사",
+      "description": "홈앤쇼핑 공개 홈/이벤트·혜택 노출 영역",
+      "lookbackDays": 1,
+      "maxItems": 1,
+      "keywords": ["홈쇼핑", "홈앤쇼핑", "혜택", "이벤트", "쿠폰"]
+    },
+    {
+      "kind": "competitor",
+      "name": "쿠팡 기획전",
+      "url": "https://www.coupang.com/",
+      "type": "경쟁사",
+      "description": "쿠팡 공개 홈/캠페인·기획전 노출 영역",
+      "lookbackDays": 1,
+      "maxItems": 1,
+      "keywords": ["대형 이커머스", "쿠팡", "기획전", "할인", "혜택"]
+    },
+    {
+      "kind": "competitor",
+      "name": "네이버쇼핑 홈",
+      "url": "https://shopping.naver.com/ns/home",
+      "type": "경쟁사",
+      "description": "네이버쇼핑 공개 쇼핑 홈/혜택 노출 영역",
+      "lookbackDays": 1,
+      "maxItems": 1,
+      "keywords": ["대형 이커머스", "네이버쇼핑", "혜택", "쇼핑라이브", "멤버십"]
+    },
+    {
+      "kind": "competitor",
+      "name": "G마켓 슈퍼딜",
+      "url": "https://www.gmarket.co.kr/n/superdeal",
+      "type": "경쟁사",
+      "description": "G마켓 공개 슈퍼딜/특가 페이지",
+      "lookbackDays": 1,
+      "maxItems": 1,
+      "keywords": ["대형 이커머스", "G마켓", "특가", "쿠폰", "할인"]
+    },
+    {
+      "kind": "competitor",
+      "name": "11번가 쇼킹딜",
+      "url": "https://www.11st.co.kr/browsing/DealAction.tmall?method=getShockingDealMain",
+      "type": "경쟁사",
+      "description": "11번가 공개 쇼킹딜/특가 페이지",
+      "lookbackDays": 1,
+      "maxItems": 1,
+      "keywords": ["대형 이커머스", "11번가", "쇼킹딜", "특가", "쿠폰"]
+    },
+    {
+      "kind": "competitor",
+      "name": "컬리 기획전",
+      "url": "https://www.kurly.com/collections/market-best",
+      "type": "경쟁사",
+      "description": "컬리 공개 기획전/베스트 상품 노출 페이지",
+      "lookbackDays": 1,
+      "maxItems": 1,
+      "keywords": ["대형 이커머스", "컬리", "장보기", "기획전", "혜택"]
+    },
+    {
+      "kind": "competitor",
+      "name": "카카오쇼핑 톡딜",
+      "url": "https://store.kakao.com/home/hotdeal",
+      "type": "경쟁사",
+      "description": "카카오쇼핑 공개 톡딜/핫딜 페이지",
+      "lookbackDays": 1,
+      "maxItems": 1,
+      "keywords": ["대형 이커머스", "카카오쇼핑", "톡딜", "핫딜", "혜택"]
+    },
+    {
+      "kind": "competitor",
       "name": "무신사 이벤트",
       "url": "https://www.musinsa.com/events",
       "type": "경쟁사",
       "description": "무신사 공개 이벤트/프로모션 페이지",
+      "lookbackDays": 1,
+      "maxItems": 1,
       "keywords": ["패션", "한정", "기획전", "할인"]
     },
     {
@@ -48,14 +209,18 @@
       "url": "https://www.oliveyoung.co.kr/store/main/getEventList.do",
       "type": "경쟁사",
       "description": "올리브영 공개 이벤트/프로모션 페이지",
+      "lookbackDays": 1,
+      "maxItems": 1,
       "keywords": ["뷰티", "쿠폰", "멤버십", "기획전"]
     },
     {
       "kind": "competitor",
       "name": "W컨셉 이벤트",
-      "url": "https://www.wconcept.co.kr/Event",
+      "url": "https://www.wconcept.co.kr/",
       "type": "경쟁사",
-      "description": "W컨셉 공개 이벤트/프로모션 페이지",
+      "description": "W컨셉 공개 홈/이벤트·프로모션 노출 영역",
+      "lookbackDays": 1,
+      "maxItems": 1,
       "keywords": ["패션", "브랜드", "기획전", "프리미엄"]
     },
     {
@@ -64,6 +229,8 @@
       "url": "https://www.ssg.com/event/eventMain.ssg",
       "type": "경쟁사",
       "description": "SSG 공개 이벤트/프로모션 페이지",
+      "lookbackDays": 1,
+      "maxItems": 1,
       "keywords": ["리빙", "장보기", "혜택", "쿠폰"]
     }
   ]
