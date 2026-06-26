@@ -107,7 +107,7 @@ export function parseRssItems(xml, { fallbackSource = 'RSS', sourceHint = '', ty
     .filter((item) => item.title && item.link);
 }
 
-export function normalizeText(value = '') {
+function normalizeText(value = '') {
   return String(value)
     .toLowerCase()
     .replace(/[\u200B-\u200D\uFEFF]/g, '')
@@ -170,31 +170,14 @@ export function matchTrendCandidate(item, trends = []) {
   return { trend: trends[0], score: 0, matchedTerms: [], fallback: true };
 }
 
-function stripPublisherSuffix(title = '', source = '') {
-  const cleanTitle = String(title || '').trim();
-  const cleanSource = String(source || '').trim();
-  if (!cleanTitle || !cleanSource) return cleanTitle;
-  const suffixes = [` - ${cleanSource}`, ` | ${cleanSource}`, ` :: ${cleanSource}`];
-  return suffixes.reduce((value, suffix) => value.endsWith(suffix) ? value.slice(0, -suffix.length).trim() : value, cleanTitle);
-}
-
-export function signalFingerprint(item = {}) {
-  const source = normalizeText(item.source || item.collectorSource || '');
-  const title = normalizeText(stripPublisherSuffix(item.title || '', item.source || item.collectorSource || ''));
-  if (!title) return '';
-  return `${source || 'unknown'}::${title}`;
-}
-
 export function dedupeSignals(items = []) {
   const seen = new Set();
   const unique = [];
   for (const item of items) {
     const canonicalUrl = item.canonicalUrl || canonicalizeUrl(item.link || item.url);
-    const fingerprint = signalFingerprint(item);
-    const keys = [canonicalUrl ? `url:${canonicalUrl}` : '', fingerprint ? `fingerprint:${fingerprint}` : ''].filter(Boolean);
-    if (!keys.length || keys.some((key) => seen.has(key))) continue;
-    for (const key of keys) seen.add(key);
-    unique.push({ ...item, canonicalUrl, link: item.link || canonicalUrl, fingerprint });
+    if (!canonicalUrl || seen.has(canonicalUrl)) continue;
+    seen.add(canonicalUrl);
+    unique.push({ ...item, canonicalUrl, link: item.link || canonicalUrl });
   }
   return unique;
 }
@@ -220,73 +203,42 @@ export function interleaveSignals(items = [], limit = 20) {
   return output;
 }
 
-function existingWithinDedupeWindow(existing = {}, item = {}) {
-  const windowDays = Number(item.dedupeWindowDays || 0);
-  if (!windowDays || !existing.evidenceDate) return false;
-  const existingTime = new Date(existing.evidenceDate).getTime();
-  if (Number.isNaN(existingTime)) return false;
-  const ageMs = Date.now() - existingTime;
-  return ageMs >= 0 && ageMs <= windowDays * 24 * 60 * 60 * 1000;
-}
-
-function planForExisting(existing, item, canonicalUrl, status, reasonPrefix = '') {
-  if (existing.status === 'Published' && status !== 'Published') {
-    return {
-      action: 'skip',
-      reason: `${reasonPrefix}existing Evidence Item is Published; refusing to downgrade to Draft`,
-      pageId: existing.pageId,
-      existing,
-      item: { ...item, canonicalUrl }
-    };
-  }
-
-  if (existing.status === 'Archived') {
-    return {
-      action: 'skip',
-      reason: `${reasonPrefix}existing Evidence Item is Archived`,
-      pageId: existing.pageId,
-      existing,
-      item: { ...item, canonicalUrl }
-    };
-  }
-
-  if (existingWithinDedupeWindow(existing, item)) {
-    return {
-      action: 'skip',
-      reason: `${reasonPrefix}existing Evidence Item is within ${item.dedupeWindowDays}d dedupe window`,
-      pageId: existing.pageId,
-      existing,
-      item: { ...item, canonicalUrl }
-    };
-  }
-
-  return { action: 'update', pageId: existing.pageId, existing, item: { ...item, canonicalUrl }, status };
-}
-
-export function buildUpsertPlan(items = [], existingByCanonicalUrl = new Map(), { status = 'Draft', existingByFingerprint = new Map() } = {}) {
+export function buildUpsertPlan(items = [], existingByCanonicalUrl = new Map(), { status = 'Draft' } = {}) {
   const seen = new Set();
   return items.map((item) => {
     const canonicalUrl = item.canonicalUrl || canonicalizeUrl(item.link || item.url);
-    const fingerprint = item.fingerprint || signalFingerprint(item);
     if (!canonicalUrl) return { action: 'skip', reason: 'missing canonical URL', item };
-    const collectionKeys = [canonicalUrl ? `url:${canonicalUrl}` : '', fingerprint ? `fingerprint:${fingerprint}` : ''].filter(Boolean);
-    const duplicateKey = collectionKeys.find((key) => seen.has(key));
-    if (duplicateKey) return { action: 'skip', reason: `duplicate signal in collection: ${duplicateKey}`, item: { ...item, canonicalUrl, fingerprint } };
-    for (const key of collectionKeys) seen.add(key);
+    if (seen.has(canonicalUrl)) return { action: 'skip', reason: `duplicate URL in collection: ${canonicalUrl}`, item: { ...item, canonicalUrl } };
+    seen.add(canonicalUrl);
 
     if (!item.trendMatch?.trend?.pageId && !item.trend?.pageId) {
-      return { action: 'skip', reason: 'missing trend match', item: { ...item, canonicalUrl, fingerprint } };
+      return { action: 'skip', reason: 'missing trend match', item: { ...item, canonicalUrl } };
     }
 
     const existing = existingByCanonicalUrl.get(canonicalUrl);
-    if (existing) return planForExisting(existing, { ...item, fingerprint }, canonicalUrl, status);
+    if (!existing) return { action: 'create', item: { ...item, canonicalUrl }, status };
 
-    const existingBySameFingerprint = fingerprint ? existingByFingerprint.get(fingerprint) : undefined;
-    if (existingBySameFingerprint) {
-      return planForExisting(existingBySameFingerprint, { ...item, fingerprint }, canonicalUrl, status, 'same title/source fingerprint already exists; ');
+    if (existing.status === 'Published' && status !== 'Published') {
+      return {
+        action: 'skip',
+        reason: 'existing Evidence Item is Published; refusing to downgrade to Draft',
+        pageId: existing.pageId,
+        existing,
+        item: { ...item, canonicalUrl }
+      };
     }
 
-    return { action: 'create', item: { ...item, canonicalUrl, fingerprint }, status };
+    if (existing.status === 'Archived') {
+      return {
+        action: 'skip',
+        reason: 'existing Evidence Item is Archived',
+        pageId: existing.pageId,
+        existing,
+        item: { ...item, canonicalUrl }
+      };
+    }
+
+    return { action: 'update', pageId: existing.pageId, existing, item: { ...item, canonicalUrl }, status };
   });
 }
 

@@ -11,7 +11,7 @@
   ↓
 최신 Published Week의 Published Trend Topics 중 가장 적합한 Trend에 relation 연결
   ↓
-Evidence Items DB에 Status=Draft로 URL + 제목/source fingerprint 기준 upsert
+Evidence Items DB에 Status=Draft로 URL 기준 upsert
   ↓
 운영자가 Notion에서 검토 후 Published 선택
   ↓
@@ -49,33 +49,16 @@ npm run collect:signals -- --dry-run --limit=5 --json
 
 경쟁사 페이지는 로그인, 우회, 세션 조작 없이 공개 HTML의 `title`/meta title/meta description만 읽습니다. 각 RSS feed의 `maxItems`는 2개, 경쟁사 page는 1개 신호로 제한해 초반 `--limit`이 특정 feed에 과도하게 쏠리지 않도록 했습니다. 개별 fetch 실패는 `sourceResults[].error`로 남기고 전체 실행은 계속합니다.
 
-## 기간 조건
-
-- 핵심 RSS source는 Google News query의 `when:14d`와 코드의 `lookbackDays=14`를 함께 사용해 발행일 기준 최근 14일 자료만 후보로 둡니다.
-- 중소·D2C·브랜드몰 discovery RSS는 누락 방지를 위해 `when:30d`, `lookbackDays=30`을 유지합니다.
-- 경쟁사 직접 페이지는 개별 행사 발행일을 아직 파싱하지 않는 1차 MVP이므로 `observationMode=page-snapshot`으로 명시하고, Evidence Date는 수집일을 사용합니다. 같은 page-snapshot Draft가 최근 7일 안에 있으면 신규 생성/갱신하지 않고 skip합니다.
-- Notion Week는 수집된 근거를 연결하는 운영 주차이며, RSS 발행일 필터는 source별 `lookbackDays`가 담당합니다.
-
-## 중복 방지 정책
-
-수집 직후와 Notion upsert 직전에 두 번 중복을 차단합니다.
-
-1. `canonicalUrl`: `utm_*`, `fbclid`, `gclid` 등 tracking query와 hash를 제거한 URL입니다.
-2. `sourceTitleFingerprint`: 같은 source와 정규화된 제목 조합입니다. Google News redirect URL이 달라도 같은 매체/제목이면 같은 근거로 봅니다.
-3. 기존 Notion Evidence Item과 같은 URL이면 신규 생성하지 않고 Draft는 update, Published/Archived는 skip합니다.
-4. 기존 URL은 다르지만 같은 source/title fingerprint가 있으면 신규 create 대신 기존 Draft를 update합니다.
-5. 같은 실행 내 중복은 첫 항목만 유지하고 `duplicatesRemoved`로 JSON summary에 집계합니다.
-
 ## Upsert 정책
 
 URL canonicalization 결과를 중복 key로 사용합니다.
 
 - 제거: `utm_*`, `fbclid`, `gclid`, `dclid`, `gbraid`, `wbraid`, `mc_cid`, `mc_eid`, hash 등 tracking 값
-- 같은 URL 없음 + 같은 source/title fingerprint 없음: `create`
-- 같은 URL 또는 같은 source/title fingerprint의 기존 Evidence Item이 `Draft`: `update`
-- 같은 URL 또는 같은 source/title fingerprint의 기존 Evidence Item이 `Published`: `skip` — Published를 Draft로 다운그레이드하지 않습니다.
-- 같은 URL 또는 같은 source/title fingerprint의 기존 Evidence Item이 `Archived`: `skip`
-- 같은 실행 내 중복 URL/fingerprint: 첫 항목만 계획하고 나머지는 `skip` 또는 사전 dedupe
+- 같은 URL 없음: `create`
+- 같은 URL의 기존 Evidence Item이 `Draft`: `update`
+- 같은 URL의 기존 Evidence Item이 `Published`: `skip` — Published를 Draft로 다운그레이드하지 않습니다.
+- 같은 URL의 기존 Evidence Item이 `Archived`: `skip`
+- 같은 실행 내 중복 URL: 첫 항목만 계획하고 나머지는 `skip`
 
 ## Trend 매칭
 

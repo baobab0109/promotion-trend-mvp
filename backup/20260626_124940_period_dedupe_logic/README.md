@@ -144,10 +144,9 @@ npm run collect:signals -- --dry-run --limit=5 --json
 ```
 
 - 기본 상태값은 `Draft`입니다. 운영자는 Notion에서 검토 후 필요한 Evidence Item만 `Published`로 변경합니다.
-- URL canonicalization으로 `utm_*`, `fbclid`, `gclid` 등 tracking query를 제거한 URL과 source/title fingerprint를 함께 사용해 중복 수집을 막습니다.
-- 핵심 RSS는 발행일 기준 최근 14일(`when:14d`, `lookbackDays=14`), 중소·D2C·브랜드몰 discovery RSS는 최근 30일 기준으로 운영합니다.
+- URL canonicalization으로 `utm_*`, `fbclid`, `gclid` 등 tracking query를 제거한 URL을 기준으로 upsert합니다.
 - 기존 Evidence Item이 `Published`이면 dry-run/write 계획에서 `Draft`로 다운그레이드하지 않고 skip합니다.
-- 경쟁사 수집은 로그인/우회 없이 공개 페이지의 `title`/meta 정보만 읽는 MVP이며 `page-snapshot` 관측값으로 처리합니다. 같은 page-snapshot Draft가 최근 7일 안에 있으면 중복 관측으로 skip합니다. RSS는 source별 `maxItems=2`, 경쟁사 페이지는 source별 1개 신호로 제한해 초반 limit이 특정 feed에 쏠리지 않게 운영합니다. 개별 source fetch 실패는 source error로 기록하고 전체 실행은 계속합니다.
+- 경쟁사 수집은 로그인/우회 없이 공개 페이지의 `title`/meta 정보만 읽는 MVP입니다. RSS는 source별 `maxItems=2`, 경쟁사 페이지는 source별 1개 신호로 제한해 초반 limit이 특정 feed에 쏠리지 않게 운영합니다. 개별 source fetch 실패는 source error로 기록하고 전체 실행은 계속합니다.
 - 자세한 내용: `docs/trend-signal-crawler.md`
 
 ## 다음 단계 후보

@@ -2,11 +2,9 @@ import { describe, expect, it } from 'vitest';
 import {
   buildUpsertPlan,
   canonicalizeUrl,
-  dedupeSignals,
   interleaveSignals,
   matchTrendCandidate,
-  parseRssItems,
-  signalFingerprint
+  parseRssItems
 } from '../scripts/lib/trend-signal-utils.mjs';
 
 const rssSample = `<?xml version="1.0" encoding="UTF-8"?>
@@ -92,48 +90,5 @@ describe('trend signal crawler utilities', () => {
     expect(plan[1].pageId).toBe('page-draft');
     expect(plan[2].reason).toContain('Published');
     expect(plan[3].reason).toContain('duplicate');
-  });
-
-  it('same-run duplicate guard가 URL과 제목/source fingerprint 중복을 제거한다', () => {
-    const items = [
-      { title: '브랜드몰 여름 기획전 - Example News', source: 'Example News', link: 'https://example.com/a?utm_source=rss' },
-      { title: '브랜드몰 여름 기획전', source: 'Example News', link: 'https://news.google.com/rss/articles/duplicate' },
-      { title: '다른 쇼핑 혜택', source: 'Other News', link: 'https://example.com/b' }
-    ];
-
-    expect(signalFingerprint(items[0])).toBe(signalFingerprint(items[1]));
-    expect(dedupeSignals(items).map((item) => item.title)).toEqual([
-      '브랜드몰 여름 기획전 - Example News',
-      '다른 쇼핑 혜택'
-    ]);
-  });
-
-  it('same article fingerprint가 기존 Evidence에 있으면 새 URL이어도 create 대신 update한다', () => {
-    const items = [
-      { title: '브랜드몰 여름 기획전', source: 'Example News', canonicalUrl: 'https://news.google.com/rss/articles/new-url', trendMatch: { trend: { pageId: 'trend-1' } } }
-    ];
-    const existingByFingerprint = new Map([
-      [signalFingerprint({ title: '브랜드몰 여름 기획전 - Example News', source: 'Example News' }), { pageId: 'existing-page', status: 'Draft' }]
-    ]);
-
-    const plan = buildUpsertPlan(items, new Map(), { status: 'Draft', existingByFingerprint });
-
-    expect(plan[0].action).toBe('update');
-    expect(plan[0].pageId).toBe('existing-page');
-  });
-
-  it('page-snapshot dedupe window 안의 기존 Draft는 update하지 않고 skip한다', () => {
-    const today = new Date().toISOString().slice(0, 10);
-    const items = [
-      { title: '카카오쇼핑 톡딜', source: '카카오쇼핑 톡딜', canonicalUrl: 'https://store.kakao.com/home/hotdeal', dedupeWindowDays: 7, trendMatch: { trend: { pageId: 'trend-1' } } }
-    ];
-    const existing = new Map([
-      ['https://store.kakao.com/home/hotdeal', { pageId: 'existing-page', status: 'Draft', evidenceDate: today }]
-    ]);
-
-    const plan = buildUpsertPlan(items, existing, { status: 'Draft' });
-
-    expect(plan[0].action).toBe('skip');
-    expect(plan[0].reason).toContain('dedupe window');
   });
 });

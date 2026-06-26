@@ -9,7 +9,6 @@ import {
   interleaveSignals,
   matchTrendCandidate,
   parseRssItems,
-  signalFingerprint,
   stripHtml
 } from './lib/trend-signal-utils.mjs';
 
@@ -163,22 +162,15 @@ async function loadNotionContext() {
     sorts: [{ timestamp: 'last_edited_time', direction: 'descending' }]
   });
   const existingEvidence = new Map();
-  const existingEvidenceByFingerprint = new Map();
   for (const page of evidencePages) {
     const canonicalUrl = canonicalizeUrl(pageUrl(page, 'URL'));
-    const existing = {
+    if (!canonicalUrl || existingEvidence.has(canonicalUrl)) continue;
+    existingEvidence.set(canonicalUrl, {
       pageId: page.id,
       status: select(page, 'Status'),
       title: title(page),
-      source: richText(page, 'Source'),
-      evidenceDate: dateStart(page, 'Evidence Date'),
       trendIds: relationIds(page, 'Trend')
-    };
-
-    if (canonicalUrl && !existingEvidence.has(canonicalUrl)) existingEvidence.set(canonicalUrl, existing);
-
-    const fingerprint = signalFingerprint(existing);
-    if (fingerprint && !existingEvidenceByFingerprint.has(fingerprint)) existingEvidenceByFingerprint.set(fingerprint, existing);
+    });
   }
 
   return {
@@ -191,8 +183,7 @@ async function loadNotionContext() {
       startDate: dateStart(week, 'Start Date')
     },
     trends,
-    existingEvidence,
-    existingEvidenceByFingerprint
+    existingEvidence
   };
 }
 
@@ -212,8 +203,7 @@ async function loadStaticContext() {
       promotionTypes: trend.promotionTypes || [],
       hints: [trend.aiInterpretation?.consumerInsight, trend.aiInterpretation?.opportunity].filter(Boolean)
     })),
-    existingEvidence: new Map(),
-    existingEvidenceByFingerprint: new Map()
+    existingEvidence: new Map()
   };
 }
 
@@ -260,8 +250,7 @@ async function collectRssSource(source) {
     ...item,
     collectorSource: source.name,
     sourceHint: [item.sourceHint, source.name].filter(Boolean).join(' '),
-    keywords: source.keywords || [],
-    dedupeWindowDays: source.dedupeWindowDays
+    keywords: source.keywords || []
   }));
 }
 
@@ -291,7 +280,6 @@ function parseHtmlSignal(html, source) {
     description,
     collectorSource: source.name,
     keywords: source.keywords || [],
-    dedupeWindowDays: source.dedupeWindowDays,
     type: source.type || '경쟁사'
   };
 }
@@ -388,7 +376,7 @@ function publicPlanEntry(entry) {
 function printHuman(result) {
   console.log(`Trend signal collection ${result.dryRun ? 'dry-run' : 'write'} complete.`);
   console.log(`Context: ${result.contextSource}, week=${result.week.weekId || result.week.label}, status=${result.status}`);
-  console.log(`Sources: ${result.sourceResults.filter((item) => item.ok).length}/${result.sourceResults.length} ok, collected=${result.totals.collected}, deduped=${result.totals.deduped}, duplicatesRemoved=${result.totals.duplicatesRemoved}, limited=${result.totals.limited}`);
+  console.log(`Sources: ${result.sourceResults.filter((item) => item.ok).length}/${result.sourceResults.length} ok, collected=${result.totals.collected}, limited=${result.totals.limited}`);
   console.log(`Plan: create=${result.totals.create}, update=${result.totals.update}, skip=${result.totals.skip}`);
   for (const source of result.sourceResults.filter((item) => !item.ok)) {
     console.log(`Source error: ${source.name} - ${source.error}`);
@@ -425,16 +413,12 @@ async function main() {
   }
 
   const { items, sourceResults } = await collectSignals(sourceConfig);
-  const dedupedItems = dedupeSignals(items);
-  const matchedItems = interleaveSignals(dedupedItems, options.limit).map((item) => ({
+  const matchedItems = interleaveSignals(dedupeSignals(items), options.limit).map((item) => ({
     ...item,
     trendMatch: matchTrendCandidate(item, context.trends)
   }));
 
-  const plan = buildUpsertPlan(matchedItems, context.existingEvidence, {
-    status: options.status,
-    existingByFingerprint: context.existingEvidenceByFingerprint
-  });
+  const plan = buildUpsertPlan(matchedItems, context.existingEvidence, { status: options.status });
   const executedPlan = options.dryRun ? plan : await executePlan(plan, context.db.evidence);
   const counts = summarizePlan(executedPlan);
   const publicPlan = executedPlan.map(publicPlanEntry);
@@ -450,8 +434,6 @@ async function main() {
       sources: sourceResults.length,
       sourceErrors: sourceResults.filter((item) => !item.ok).length,
       collected: items.length,
-      duplicatesRemoved: items.length - dedupedItems.length,
-      deduped: dedupedItems.length,
       limited: matchedItems.length,
       ...counts
     },
