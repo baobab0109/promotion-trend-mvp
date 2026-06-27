@@ -2,7 +2,7 @@
   "weekId": "2026-W25",
   "label": "2026.06.17 - 2026.06.23",
   "status": "Published",
-  "generatedAt": "2026-06-27T03:36:00.000Z",
+  "generatedAt": "2026-06-27T04:20:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
@@ -17,7 +17,7 @@
     },
     {
       "name": "커머스 혜택 검색",
-      "count": 0,
+      "count": 1,
       "note": "쿠폰·혜택·특가·프로모션 공개 근거"
     },
     {
@@ -471,6 +471,14 @@
         "risk": 42
       },
       "evidence": [
+        {
+          "type": "검색",
+          "title": "알리익스프레스, 상반기 베스트 상품 최대 60% 할인 - 핀포인트뉴스",
+          "source": "핀포인트뉴스",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5DSllic0pkaGJOTGhoMkE2bkl2Y0NYVXQwVjBQWDBwTEFzVFl6SVdLX1FHZmthNUUxLWVDVkFFVVlBNkludVNUUWt3R3gtclhUWnpSd1VKSkJfcExCTk5zTnM5dThyTUFJM2Fwd25CeFJBZFFPTklV0gF3QVVfeXFMTkNKWWJzSmRoYk5MaGgyQTZuSXZjQ1hVdDBWMFBYMHBMQXNUWXpJV0tfUUdma2E1RTEtZUNWQUVVWUE2SW51U1RRa3dHeC1yWFRaelJ3VUpKQl9wTEJOTnNOczl1OHJNQUkzYXB3bkJ4UkFkUU9OSVU?oc=5",
+          "summary": "핀포인트뉴스 사례. 데이터·랭킹·베스트 상품을 큐레이션 메시지로 전환해 탐색 피로를 줄이는 근거."
+        },
         {
           "type": "기사",
           "title": "알리익스프레스, 빅데이터 기반 ‘알급날 2026 상반기 어워즈’ 개최…최대 60% 할인 - 데일리포스트",
