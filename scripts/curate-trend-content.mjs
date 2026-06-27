@@ -123,6 +123,9 @@ function isSampleEvidence(evidence) {
 
 function exclusionReason(evidence) {
   const text = `${evidence.title} ${evidence.source} ${evidence.summary}`;
+  if (evidence.type === 'SNS' && !isHighSignalSocialEvidence(text)) return '공개 SNS/UGC 근거이나 쇼핑·혜택·라이브·후기 맥락이 충분히 구체적이지 않음';
+  if (evidence.type === '검색' && !isHighSignalSearchEvidence(text)) return '검색 근거이나 커머스·혜택·트렌드 맥락이 충분히 구체적이지 않음';
+  if (hasAny(text, ['협찬', '광고', '체험단', '파트너스', '제공받아'])) return '광고/협찬/체험단 가능성이 있어 직접 Published 근거로 사용하지 않음';
   if (hasAny(text, ['금호타이어', '타이어프로', '불스원', '유류'])) return '온스타일 핵심 카테고리와 거리가 큰 자동차/유류 이벤트';
   if (hasAny(text, ['신세계면세점', '면세점', '여름 여행', '휴가철 맞아 여름 여행'])) return '면세/여행 캠페인 성격이 강해 직접 적용성이 낮음';
   if (hasAny(text, ['경방 타임스퀘어', '오프라인', '스윔웨어 할인 행사'])) return '오프라인몰 행사 성격이 강함';
@@ -139,28 +142,38 @@ function titleOnlyLooksGeneric(value = '') {
   return ['롯데홈쇼핑', '홈앤쇼핑', 'w컨셉 w concept', 'top300 마켓컬리'].includes(text);
 }
 
+function isHighSignalSearchEvidence(text) {
+  return hasAny(text, ['쇼핑', '커머스', '쇼핑라이브', '라이브커머스', '쿠폰', '혜택', '특가', '타임딜', '멤버십', '올리브영', '무신사', '온스타일', '네이버쇼핑'])
+    && hasAny(text, ['검색', '키워드', '트렌드', '인기', '급상승', '관심', '랭킹', '큐레이션']);
+}
+
+function isHighSignalSocialEvidence(text) {
+  return hasAny(text, ['유튜브', '쇼츠', '블로그', 'sns', '인증샷', '후기', '언박싱', '하울', '댓글', '챌린지', '리뷰'])
+    && hasAny(text, ['쇼핑', '커머스', '쇼핑라이브', '라이브커머스', '쿠폰', '혜택', '특가', '타임딜', '한정판', '굿즈', '구매', '할인', '기획전']);
+}
+
 function classifyEvidence(evidence, trendMap) {
   const text = `${evidence.title} ${evidence.source} ${evidence.summary}`;
   const reason = exclusionReason(evidence);
   if (reason) return { action: 'archive', reason };
 
   const byTrendId = (trendId, summary) => ({ action: 'publish', trend: trendMap.get(trendId), summary });
-  if (hasAny(text, ['쇼킹딜', '톡딜', '쇼핑라이브', '쎈딜', '반값창고', '라이브', '타임딜']) || evidence.source === 'NS홈쇼핑 이벤트') {
+  if (hasAny(text, ['쇼킹딜', '톡딜', '쇼핑라이브', '쎈딜', '반값창고', '라이브', '타임딜', '라이브특가', '숏폼커머스', '쇼츠'])) {
     return byTrendId('live-instant', summaryFor('live-instant', evidence));
   }
-  if (hasAny(text, ['hmall', 'ssg', '혜택 쌓기', '카탈로그 연동 베네핏', '이벤트 쿠폰', '출석', '퀴즈', '래플'])) {
+  if (hasAny(text, ['hmall', 'ssg', '혜택 쌓기', '카탈로그 연동 베네핏', '이벤트 쿠폰', '출석', '퀴즈', '래플', '쿠폰팩', '쿠폰추천', '검색 관심'])) {
     return byTrendId('routine-benefit', summaryFor('routine-benefit', evidence));
   }
   if (hasAny(text, ['로켓와우', '홈앤쇼핑', '현대이지웰', '복지몰', '멤버십', '클럽', '무료 반품'])) {
     return byTrendId('membership-preview', summaryFor('membership-preview', evidence));
   }
-  if (hasAny(text, ['roka', '협업', '브랜드 하이라이트', 'w컨셉 신규 브랜드', '굿즈', '한정'])) {
+  if (hasAny(text, ['roka', '협업', '브랜드 하이라이트', 'w컨셉 신규 브랜드', '굿즈', '한정', '한정판굿즈', '브랜드위크'])) {
     return byTrendId('limited-goods', summaryFor('limited-goods', evidence));
   }
   if (hasAny(text, ['ai', '빅데이터', '어워즈', '큐레이션', '알리익스프레스'])) {
     return byTrendId('ai-curation', summaryFor('ai-curation', evidence));
   }
-  if (hasAny(text, ['리뷰', 'ugc', '인증샷', '챌린지'])) {
+  if (hasAny(text, ['리뷰', 'ugc', '인증샷', '챌린지', '후기', '언박싱', '하울', '유튜브', '블로그', '댓글', 'sns'])) {
     return byTrendId('ugc-review', summaryFor('ugc-review', evidence));
   }
   return { action: 'archive', reason: '자동 큐레이션 기준상 high-signal 키워드가 부족함' };
@@ -169,12 +182,12 @@ function classifyEvidence(evidence, trendMap) {
 function summaryFor(trendId, evidence) {
   const source = evidence.source || '외부 신호';
   const map = {
-    'live-instant': `${source} 사례. 시간 제한, 라이브/현장감, 단독 딜을 결합해 즉시 구매를 유도하는 프로모션 근거.`,
-    'routine-benefit': `${source} 사례. 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거.`,
+    'live-instant': `${source} 사례. 검색·공개 SNS·뉴스에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거.`,
+    'routine-benefit': `${source} 사례. 검색 관심과 공개 UGC에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거.`,
     'membership-preview': `${source} 사례. 멤버십/클럽/폐쇄형 채널에서 접근권·편의·추가혜택을 묶어 효용을 제시하는 근거.`,
-    'limited-goods': `${source} 사례. 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거.`,
+    'limited-goods': `${source} 사례. 검색/UGC 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거.`,
     'ai-curation': `${source} 사례. 데이터·랭킹·베스트 상품을 큐레이션 메시지로 전환해 탐색 피로를 줄이는 근거.`,
-    'ugc-review': `${source} 사례. 구매 후 리뷰/인증 참여를 다음 혜택과 연결하는 보조 CRM 근거.`
+    'ugc-review': `${source} 사례. 공개 SNS/블로그/영상 신호를 통해 구매 후 리뷰·인증 참여를 다음 혜택과 연결하는 보조 CRM 근거.`
   };
   return map[trendId] || evidence.summary;
 }
@@ -188,7 +201,7 @@ function clusterKey(evidence, classification) {
 
 const trendContent = {
   'routine-benefit': {
-    summary: '혜택을 쿠폰함에만 두지 않고 고객 루틴·앱 방문·미션·혜택 허브로 묶는 흐름. Hmall/SSG/무신사/카카오 베네핏 신호에서 쿠폰·적립·참여형 혜택의 상시화가 관찰됨.',
+    summary: '혜택을 쿠폰함에만 두지 않고 고객 루틴·앱 방문·미션·혜택 허브로 묶는 흐름. Hmall/SSG/무신사/카카오 베네핏과 검색 키워드 신호에서 쿠폰·적립·참여형 혜택의 상시화가 관찰됨.',
     consumer: '고객은 단발 할인보다 “내가 받을 수 있는 혜택이 어디에 있고, 오늘 무엇을 하면 더 받는지”를 쉽게 확인하려는 니즈가 커지고 있다.',
     opportunity: '온스타일은 혜택 탭을 개인화 루틴 허브로 재정의하고, 출석·찜·라이브 알림·리뷰 같은 행동을 소액 리워드와 연결해 재방문을 만든다.',
     caution: '미션형 리워드는 체리피커 유입과 비용 누수가 생길 수 있어 월 한도, 구매 연계 조건, 등급별 차등 지급이 필요하다.',
@@ -202,9 +215,9 @@ const trendContent = {
     scores: { momentum: 70, onstyleFit: 78, risk: 50 }
   },
   'ugc-review': {
-    summary: '이번 크롤링에서는 신규 UGC 신호가 강하지 않아 기존 보조 트렌드로 유지. 라이브딜/한정 굿즈 구매 후 인증·리뷰 참여로 연결하는 후속 장치로 적합.',
+    summary: '공개 블로그·영상·SNS성 신호를 보강 수집해 라이브딜/한정 굿즈 구매 후 인증·리뷰 참여를 후속 혜택으로 연결하는 흐름이 관찰됨.',
     consumer: '구매 전에는 타인의 사용 경험과 인증 콘텐츠를 참고하고, 구매 후에는 보상 조건이 명확할 때 리뷰/UGC 참여가 늘어난다.',
-    opportunity: '라이브 구매자 또는 한정 굿즈 수령 고객에게 리뷰·인증샷 미션을 부여해 다음 구매 쿠폰/적립으로 연결한다.',
+    opportunity: '라이브 구매자 또는 한정 굿즈 수령 고객에게 리뷰·인증샷 미션을 부여해 다음 구매 쿠폰/적립으로 연결하고, 공개 UGC 신호를 다음 프로모션 기획의 보조 근거로 활용한다.',
     caution: '허위 리뷰, 과도한 보상성 콘텐츠, 개인정보 노출을 막기 위한 가이드와 검수 기준이 필요하다.',
     scores: { momentum: 45, onstyleFit: 65, risk: 40 }
   },
@@ -223,7 +236,7 @@ const trendContent = {
     scores: { momentum: 62, onstyleFit: 76, risk: 42 }
   },
   'live-instant': {
-    summary: '쇼킹딜·톡딜·쇼핑라이브·반값창고처럼 시간 제한, 방송/현장감, 단독 딜을 결합해 즉시 구매를 압박하는 프로모션이 가장 강하게 포착됨.',
+    summary: '쇼킹딜·톡딜·쇼핑라이브·반값창고에 더해 검색/SNS 공개 신호에서도 시간 제한, 방송 현장감, 단독 딜을 결합한 즉시 구매형 프로모션 관심이 강하게 포착됨.',
     consumer: '고객은 “지금 사면 더 받는다”는 명확한 이유가 있을 때 라이브/딜 페이지에서 빠르게 전환한다.',
     opportunity: '온스타일은 방송 전 알림 신청, 방송 중 전용 쿠폰/사은품, 방송 후 미구매자 리마인드 쿠폰으로 라이브 전후 CRM 퍼널을 설계한다.',
     caution: '상시 타임딜화는 할인 피로와 마진 훼손을 만들 수 있어 단독 구성·콘텐츠·세그먼트별 혜택을 함께 설계해야 한다.',

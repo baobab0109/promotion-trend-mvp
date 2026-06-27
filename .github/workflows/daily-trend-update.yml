@@ -7,7 +7,7 @@ on:
         description: Maximum collected items to plan/write before curation
         required: false
         type: number
-        default: 24
+        default: 40
       dry_run:
         description: Run collect/curate without writing to Notion or committing data
         required: false
@@ -59,7 +59,7 @@ jobs:
       - name: Collect external trend signals
         env:
           INPUT_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
-          INPUT_LIMIT: ${{ github.event.inputs.collect_limit || '24' }}
+          INPUT_LIMIT: ${{ github.event.inputs.collect_limit || '40' }}
         run: |
           ARGS="--status=Draft --limit=${INPUT_LIMIT} --json"
           if [ "${INPUT_DRY_RUN}" = "true" ]; then

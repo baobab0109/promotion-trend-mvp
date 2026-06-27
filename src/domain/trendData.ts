@@ -48,6 +48,21 @@ function hasText(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
+const VALID_EVIDENCE_TYPES = new Set<EvidenceItem['type']>(['기사', 'SNS', '검색', '경쟁사']);
+
+function isHttpUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
+function sourceSummaryNameForType(type: EvidenceItem['type']): string {
+  return SOURCE_SUMMARY_META[type].name;
+}
+
 export function validateTrendDataset(dataset: TrendDataset): string[] {
   const errors: string[] = [];
 
@@ -60,6 +75,7 @@ export function validateTrendDataset(dataset: TrendDataset): string[] {
   }
 
   const ids = new Set<string>();
+  const evidenceCounts: Record<EvidenceItem['type'], number> = { 기사: 0, SNS: 0, 검색: 0, 경쟁사: 0 };
   dataset.trends.forEach((trend) => {
     const label = trend.id || '(missing trend id)';
     if (!hasText(trend.id)) errors.push('trend.id is required');
@@ -68,7 +84,24 @@ export function validateTrendDataset(dataset: TrendDataset): string[] {
     if (!hasText(trend.name)) errors.push(`${label}.name is required`);
     if (!hasText(trend.summary)) errors.push(`${label}.summary is required`);
     if (!Array.isArray(trend.keywords) || trend.keywords.length === 0) errors.push(`${label}.keywords must include at least one item`);
-    if (!Array.isArray(trend.evidence)) errors.push(`${label}.evidence must be an array`);
+    if (!Array.isArray(trend.evidence)) {
+      errors.push(`${label}.evidence must be an array`);
+    } else {
+      trend.evidence.forEach((evidence, index) => {
+        const evidenceLabel = `${label}.evidence[${index}]`;
+        if (!VALID_EVIDENCE_TYPES.has(evidence.type)) {
+          errors.push(`${evidenceLabel}.type must be one of 기사, SNS, 검색, 경쟁사`);
+        } else {
+          evidenceCounts[evidence.type] = (evidenceCounts[evidence.type] ?? 0) + 1;
+        }
+        if (!hasText(evidence.title)) errors.push(`${evidenceLabel}.title is required`);
+        if (!hasText(evidence.source)) errors.push(`${evidenceLabel}.source is required`);
+        if (!hasText(evidence.date)) errors.push(`${evidenceLabel}.date is required`);
+        if (!hasText(evidence.summary)) errors.push(`${evidenceLabel}.summary is required`);
+        if (!hasText(evidence.url)) errors.push(`${evidenceLabel}.url is required`);
+        else if (!isHttpUrl(evidence.url)) errors.push(`${evidenceLabel}.url must be http(s)`);
+      });
+    }
     if (!trend.ideas?.stable) errors.push(`${label}.ideas.stable is required`);
     if (!trend.ideas?.aggressive) errors.push(`${label}.ideas.aggressive is required`);
 
@@ -78,6 +111,14 @@ export function validateTrendDataset(dataset: TrendDataset): string[] {
       }
     });
   });
+
+  for (const type of SOURCE_ORDER) {
+    const sourceName = sourceSummaryNameForType(type);
+    const summary = dataset.sourceSummary.find((item) => item.name === sourceName);
+    const expectedCount = evidenceCounts[type] ?? 0;
+    if (!summary) errors.push(`sourceSummary.${sourceName} is required`);
+    else if (summary.count !== expectedCount) errors.push(`sourceSummary.${sourceName} count must equal evidence count ${expectedCount}`);
+  }
 
   return errors;
 }

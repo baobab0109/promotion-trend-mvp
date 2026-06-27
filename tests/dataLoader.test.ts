@@ -25,7 +25,7 @@ const validDataset: TrendDataset = {
       promotionTypes: ['멤버십'],
       modeBias: 'stable',
       scores: { momentum: 80, onstyleFit: 90, risk: 30 },
-      evidence: [{ type: '기사', title: '근거', source: '뉴스', date: '2026-06-26', url: '', summary: '요약' }],
+      evidence: [{ type: '기사', title: '근거', source: '뉴스', date: '2026-06-26', url: 'https://example.com/news', summary: '요약' }],
       aiInterpretation: { consumerInsight: '인사이트', opportunity: '기회', caution: '주의' },
       ideas: {
         stable: {
@@ -84,7 +84,13 @@ describe('loadTrendDataset', () => {
       ...validDataset,
       weekId: '2026-W24',
       label: '2026.06.10 - 2026.06.16',
-      trends: [{ ...validDataset.trends[0], id: 'trend-b', evidence: [{ type: 'SNS' as const, title: 'SNS 근거', source: 'SNS', date: '2026-06-12', url: '', summary: '요약' }] }]
+      sourceSummary: [
+        { name: '뉴스/기사', count: 0, note: '커머스·유통·브랜드 기사' },
+        { name: 'SNS 공개 신호', count: 1, note: '해시태그/UGC 공개 신호' },
+        { name: '검색 키워드', count: 0, note: '상승 검색어/키워드' },
+        { name: '경쟁사 프로모션', count: 0, note: '이벤트/기획전 페이지' }
+      ],
+      trends: [{ ...validDataset.trends[0], id: 'trend-b', evidence: [{ type: 'SNS' as const, title: 'SNS 근거', source: 'SNS', date: '2026-06-12', url: 'https://www.youtube.com/watch?v=abc123', summary: '요약' }] }]
     };
     const fetchMock = vi.fn()
       .mockResolvedValueOnce({ ok: true, json: async () => week25 })

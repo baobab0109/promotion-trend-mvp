@@ -136,4 +136,31 @@ describe('trend signal crawler utilities', () => {
     expect(plan[0].action).toBe('skip');
     expect(plan[0].reason).toContain('dedupe window');
   });
+
+  it('direct Published 모드에서 검색/SNS 타입을 보존하고 충분한 매칭 점수만 create한다', () => {
+    const items = [
+      { title: '라이브 특가 검색 관심 상승', type: '검색', source: 'Google Trends KR', canonicalUrl: 'https://trends.google.com/trending/rss?geo=KR', trendMatch: { trend: { pageId: 'trend-1' }, score: 8 } },
+      { title: '쇼핑라이브 리뷰 영상 확산', type: 'SNS', source: 'YouTube 공개 신호', canonicalUrl: 'https://www.youtube.com/watch?v=abc123', trendMatch: { trend: { pageId: 'trend-2' }, score: 7 } }
+    ];
+
+    const plan = buildUpsertPlan(items, new Map(), { status: 'Published', minMatchScore: 5 });
+
+    expect(plan.map((entry) => entry.action)).toEqual(['create', 'create']);
+    expect(plan.every((entry) => entry.status === 'Published')).toBe(true);
+    expect(plan.map((entry) => entry.item.type)).toEqual(['검색', 'SNS']);
+    expect(plan.every((entry) => entry.item.canonicalUrl.startsWith('https://'))).toBe(true);
+  });
+
+  it('direct Published 모드에서는 fallback 또는 낮은 match score 근거를 publish하지 않는다', () => {
+    const items = [
+      { title: '무관한 급상승어', type: '검색', source: 'Google Trends KR', canonicalUrl: 'https://trends.google.com/trending/rss?geo=KR#unrelated', trendMatch: { trend: { pageId: 'trend-1' }, score: 0, fallback: true } },
+      { title: '약한 SNS 언급', type: 'SNS', source: 'YouTube 공개 신호', canonicalUrl: 'https://www.youtube.com/watch?v=weak', trendMatch: { trend: { pageId: 'trend-2' }, score: 2 } }
+    ];
+
+    const plan = buildUpsertPlan(items, new Map(), { status: 'Published', minMatchScore: 5 });
+
+    expect(plan.map((entry) => entry.action)).toEqual(['skip', 'skip']);
+    expect(plan[0].reason).toContain('fallback');
+    expect(plan[1].reason).toContain('match score');
+  });
 });

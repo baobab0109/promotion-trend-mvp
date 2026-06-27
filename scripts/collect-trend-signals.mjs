@@ -22,12 +22,13 @@ const NOTION_CONFIG_PATH = path.join(ROOT, 'config', 'notion-data-sources.json')
 const STATIC_LATEST_PATH = path.join(ROOT, 'public', 'data', 'trends', 'latest.json');
 
 function parseArgs(argv) {
-  const options = { dryRun: false, limit: 20, status: DEFAULT_STATUS, json: false };
+  const options = { dryRun: false, limit: 20, status: DEFAULT_STATUS, json: false, minMatchScore: 0 };
   for (const arg of argv) {
     if (arg === '--dry-run') options.dryRun = true;
     else if (arg === '--json') options.json = true;
     else if (arg.startsWith('--limit=')) options.limit = Math.max(1, Number.parseInt(arg.split('=')[1], 10) || options.limit);
     else if (arg.startsWith('--status=')) options.status = arg.split('=')[1] || DEFAULT_STATUS;
+    else if (arg.startsWith('--min-match-score=')) options.minMatchScore = Math.max(0, Number.parseInt(arg.split('=')[1], 10) || 0);
   }
   return options;
 }
@@ -243,28 +244,51 @@ function decodeResponseBody(buffer, contentType = '') {
   }
 }
 
-async function fetchText(url) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 15000);
-  try {
-    const response = await fetch(url, {
-      signal: controller.signal,
-      headers: {
-        'User-Agent': 'promotion-trend-mvp-signal-collector/1.0 (+public pages only)',
-        Accept: 'text/html,application/rss+xml,application/xml,text/xml;q=0.9,*/*;q=0.8'
-      }
-    });
-    const buffer = new Uint8Array(await response.arrayBuffer());
-    const text = decodeResponseBody(buffer, response.headers.get('content-type') || '');
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return text;
-  } finally {
-    clearTimeout(timer);
+async function fetchText(url, retries = 2) {
+  let lastError;
+  for (let attempt = 1; attempt <= retries + 1; attempt += 1) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await fetch(url, {
+        signal: controller.signal,
+        headers: {
+          'User-Agent': 'promotion-trend-mvp-signal-collector/1.0 (+public pages only)',
+          Accept: 'text/html,application/rss+xml,application/xml,text/xml;q=0.9,*/*;q=0.8'
+        }
+      });
+      const buffer = new Uint8Array(await response.arrayBuffer());
+      const text = decodeResponseBody(buffer, response.headers.get('content-type') || '');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return text;
+    } catch (error) {
+      lastError = error;
+      if (attempt <= retries) await new Promise((resolve) => setTimeout(resolve, 700 * attempt));
+    } finally {
+      clearTimeout(timer);
+    }
   }
+  throw lastError;
 }
 
 function googleNewsUrl(query) {
   return `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=ko&gl=KR&ceid=KR:ko`;
+}
+
+function itemMatchesSourceQuality(item, source) {
+  if (!source.strictKeywordFilter && !source.requiredKeywordGroups?.length) return true;
+  const fields = source.keywordFilterFields || ['title', 'description', 'source'];
+  const haystack = fields.map((field) => item[field]).filter(Boolean).join(' ');
+  if (source.strictKeywordFilter && (source.keywords || []).length && !hasAnyText(haystack, source.keywords)) return false;
+  for (const group of source.requiredKeywordGroups || []) {
+    if (!hasAnyText(haystack, group)) return false;
+  }
+  return true;
+}
+
+function hasAnyText(text, patterns = []) {
+  const haystack = String(text || '').toLowerCase();
+  return patterns.some((pattern) => haystack.includes(String(pattern || '').toLowerCase()));
 }
 
 async function collectRssSource(source) {
@@ -277,7 +301,8 @@ async function collectRssSource(source) {
     fallbackSource: source.name,
     sourceHint: [source.query, ...(source.keywords || [])].filter(Boolean).join(' '),
     type: source.type || '기사'
-  }).filter((item) => {
+  }).filter((item) => itemMatchesSourceQuality(item, source))
+    .filter((item) => {
     if (!minTime || !item.publishedAt) return true;
     return new Date(item.publishedAt).getTime() >= minTime;
   }).sort((a, b) => new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime())
@@ -478,7 +503,8 @@ async function main() {
 
   const plan = buildUpsertPlan(matchedItems, context.existingEvidence, {
     status: options.status,
-    existingByFingerprint: context.existingEvidenceByFingerprint
+    existingByFingerprint: context.existingEvidenceByFingerprint,
+    minMatchScore: options.status === 'Published' ? options.minMatchScore : 0
   });
   const executedPlan = options.dryRun ? plan : await executePlan(plan, context.db.evidence);
   const counts = summarizePlan(executedPlan);

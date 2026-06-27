@@ -263,19 +263,28 @@ function planForExisting(existing, item, canonicalUrl, status, reasonPrefix = ''
   return { action: 'update', pageId: existing.pageId, existing, item: { ...item, canonicalUrl }, status };
 }
 
-export function buildUpsertPlan(items = [], existingByCanonicalUrl = new Map(), { status = 'Draft', existingByFingerprint = new Map() } = {}) {
+export function buildUpsertPlan(items = [], existingByCanonicalUrl = new Map(), { status = 'Draft', existingByFingerprint = new Map(), minMatchScore = 0 } = {}) {
   const seen = new Set();
   return items.map((item) => {
     const canonicalUrl = item.canonicalUrl || canonicalizeUrl(item.link || item.url);
     const fingerprint = item.fingerprint || signalFingerprint(item);
+    const itemWithKeys = { ...item, canonicalUrl, fingerprint };
     if (!canonicalUrl) return { action: 'skip', reason: 'missing canonical URL', item };
     const collectionKeys = [canonicalUrl ? `url:${canonicalUrl}` : '', fingerprint ? `fingerprint:${fingerprint}` : ''].filter(Boolean);
     const duplicateKey = collectionKeys.find((key) => seen.has(key));
-    if (duplicateKey) return { action: 'skip', reason: `duplicate signal in collection: ${duplicateKey}`, item: { ...item, canonicalUrl, fingerprint } };
+    if (duplicateKey) return { action: 'skip', reason: `duplicate signal in collection: ${duplicateKey}`, item: itemWithKeys };
     for (const key of collectionKeys) seen.add(key);
 
     if (!item.trendMatch?.trend?.pageId && !item.trend?.pageId) {
-      return { action: 'skip', reason: 'missing trend match', item: { ...item, canonicalUrl, fingerprint } };
+      return { action: 'skip', reason: 'missing trend match', item: itemWithKeys };
+    }
+
+    if (status === 'Published') {
+      const match = item.trendMatch;
+      if (match?.fallback) return { action: 'skip', reason: 'fallback trend match is not publishable', item: itemWithKeys };
+      if (Number(match?.score || 0) < minMatchScore) {
+        return { action: 'skip', reason: `match score ${Number(match?.score || 0)} is below publish threshold ${minMatchScore}`, item: itemWithKeys };
+      }
     }
 
     const existing = existingByCanonicalUrl.get(canonicalUrl);
@@ -286,7 +295,7 @@ export function buildUpsertPlan(items = [], existingByCanonicalUrl = new Map(), 
       return planForExisting(existingBySameFingerprint, { ...item, fingerprint }, canonicalUrl, status, 'same title/source fingerprint already exists; ');
     }
 
-    return { action: 'create', item: { ...item, canonicalUrl, fingerprint }, status };
+    return { action: 'create', item: itemWithKeys, status };
   });
 }
 

@@ -37,7 +37,7 @@ function trend(overrides: Partial<TrendTopic> = {}): TrendTopic {
     scores: { momentum: 80, onstyleFit: 90, risk: 30 },
     evidence: [
       { type: '기사', title: '기사 근거', source: '뉴스', date: '2026-06-25', url: 'https://example.com/news', summary: '기사 요약' },
-      { type: '검색', title: '검색 근거', source: '검색', date: '2026-06-25', url: '', summary: '검색 요약' }
+      { type: '검색', title: '검색 근거', source: '검색', date: '2026-06-25', url: 'https://trends.google.com/trending/rss?geo=KR', summary: '검색 요약' }
     ],
     aiInterpretation: { consumerInsight: '인사이트', opportunity: '기회', caution: '주의' },
     ideas: { stable: baseIdea, aggressive: { ...baseIdea, title: '공격형 기획안' } },
@@ -83,6 +83,32 @@ describe('trend data helpers', () => {
     expect(validateTrendDataset(dataset)).toEqual([]);
     expect(validateTrendDataset({ ...dataset, trends: [trend({ scores: { momentum: 101, onstyleFit: 90, risk: 30 } })] })).toContain(
       'trend-a.scores.momentum must be between 0 and 100'
+    );
+  });
+
+  it('requires publish-ready evidence type, fields, URL, and sourceSummary counts', () => {
+    const dataset: TrendDataset = {
+      weekId: '2026-W26',
+      label: '2026.06.24 - 2026.06.30',
+      status: 'Published',
+      generatedAt: '2026-06-26T00:00:00.000Z',
+      source: 'notion',
+      sourceSummary: buildSourceSummaryFromEvidence([trend()]),
+      trends: [trend()]
+    };
+
+    expect(validateTrendDataset(dataset)).toEqual([]);
+    expect(validateTrendDataset({ ...dataset, trends: [trend({ evidence: [{ ...trend().evidence[0], type: 'Search' as never }] })] })).toContain(
+      'trend-a.evidence[0].type must be one of 기사, SNS, 검색, 경쟁사'
+    );
+    expect(validateTrendDataset({ ...dataset, trends: [trend({ evidence: [{ ...trend().evidence[0], url: '' }] })] })).toContain(
+      'trend-a.evidence[0].url is required'
+    );
+    expect(validateTrendDataset({ ...dataset, trends: [trend({ evidence: [{ ...trend().evidence[0], url: 'javascript:alert(1)' }] })] })).toContain(
+      'trend-a.evidence[0].url must be http(s)'
+    );
+    expect(validateTrendDataset({ ...dataset, sourceSummary: dataset.sourceSummary.map((item) => item.name === '검색 키워드' ? { ...item, count: 0 } : item) })).toContain(
+      'sourceSummary.검색 키워드 count must equal evidence count 1'
     );
   });
 

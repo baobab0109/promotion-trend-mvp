@@ -1,6 +1,232 @@
 {
   "rssFeeds": [
     {
+      "name": "Google Trends KR · 쇼핑/프로모션 급상승 검색어",
+      "url": "https://trends.google.com/trending/rss?geo=KR",
+      "type": "검색",
+      "description": "Google Trends KR 공개 RSS에서 쇼핑·프로모션 관련 급상승 검색어 후보를 관측합니다. 단독 검색량이 아니라 급상승 검색어 공개 신호로만 사용합니다.",
+      "lookbackDays": 3,
+      "maxItems": 4,
+      "keywords": [
+        "쇼핑",
+        "커머스",
+        "쿠폰",
+        "혜택",
+        "특가",
+        "타임딜",
+        "라이브",
+        "멤버십",
+        "뷰티",
+        "패션",
+        "굿즈",
+        "한정판",
+        "추천"
+      ],
+      "windowPolicy": "google_trends_kr_daily_public_rss",
+      "dedupeKeys": [
+        "canonicalUrl",
+        "sourceTitleFingerprint"
+      ],
+      "dedupeWindowDays": 3,
+      "publishGrade": true,
+      "validationNotes": "공개 RSS, 최근 3일, 커머스 키워드 매칭 및 curation high-signal gate 통과 항목만 Published 승격",
+      "strictKeywordFilter": true,
+      "requiredKeywordGroups": [
+        [
+          "쇼핑",
+          "쿠폰",
+          "혜택",
+          "특가",
+          "타임딜",
+          "라이브",
+          "멤버십",
+          "뷰티",
+          "패션",
+          "굿즈",
+          "한정판",
+          "세일",
+          "올리브영",
+          "무신사",
+          "쿠팡",
+          "네이버쇼핑"
+        ]
+      ],
+      "keywordFilterFields": [
+        "title"
+      ]
+    },
+    {
+      "name": "Google News · 커머스 검색 관심/키워드 신호",
+      "query": "(올리브영 OR 무신사 OR 쿠팡 OR 네이버쇼핑 OR CJ온스타일 OR 쇼핑라이브 OR 쇼핑 OR 커머스 OR 쿠폰 OR 혜택 OR 특가 OR 타임딜) (검색 OR 키워드 OR 트렌드 OR 인기 OR 급상승) when:30d",
+      "type": "검색",
+      "description": "검색 관심·키워드 상승을 보도/공개 문서로 확인할 수 있는 커머스 관련 신호를 Google News RSS에서 수집합니다.",
+      "lookbackDays": 30,
+      "maxItems": 4,
+      "keywords": [
+        "검색",
+        "키워드",
+        "급상승",
+        "인기",
+        "트렌드",
+        "라이브특가",
+        "쿠폰",
+        "멤버십",
+        "뷰티",
+        "한정판",
+        "타임딜"
+      ],
+      "windowPolicy": "published_at_14d_search_interest_public_rss",
+      "dedupeKeys": [
+        "canonicalUrl",
+        "sourceTitleFingerprint"
+      ],
+      "dedupeWindowDays": 7,
+      "publishGrade": true,
+      "validationNotes": "검색량 수치가 아닌 공개 검색 관심 보도/문서 신호. 원문 URL, 최근성, trend keyword match 필요",
+      "strictKeywordFilter": true,
+      "requiredKeywordGroups": [
+        [
+          "쇼핑",
+          "커머스",
+          "쿠폰",
+          "혜택",
+          "특가",
+          "타임딜",
+          "쇼핑라이브",
+          "올리브영",
+          "무신사",
+          "쿠팡",
+          "네이버쇼핑",
+          "CJ온스타일"
+        ],
+        [
+          "검색",
+          "키워드",
+          "트렌드",
+          "인기",
+          "급상승"
+        ]
+      ],
+      "keywordFilterFields": [
+        "title",
+        "description"
+      ]
+    },
+    {
+      "name": "Google News · 공개 UGC/SNS 쇼핑 리뷰 신호",
+      "query": "(유튜브 OR 쇼츠 OR 블로그 OR SNS OR 리뷰 OR 후기 OR 언박싱 OR 하울) (쇼핑 OR 뷰티 OR 패션 OR 쿠폰 OR 라이브커머스 OR 쇼핑라이브 OR 한정판 OR 굿즈) when:30d",
+      "type": "SNS",
+      "description": "로그인/우회 없이 공개적으로 인덱싱된 쇼핑 리뷰·후기·인증·영상형 UGC 신호를 Google News RSS에서 수집합니다.",
+      "lookbackDays": 30,
+      "maxItems": 4,
+      "keywords": [
+        "유튜브",
+        "쇼츠",
+        "블로그",
+        "SNS",
+        "후기",
+        "인증샷",
+        "언박싱",
+        "하울",
+        "댓글",
+        "챌린지",
+        "라이브커머스",
+        "쇼핑라이브",
+        "뷰티",
+        "패션",
+        "쿠폰",
+        "한정판",
+        "굿즈"
+      ],
+      "windowPolicy": "published_at_14d_public_ugc_rss",
+      "dedupeKeys": [
+        "canonicalUrl",
+        "sourceTitleFingerprint"
+      ],
+      "dedupeWindowDays": 7,
+      "publishGrade": true,
+      "validationNotes": "공개 UGC/SNS 보도·인덱싱 신호. sponsored/광고성 과다 문구는 curation에서 제외",
+      "strictKeywordFilter": true,
+      "requiredKeywordGroups": [
+        [
+          "유튜브",
+          "쇼츠",
+          "블로그",
+          "sns",
+          "후기",
+          "인증샷",
+          "언박싱",
+          "하울",
+          "댓글",
+          "챌린지"
+        ],
+        [
+          "쇼핑",
+          "뷰티",
+          "패션",
+          "쿠폰",
+          "라이브커머스",
+          "쇼핑라이브",
+          "한정판",
+          "굿즈"
+        ]
+      ],
+      "keywordFilterFields": [
+        "title",
+        "description"
+      ]
+    },
+    {
+      "name": "Google News · 라이브/숏폼 커머스 SNS 확산 신호",
+      "query": "(라이브커머스 OR 쇼핑라이브 OR 숏폼커머스 OR 쇼츠 OR 릴스) (유튜브 OR SNS OR 리뷰 OR 댓글 OR 화제 OR 챌린지 OR 영상) when:30d",
+      "type": "SNS",
+      "description": "라이브/숏폼 커머스 관련 공개 SNS·영상·댓글 확산 신호를 수집합니다.",
+      "lookbackDays": 30,
+      "maxItems": 3,
+      "keywords": [
+        "라이브커머스",
+        "쇼핑라이브",
+        "숏폼",
+        "쇼츠",
+        "릴스",
+        "SNS",
+        "댓글",
+        "화제",
+        "챌린지"
+      ],
+      "windowPolicy": "published_at_14d_public_social_video_rss",
+      "dedupeKeys": [
+        "canonicalUrl",
+        "sourceTitleFingerprint"
+      ],
+      "dedupeWindowDays": 7,
+      "publishGrade": true,
+      "validationNotes": "공개 영상/SNS 확산 신호. 원문 URL과 trend keyword match 필요",
+      "strictKeywordFilter": true,
+      "requiredKeywordGroups": [
+        [
+          "라이브커머스",
+          "쇼핑라이브",
+          "숏폼커머스",
+          "쇼츠",
+          "릴스"
+        ],
+        [
+          "유튜브",
+          "sns",
+          "리뷰",
+          "댓글",
+          "화제",
+          "챌린지",
+          "영상"
+        ]
+      ],
+      "keywordFilterFields": [
+        "title",
+        "description"
+      ]
+    },
+    {
       "name": "Google News · 홈쇼핑형 커머스 행사/혜택",
       "query": "(GS샵 OR GS SHOP OR 현대홈쇼핑 OR Hmall OR 롯데홈쇼핑 OR NS홈쇼핑 OR 홈앤쇼핑 OR CJ온스타일) (혜택 OR 프로모션 OR 쿠폰 OR 이벤트 OR 기획전) when:14d",
       "type": "기사",
