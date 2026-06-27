@@ -125,6 +125,7 @@ function exclusionReason(evidence) {
   const text = `${evidence.title} ${evidence.source} ${evidence.summary}`;
   if (evidence.type === 'SNS' && !isHighSignalSocialEvidence(text)) return '공개 SNS/UGC 근거이나 쇼핑·혜택·라이브·후기 맥락이 충분히 구체적이지 않음';
   if (evidence.type === '검색' && !isHighSignalSearchEvidence(text)) return '검색 근거이나 커머스·혜택·트렌드 맥락이 충분히 구체적이지 않음';
+  if (hasAny(text, ['탈세', '과세', '세무', '세금', '전쟁 선포'])) return '규제/세무 이슈 중심으로 프로모션 실행 근거가 아님';
   if (hasAny(text, ['협찬', '광고', '체험단', '파트너스', '제공받아'])) return '광고/협찬/체험단 가능성이 있어 직접 Published 근거로 사용하지 않음';
   if (hasAny(text, ['금호타이어', '타이어프로', '불스원', '유류'])) return '온스타일 핵심 카테고리와 거리가 큰 자동차/유류 이벤트';
   if (hasAny(text, ['신세계면세점', '면세점', '여름 여행', '휴가철 맞아 여름 여행'])) return '면세/여행 캠페인 성격이 강해 직접 적용성이 낮음';
