@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 import {
   buildUpsertPlan,
@@ -139,7 +140,7 @@ describe('trend signal crawler utilities', () => {
 
   it('direct Published 모드에서 검색/SNS 타입을 보존하고 충분한 매칭 점수만 create한다', () => {
     const items = [
-      { title: '라이브 특가 검색 관심 상승', type: '검색', source: 'Google Trends KR', canonicalUrl: 'https://trends.google.com/trending/rss?geo=KR', trendMatch: { trend: { pageId: 'trend-1' }, score: 8 } },
+      { title: 'CJ온스타일 라이브 전용 쿠폰 혜택 기획전', type: '검색', source: 'Google News · 커머스사 혜택/쿠폰 실행 신호', canonicalUrl: 'https://example.com/commerce-benefit', trendMatch: { trend: { pageId: 'trend-1' }, score: 8 } },
       { title: '쇼핑라이브 리뷰 영상 확산', type: 'SNS', source: 'YouTube 공개 신호', canonicalUrl: 'https://www.youtube.com/watch?v=abc123', trendMatch: { trend: { pageId: 'trend-2' }, score: 7 } }
     ];
 
@@ -153,7 +154,7 @@ describe('trend signal crawler utilities', () => {
 
   it('direct Published 모드에서는 fallback 또는 낮은 match score 근거를 publish하지 않는다', () => {
     const items = [
-      { title: '무관한 급상승어', type: '검색', source: 'Google Trends KR', canonicalUrl: 'https://trends.google.com/trending/rss?geo=KR#unrelated', trendMatch: { trend: { pageId: 'trend-1' }, score: 0, fallback: true } },
+      { title: '무관한 검색 신호', type: '검색', source: 'Google News · 커머스사 혜택/쿠폰 실행 신호', canonicalUrl: 'https://example.com/unrelated-search', trendMatch: { trend: { pageId: 'trend-1' }, score: 0, fallback: true } },
       { title: '약한 SNS 언급', type: 'SNS', source: 'YouTube 공개 신호', canonicalUrl: 'https://www.youtube.com/watch?v=weak', trendMatch: { trend: { pageId: 'trend-2' }, score: 2 } }
     ];
 
@@ -162,5 +163,28 @@ describe('trend signal crawler utilities', () => {
     expect(plan.map((entry) => entry.action)).toEqual(['skip', 'skip']);
     expect(plan[0].reason).toContain('fallback');
     expect(plan[1].reason).toContain('match score');
+  });
+
+  it('커머스 혜택 검색 source는 플랫폼+혜택+실행 문맥을 요구한다', async () => {
+    const config = JSON.parse(await fs.readFile('config/trend-signal-sources.json', 'utf8'));
+    const searchSources = config.rssFeeds.filter((source) => source.type === '검색');
+
+    expect(searchSources.map((source) => source.name)).toEqual([
+      'Google News · 커머스사 혜택/쿠폰 실행 신호',
+      'Google News · 멤버십/회원전용 혜택 신호',
+      'Google News · 라이브커머스 전용 혜택 신호',
+      'Google News · 버티컬 기획전/브랜드위크 혜택 신호',
+      'Google News · CRM 루틴/참여형 혜택 신호',
+      'Google News · 개인화/추천딜 혜택 신호'
+    ]);
+
+    for (const source of searchSources) {
+      expect(source.publishGrade).toBe(true);
+      expect(source.strictKeywordFilter).toBe(true);
+      expect(source.requiredKeywordGroups).toHaveLength(3);
+      expect(source.validationNotes).toMatch(/혜택|쿠폰|프로모션|커머스사/);
+      expect(source.name).not.toContain('급상승 검색어');
+      expect(source.name).not.toContain('검색 관심/키워드');
+    }
   });
 });

@@ -4,7 +4,7 @@ import type { EvidenceItem, FilterOptions, SourceSummary, TrendDataset, TrendTop
 const SOURCE_SUMMARY_META: Record<EvidenceItem['type'], { name: string; note: string }> = {
   기사: { name: '뉴스/기사', note: '커머스·유통·브랜드 기사' },
   SNS: { name: 'SNS 공개 신호', note: '해시태그/UGC 공개 신호' },
-  검색: { name: '검색 키워드', note: '상승 검색어/키워드' },
+  검색: { name: '커머스 혜택 검색', note: '쿠폰·혜택·특가·프로모션 공개 근거' },
   경쟁사: { name: '경쟁사 프로모션', note: '이벤트/기획전 페이지' }
 };
 
@@ -69,6 +69,16 @@ export function validateTrendDataset(dataset: TrendDataset): string[] {
   if (!hasText(dataset.weekId)) errors.push('weekId is required');
   if (!hasText(dataset.label)) errors.push('label is required');
   if (!Array.isArray(dataset.sourceSummary) || dataset.sourceSummary.length === 0) errors.push('sourceSummary is required');
+  if (Array.isArray(dataset.sourceSummary)) {
+    const expectedSourceNames = SOURCE_ORDER.map(sourceSummaryNameForType);
+    const actualSourceNames = dataset.sourceSummary.map((item) => item.name);
+    for (const name of actualSourceNames) {
+      if (!expectedSourceNames.includes(name)) errors.push(`sourceSummary.${name} is not recognized`);
+    }
+    if (actualSourceNames.slice(0, expectedSourceNames.length).join('|') !== expectedSourceNames.join('|')) {
+      errors.push(`sourceSummary order must be ${expectedSourceNames.join(', ')}`);
+    }
+  }
   if (!Array.isArray(dataset.trends) || dataset.trends.length === 0) {
     errors.push('trends must include at least one item');
     return errors;

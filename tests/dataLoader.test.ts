@@ -11,7 +11,7 @@ const validDataset: TrendDataset = {
   sourceSummary: [
     { name: '뉴스/기사', count: 1, note: '커머스·유통·브랜드 기사' },
     { name: 'SNS 공개 신호', count: 0, note: '해시태그/UGC 공개 신호' },
-    { name: '검색 키워드', count: 0, note: '상승 검색어/키워드' },
+    { name: '커머스 혜택 검색', count: 0, note: '쿠폰·혜택·특가·프로모션 공개 근거' },
     { name: '경쟁사 프로모션', count: 0, note: '이벤트/기획전 페이지' }
   ],
   trends: [
@@ -87,7 +87,7 @@ describe('loadTrendDataset', () => {
       sourceSummary: [
         { name: '뉴스/기사', count: 0, note: '커머스·유통·브랜드 기사' },
         { name: 'SNS 공개 신호', count: 1, note: '해시태그/UGC 공개 신호' },
-        { name: '검색 키워드', count: 0, note: '상승 검색어/키워드' },
+        { name: '커머스 혜택 검색', count: 0, note: '쿠폰·혜택·특가·프로모션 공개 근거' },
         { name: '경쟁사 프로모션', count: 0, note: '이벤트/기획전 페이지' }
       ],
       trends: [{ ...validDataset.trends[0], id: 'trend-b', evidence: [{ type: 'SNS' as const, title: 'SNS 근거', source: 'SNS', date: '2026-06-12', url: 'https://www.youtube.com/watch?v=abc123', summary: '요약' }] }]

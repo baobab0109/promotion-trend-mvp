@@ -1,116 +1,473 @@
 {
   "rssFeeds": [
     {
-      "name": "Google Trends KR · 쇼핑/프로모션 급상승 검색어",
-      "url": "https://trends.google.com/trending/rss?geo=KR",
       "type": "검색",
-      "description": "Google Trends KR 공개 RSS에서 쇼핑·프로모션 관련 급상승 검색어 후보를 관측합니다. 단독 검색량이 아니라 급상승 검색어 공개 신호로만 사용합니다.",
-      "lookbackDays": 3,
-      "maxItems": 4,
-      "keywords": [
-        "쇼핑",
-        "커머스",
-        "쿠폰",
-        "혜택",
-        "특가",
-        "타임딜",
-        "라이브",
-        "멤버십",
-        "뷰티",
-        "패션",
-        "굿즈",
-        "한정판",
-        "추천"
-      ],
-      "windowPolicy": "google_trends_kr_daily_public_rss",
-      "dedupeKeys": [
-        "canonicalUrl",
-        "sourceTitleFingerprint"
-      ],
-      "dedupeWindowDays": 3,
-      "publishGrade": true,
-      "validationNotes": "공개 RSS, 최근 3일, 커머스 키워드 매칭 및 curation high-signal gate 통과 항목만 Published 승격",
-      "strictKeywordFilter": true,
-      "requiredKeywordGroups": [
-        [
-          "쇼핑",
-          "쿠폰",
-          "혜택",
-          "특가",
-          "타임딜",
-          "라이브",
-          "멤버십",
-          "뷰티",
-          "패션",
-          "굿즈",
-          "한정판",
-          "세일",
-          "올리브영",
-          "무신사",
-          "쿠팡",
-          "네이버쇼핑"
-        ]
-      ],
-      "keywordFilterFields": [
-        "title"
-      ]
-    },
-    {
-      "name": "Google News · 커머스 검색 관심/키워드 신호",
-      "query": "(올리브영 OR 무신사 OR 쿠팡 OR 네이버쇼핑 OR CJ온스타일 OR 쇼핑라이브 OR 쇼핑 OR 커머스 OR 쿠폰 OR 혜택 OR 특가 OR 타임딜) (검색 OR 키워드 OR 트렌드 OR 인기 OR 급상승) when:30d",
-      "type": "검색",
-      "description": "검색 관심·키워드 상승을 보도/공개 문서로 확인할 수 있는 커머스 관련 신호를 Google News RSS에서 수집합니다.",
       "lookbackDays": 30,
-      "maxItems": 4,
-      "keywords": [
-        "검색",
-        "키워드",
-        "급상승",
-        "인기",
-        "트렌드",
-        "라이브특가",
-        "쿠폰",
-        "멤버십",
-        "뷰티",
-        "한정판",
-        "타임딜"
-      ],
-      "windowPolicy": "published_at_14d_search_interest_public_rss",
       "dedupeKeys": [
         "canonicalUrl",
         "sourceTitleFingerprint"
       ],
       "dedupeWindowDays": 7,
       "publishGrade": true,
-      "validationNotes": "검색량 수치가 아닌 공개 검색 관심 보도/문서 신호. 원문 URL, 최근성, trend keyword match 필요",
       "strictKeywordFilter": true,
-      "requiredKeywordGroups": [
-        [
-          "쇼핑",
-          "커머스",
-          "쿠폰",
-          "혜택",
-          "특가",
-          "타임딜",
-          "쇼핑라이브",
-          "올리브영",
-          "무신사",
-          "쿠팡",
-          "네이버쇼핑",
-          "CJ온스타일"
-        ],
-        [
-          "검색",
-          "키워드",
-          "트렌드",
-          "인기",
-          "급상승"
-        ]
-      ],
       "keywordFilterFields": [
         "title",
         "description"
-      ]
+      ],
+      "name": "Google News · 커머스사 혜택/쿠폰 실행 신호",
+      "query": "(CJ온스타일 OR 온스타일 OR GS샵 OR GS SHOP OR 현대홈쇼핑 OR 현대Hmall OR Hmall OR 롯데홈쇼핑 OR NS홈쇼핑 OR 홈앤쇼핑 OR 쿠팡 OR 네이버쇼핑 OR 11번가 OR G마켓 OR 옥션 OR SSG OR 쓱닷컴 OR 롯데온 OR 카카오쇼핑 OR 톡딜 OR 올리브영 OR 무신사 OR W컨셉 OR 컬리) (혜택 OR 쿠폰 OR 쿠폰팩 OR 할인 OR 적립 OR 포인트 OR 캐시백 OR 페이백 OR 사은품 OR 무료배송 OR 특가 OR 타임딜) (프로모션 OR 이벤트 OR 기획전 OR 행사 OR 페스타 OR 세일 OR 할인전 OR 딜 OR 브랜드위크) when:30d -면세점 -여행 -항공권 -호텔 -숙박 -렌터카 -주유 -유류 -타이어 -자동차 -탈세 -과세 -세무 -소송 -과징금 -채용 -공모전 -인사 -상장 -인수",
+      "description": "커머스사가 실제로 공개한 쿠폰·할인·적립·사은품·배송 혜택과 행사/기획전 실행 신호를 Google News RSS에서 수집합니다.",
+      "maxItems": 6,
+      "keywords": [
+        "커머스사",
+        "혜택",
+        "쿠폰",
+        "쿠폰팩",
+        "할인",
+        "적립",
+        "포인트",
+        "캐시백",
+        "페이백",
+        "사은품",
+        "무료배송",
+        "특가",
+        "타임딜",
+        "프로모션",
+        "이벤트",
+        "기획전"
+      ],
+      "requiredKeywordGroups": [
+        [
+          "CJ온스타일",
+          "온스타일",
+          "GS샵",
+          "GS SHOP",
+          "현대홈쇼핑",
+          "현대Hmall",
+          "Hmall",
+          "롯데홈쇼핑",
+          "NS홈쇼핑",
+          "홈앤쇼핑",
+          "쿠팡",
+          "네이버쇼핑",
+          "11번가",
+          "G마켓",
+          "옥션",
+          "SSG",
+          "쓱닷컴",
+          "롯데온",
+          "카카오쇼핑",
+          "톡딜",
+          "올리브영",
+          "무신사",
+          "W컨셉",
+          "컬리"
+        ],
+        [
+          "혜택",
+          "쿠폰",
+          "쿠폰팩",
+          "할인",
+          "적립",
+          "포인트",
+          "캐시백",
+          "페이백",
+          "사은품",
+          "무료배송",
+          "특가",
+          "타임딜"
+        ],
+        [
+          "프로모션",
+          "이벤트",
+          "기획전",
+          "행사",
+          "페스타",
+          "세일",
+          "할인전",
+          "딜",
+          "브랜드위크"
+        ]
+      ],
+      "windowPolicy": "published_at_30d_commerce_benefit_evidence",
+      "validationNotes": "검색량/급상승어가 아니라 커머스사명+혜택 메커니즘+실행 문맥이 함께 확인되는 공개 검색 기반 혜택 근거만 후보로 사용"
+    },
+    {
+      "type": "검색",
+      "lookbackDays": 30,
+      "dedupeKeys": [
+        "canonicalUrl",
+        "sourceTitleFingerprint"
+      ],
+      "dedupeWindowDays": 7,
+      "publishGrade": true,
+      "strictKeywordFilter": true,
+      "keywordFilterFields": [
+        "title",
+        "description"
+      ],
+      "name": "Google News · 멤버십/회원전용 혜택 신호",
+      "query": "(쿠팡 OR 로켓와우 OR 네이버플러스 OR 네이버쇼핑 OR SSG OR 쓱닷컴 OR 컬리 OR 마켓컬리 OR 올리브영 OR 무신사 OR CJ온스타일 OR GS샵 OR Hmall OR 롯데온 OR 11번가 OR G마켓) (멤버십 OR 회원전용 OR VIP OR VVIP OR 우수고객 OR 등급 OR 클럽 OR 구독 OR 패스 OR 첫구매 OR 신규가입 OR 웰컴쿠폰) (혜택 OR 쿠폰 OR 적립 OR 무료배송 OR 무료반품 OR 사은품 OR 선공개 OR 전용혜택) when:30d -면세점 -여행 -항공권 -호텔 -숙박 -렌터카 -주유 -유류 -타이어 -자동차 -탈세 -과세 -세무 -소송 -과징금 -채용 -공모전 -인사 -상장 -인수",
+      "description": "멤버십·회원전용·신규가입·등급 혜택처럼 회원가치 제안을 확인할 수 있는 공개 검색 근거를 수집합니다.",
+      "maxItems": 4,
+      "keywords": [
+        "멤버십",
+        "회원전용",
+        "VIP",
+        "등급",
+        "클럽",
+        "구독",
+        "첫구매",
+        "신규가입",
+        "웰컴쿠폰",
+        "무료배송",
+        "무료반품",
+        "선공개",
+        "전용혜택"
+      ],
+      "requiredKeywordGroups": [
+        [
+          "쿠팡",
+          "로켓와우",
+          "네이버플러스",
+          "네이버쇼핑",
+          "SSG",
+          "쓱닷컴",
+          "컬리",
+          "마켓컬리",
+          "올리브영",
+          "무신사",
+          "CJ온스타일",
+          "GS샵",
+          "Hmall",
+          "롯데온",
+          "11번가",
+          "G마켓"
+        ],
+        [
+          "멤버십",
+          "회원전용",
+          "VIP",
+          "VVIP",
+          "우수고객",
+          "등급",
+          "클럽",
+          "구독",
+          "패스",
+          "첫구매",
+          "신규가입",
+          "웰컴쿠폰"
+        ],
+        [
+          "혜택",
+          "쿠폰",
+          "적립",
+          "무료배송",
+          "무료반품",
+          "사은품",
+          "선공개",
+          "전용혜택"
+        ]
+      ],
+      "windowPolicy": "published_at_30d_membership_benefit_evidence",
+      "validationNotes": "커머스사명+멤버십/회원 조건+혜택 항목이 함께 확인되는 경우만 Published 후보"
+    },
+    {
+      "type": "검색",
+      "lookbackDays": 30,
+      "dedupeKeys": [
+        "canonicalUrl",
+        "sourceTitleFingerprint"
+      ],
+      "dedupeWindowDays": 7,
+      "publishGrade": true,
+      "strictKeywordFilter": true,
+      "keywordFilterFields": [
+        "title",
+        "description"
+      ],
+      "name": "Google News · 라이브커머스 전용 혜택 신호",
+      "query": "(CJ온스타일 OR GS샵 OR Hmall OR 롯데홈쇼핑 OR NS홈쇼핑 OR 네이버쇼핑 OR 네이버쇼핑라이브 OR 카카오쇼핑 OR 톡딜 OR 쎈딜 OR 11번가 OR 쇼킹딜 OR G마켓 OR 슈퍼딜) (쇼핑라이브 OR 라이브커머스 OR 라이브특가 OR 방송중 OR 방송 OR 알림신청 OR 라이브전용) (혜택 OR 쿠폰 OR 특가 OR 타임딜 OR 핫딜 OR 선착순 OR 한정수량 OR 사은품 OR 반값 OR 단독가) when:30d -면세점 -여행 -항공권 -호텔 -숙박 -렌터카 -주유 -유류 -타이어 -자동차 -탈세 -과세 -세무 -소송 -과징금 -채용 -공모전 -인사 -상장 -인수",
+      "description": "쇼핑라이브/라이브커머스에서 방송 중 쿠폰, 전용 특가, 선착순 사은품처럼 시간 제한 혜택을 확인합니다.",
+      "maxItems": 4,
+      "keywords": [
+        "쇼핑라이브",
+        "라이브커머스",
+        "라이브특가",
+        "방송중",
+        "알림신청",
+        "라이브전용",
+        "쿠폰",
+        "타임딜",
+        "핫딜",
+        "선착순",
+        "한정수량",
+        "사은품",
+        "반값"
+      ],
+      "requiredKeywordGroups": [
+        [
+          "CJ온스타일",
+          "GS샵",
+          "Hmall",
+          "롯데홈쇼핑",
+          "NS홈쇼핑",
+          "네이버쇼핑",
+          "네이버쇼핑라이브",
+          "카카오쇼핑",
+          "톡딜",
+          "쎈딜",
+          "11번가",
+          "쇼킹딜",
+          "G마켓",
+          "슈퍼딜"
+        ],
+        [
+          "쇼핑라이브",
+          "라이브커머스",
+          "라이브특가",
+          "방송중",
+          "방송",
+          "알림신청",
+          "라이브전용"
+        ],
+        [
+          "혜택",
+          "쿠폰",
+          "특가",
+          "타임딜",
+          "핫딜",
+          "선착순",
+          "한정수량",
+          "사은품",
+          "반값",
+          "단독가"
+        ]
+      ],
+      "windowPolicy": "published_at_30d_live_commerce_benefit_evidence",
+      "validationNotes": "플랫폼/딜명+라이브 문맥+혜택 메커니즘이 모두 확인되는 경우만 후보화"
+    },
+    {
+      "type": "검색",
+      "lookbackDays": 30,
+      "dedupeKeys": [
+        "canonicalUrl",
+        "sourceTitleFingerprint"
+      ],
+      "dedupeWindowDays": 7,
+      "publishGrade": true,
+      "strictKeywordFilter": true,
+      "keywordFilterFields": [
+        "title",
+        "description"
+      ],
+      "name": "Google News · 버티컬 기획전/브랜드위크 혜택 신호",
+      "query": "(올리브영 OR 무신사 OR W컨셉 OR 29CM OR 지그재그 OR 에이블리 OR 오늘의집 OR 컬리 OR SSG OR 쓱닷컴 OR 브랜드몰) (기획전 OR 브랜드위크 OR 브랜드데이 OR 단독 OR 선공개 OR 얼리버드 OR 드롭 OR 래플 OR 런칭) (쿠폰 OR 할인 OR 혜택 OR 사은품 OR 굿즈 OR 한정 OR 한정판 OR 한정수량 OR 콜라보) when:30d -면세점 -여행 -항공권 -호텔 -숙박 -렌터카 -주유 -유류 -타이어 -자동차 -탈세 -과세 -세무 -소송 -과징금 -채용 -공모전 -인사 -상장 -인수",
+      "description": "뷰티/패션/리빙 버티컬의 브랜드위크·선공개·굿즈·한정 혜택 실행 사례를 수집합니다.",
+      "maxItems": 4,
+      "keywords": [
+        "기획전",
+        "브랜드위크",
+        "브랜드데이",
+        "단독",
+        "선공개",
+        "얼리버드",
+        "드롭",
+        "래플",
+        "런칭",
+        "쿠폰",
+        "할인",
+        "사은품",
+        "굿즈",
+        "한정판",
+        "콜라보"
+      ],
+      "requiredKeywordGroups": [
+        [
+          "올리브영",
+          "무신사",
+          "W컨셉",
+          "29CM",
+          "지그재그",
+          "에이블리",
+          "오늘의집",
+          "컬리",
+          "SSG",
+          "쓱닷컴",
+          "브랜드몰"
+        ],
+        [
+          "기획전",
+          "브랜드위크",
+          "브랜드데이",
+          "단독",
+          "선공개",
+          "얼리버드",
+          "드롭",
+          "래플",
+          "런칭"
+        ],
+        [
+          "쿠폰",
+          "할인",
+          "혜택",
+          "사은품",
+          "굿즈",
+          "한정",
+          "한정판",
+          "한정수량",
+          "콜라보"
+        ]
+      ],
+      "windowPolicy": "published_at_30d_vertical_promotion_benefit_evidence",
+      "validationNotes": "버티컬 커머스명+행사 구조+고객 혜택 항목이 확인되는 경우만 후보화"
+    },
+    {
+      "type": "검색",
+      "lookbackDays": 30,
+      "dedupeKeys": [
+        "canonicalUrl",
+        "sourceTitleFingerprint"
+      ],
+      "dedupeWindowDays": 7,
+      "publishGrade": true,
+      "strictKeywordFilter": true,
+      "keywordFilterFields": [
+        "title",
+        "description"
+      ],
+      "name": "Google News · CRM 루틴/참여형 혜택 신호",
+      "query": "(무신사 OR SSG OR 쓱닷컴 OR Hmall OR 현대Hmall OR 카카오쇼핑 OR 쿠팡 OR 네이버쇼핑 OR CJ온스타일 OR 올리브영 OR 컬리) (출석 OR 출석체크 OR 미션 OR 룰렛 OR 스탬프 OR 챌린지 OR 리뷰 OR 후기 OR 인증샷 OR 알림신청 OR 찜 OR 장바구니 OR 친구초대) (혜택 OR 쿠폰 OR 적립 OR 포인트 OR 리워드 OR 이벤트 OR 프로모션) when:30d -면세점 -여행 -항공권 -호텔 -숙박 -렌터카 -주유 -유류 -타이어 -자동차 -탈세 -과세 -세무 -소송 -과징금 -채용 -공모전 -인사 -상장 -인수",
+      "description": "출석·미션·리뷰·알림신청·찜/장바구니 등 행동 기반 CRM 혜택 신호를 수집합니다.",
+      "maxItems": 4,
+      "keywords": [
+        "출석",
+        "출석체크",
+        "미션",
+        "룰렛",
+        "스탬프",
+        "챌린지",
+        "리뷰",
+        "후기",
+        "인증샷",
+        "알림신청",
+        "찜",
+        "장바구니",
+        "친구초대",
+        "적립",
+        "포인트",
+        "리워드"
+      ],
+      "requiredKeywordGroups": [
+        [
+          "무신사",
+          "SSG",
+          "쓱닷컴",
+          "Hmall",
+          "현대Hmall",
+          "카카오쇼핑",
+          "쿠팡",
+          "네이버쇼핑",
+          "CJ온스타일",
+          "올리브영",
+          "컬리"
+        ],
+        [
+          "출석",
+          "출석체크",
+          "미션",
+          "룰렛",
+          "스탬프",
+          "챌린지",
+          "리뷰",
+          "후기",
+          "인증샷",
+          "알림신청",
+          "찜",
+          "장바구니",
+          "친구초대"
+        ],
+        [
+          "혜택",
+          "쿠폰",
+          "적립",
+          "포인트",
+          "리워드",
+          "이벤트",
+          "프로모션"
+        ]
+      ],
+      "windowPolicy": "published_at_30d_crm_routine_benefit_evidence",
+      "validationNotes": "커머스사명+고객 행동 미션+보상/혜택이 함께 확인되는 경우만 후보화"
+    },
+    {
+      "type": "검색",
+      "lookbackDays": 30,
+      "dedupeKeys": [
+        "canonicalUrl",
+        "sourceTitleFingerprint"
+      ],
+      "dedupeWindowDays": 7,
+      "publishGrade": true,
+      "strictKeywordFilter": true,
+      "keywordFilterFields": [
+        "title",
+        "description"
+      ],
+      "name": "Google News · 개인화/추천딜 혜택 신호",
+      "query": "(쿠팡 OR 네이버쇼핑 OR 컬리 OR SSG OR 쓱닷컴 OR 무신사 OR 올리브영 OR W컨셉 OR CJ온스타일 OR 알리익스프레스) (개인화 OR AI추천 OR 추천딜 OR 큐레이션 OR 랭킹 OR 베스트 OR 빅데이터 OR 장바구니 OR 관심상품) (쿠폰 OR 할인 OR 혜택 OR 특가 OR 프로모션 OR 기획전 OR 적용가) when:30d -면세점 -여행 -항공권 -호텔 -숙박 -렌터카 -주유 -유류 -타이어 -자동차 -탈세 -과세 -세무 -소송 -과징금 -채용 -공모전 -인사 -상장 -인수",
+      "description": "개인화/AI추천/랭킹/장바구니 기반으로 혜택 좋은 상품을 제안하는 큐레이션형 혜택 신호를 수집합니다.",
+      "maxItems": 3,
+      "keywords": [
+        "개인화",
+        "AI추천",
+        "추천딜",
+        "큐레이션",
+        "랭킹",
+        "베스트",
+        "빅데이터",
+        "장바구니",
+        "관심상품",
+        "쿠폰",
+        "할인",
+        "적용가"
+      ],
+      "requiredKeywordGroups": [
+        [
+          "쿠팡",
+          "네이버쇼핑",
+          "컬리",
+          "SSG",
+          "쓱닷컴",
+          "무신사",
+          "올리브영",
+          "W컨셉",
+          "CJ온스타일",
+          "알리익스프레스"
+        ],
+        [
+          "개인화",
+          "AI추천",
+          "추천딜",
+          "큐레이션",
+          "랭킹",
+          "베스트",
+          "빅데이터",
+          "장바구니",
+          "관심상품"
+        ],
+        [
+          "쿠폰",
+          "할인",
+          "혜택",
+          "특가",
+          "프로모션",
+          "기획전",
+          "적용가"
+        ]
+      ],
+      "windowPolicy": "published_at_30d_personalized_deal_benefit_evidence",
+      "validationNotes": "플랫폼명+개인화/추천 맥락+혜택/가격 메커니즘이 함께 확인되는 경우만 후보화"
     },
     {
       "name": "Google News · 공개 UGC/SNS 쇼핑 리뷰 신호",

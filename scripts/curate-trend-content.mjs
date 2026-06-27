@@ -124,7 +124,7 @@ function isSampleEvidence(evidence) {
 function exclusionReason(evidence) {
   const text = `${evidence.title} ${evidence.source} ${evidence.summary}`;
   if (evidence.type === 'SNS' && !isHighSignalSocialEvidence(text)) return '공개 SNS/UGC 근거이나 쇼핑·혜택·라이브·후기 맥락이 충분히 구체적이지 않음';
-  if (evidence.type === '검색' && !isHighSignalSearchEvidence(text)) return '검색 근거이나 커머스·혜택·트렌드 맥락이 충분히 구체적이지 않음';
+  if (evidence.type === '검색' && !isHighSignalSearchEvidence(text)) return '검색 근거이나 커머스사·혜택 메커니즘·프로모션 실행 맥락이 모두 확인되지 않음';
   if (hasAny(text, ['탈세', '과세', '세무', '세금', '전쟁 선포'])) return '규제/세무 이슈 중심으로 프로모션 실행 근거가 아님';
   if (hasAny(text, ['협찬', '광고', '체험단', '파트너스', '제공받아'])) return '광고/협찬/체험단 가능성이 있어 직접 Published 근거로 사용하지 않음';
   if (hasAny(text, ['금호타이어', '타이어프로', '불스원', '유류'])) return '온스타일 핵심 카테고리와 거리가 큰 자동차/유류 이벤트';
@@ -144,8 +144,18 @@ function titleOnlyLooksGeneric(value = '') {
 }
 
 function isHighSignalSearchEvidence(text) {
-  return hasAny(text, ['쇼핑', '커머스', '쇼핑라이브', '라이브커머스', '쿠폰', '혜택', '특가', '타임딜', '멤버십', '올리브영', '무신사', '온스타일', '네이버쇼핑'])
-    && hasAny(text, ['검색', '키워드', '트렌드', '인기', '급상승', '관심', '랭킹', '큐레이션']);
+  return hasAny(text, [
+    'CJ온스타일', '온스타일', 'GS샵', 'GS SHOP', '현대홈쇼핑', '현대Hmall', 'Hmall', '롯데홈쇼핑', 'NS홈쇼핑', '홈앤쇼핑',
+    '쿠팡', '로켓와우', '네이버쇼핑', '네이버플러스', '11번가', 'G마켓', '옥션', 'SSG', '쓱닷컴', '롯데온', '카카오쇼핑', '톡딜',
+    '올리브영', '무신사', 'W컨셉', '29CM', '지그재그', '에이블리', '컬리', '오늘의집', '알리익스프레스', '브랜드몰'
+  ]) && hasAny(text, [
+    '혜택', '쿠폰', '쿠폰팩', '할인', '적립', '포인트', '캐시백', '페이백', '리워드', '무료배송', '무료반품',
+    '사은품', '증정', '굿즈', '특가', '타임딜', '핫딜', '선착순', '한정수량', '멤버십', '회원전용', '전용혜택', '선공개'
+  ]) && hasAny(text, [
+    '프로모션', '이벤트', '기획전', '행사', '페스타', '세일', '할인전', '브랜드위크', '브랜드데이', '쇼핑라이브',
+    '라이브커머스', '출석', '미션', '룰렛', '스탬프', '챌린지', '리뷰', '후기', '알림신청', '찜', '장바구니',
+    '개인화', 'AI추천', '추천딜', '큐레이션', '랭킹', '베스트', '드롭', '래플', '런칭'
+  ]);
 }
 
 function isHighSignalSocialEvidence(text) {

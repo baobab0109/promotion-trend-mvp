@@ -37,7 +37,7 @@ function trend(overrides: Partial<TrendTopic> = {}): TrendTopic {
     scores: { momentum: 80, onstyleFit: 90, risk: 30 },
     evidence: [
       { type: '기사', title: '기사 근거', source: '뉴스', date: '2026-06-25', url: 'https://example.com/news', summary: '기사 요약' },
-      { type: '검색', title: '검색 근거', source: '검색', date: '2026-06-25', url: 'https://trends.google.com/trending/rss?geo=KR', summary: '검색 요약' }
+      { type: '검색', title: 'CJ온스타일 라이브 전용 쿠폰 혜택 기획전', source: 'Google News · 커머스사 혜택/쿠폰 실행 신호', date: '2026-06-25', url: 'https://example.com/commerce-benefit', summary: '커머스사명과 혜택 메커니즘이 확인된 검색 기반 근거' }
     ],
     aiInterpretation: { consumerInsight: '인사이트', opportunity: '기회', caution: '주의' },
     ideas: { stable: baseIdea, aggressive: { ...baseIdea, title: '공격형 기획안' } },
@@ -64,7 +64,7 @@ describe('trend data helpers', () => {
     expect(summary).toEqual([
       { name: '뉴스/기사', count: 1, note: '커머스·유통·브랜드 기사' },
       { name: 'SNS 공개 신호', count: 0, note: '해시태그/UGC 공개 신호' },
-      { name: '검색 키워드', count: 1, note: '상승 검색어/키워드' },
+      { name: '커머스 혜택 검색', count: 1, note: '쿠폰·혜택·특가·프로모션 공개 근거' },
       { name: '경쟁사 프로모션', count: 0, note: '이벤트/기획전 페이지' }
     ]);
   });
@@ -107,8 +107,14 @@ describe('trend data helpers', () => {
     expect(validateTrendDataset({ ...dataset, trends: [trend({ evidence: [{ ...trend().evidence[0], url: 'javascript:alert(1)' }] })] })).toContain(
       'trend-a.evidence[0].url must be http(s)'
     );
-    expect(validateTrendDataset({ ...dataset, sourceSummary: dataset.sourceSummary.map((item) => item.name === '검색 키워드' ? { ...item, count: 0 } : item) })).toContain(
-      'sourceSummary.검색 키워드 count must equal evidence count 1'
+    expect(validateTrendDataset({ ...dataset, sourceSummary: dataset.sourceSummary.map((item) => item.name === '커머스 혜택 검색' ? { ...item, count: 0 } : item) })).toContain(
+      'sourceSummary.커머스 혜택 검색 count must equal evidence count 1'
+    );
+    expect(validateTrendDataset({ ...dataset, sourceSummary: dataset.sourceSummary.map((item) => item.name === '커머스 혜택 검색' ? { ...item, name: '검색 키워드', note: '상승 검색어/키워드' } : item) })).toEqual(
+      expect.arrayContaining([
+        'sourceSummary.검색 키워드 is not recognized',
+        'sourceSummary.커머스 혜택 검색 is required'
+      ])
     );
   });
 

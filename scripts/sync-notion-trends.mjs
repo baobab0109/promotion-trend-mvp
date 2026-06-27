@@ -9,7 +9,7 @@ const STATUS_PUBLISHED = 'Published';
 const SOURCE_META = {
   기사: { name: '뉴스/기사', note: '커머스·유통·브랜드 기사' },
   SNS: { name: 'SNS 공개 신호', note: '해시태그/UGC 공개 신호' },
-  검색: { name: '검색 키워드', note: '상승 검색어/키워드' },
+  검색: { name: '커머스 혜택 검색', note: '쿠폰·혜택·특가·프로모션 공개 근거' },
   경쟁사: { name: '경쟁사 프로모션', note: '이벤트/기획전 페이지' }
 };
 const SOURCE_ORDER = ['기사', 'SNS', '검색', '경쟁사'];

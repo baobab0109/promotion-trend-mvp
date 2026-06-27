@@ -3,7 +3,7 @@ import type { FilterOptions, SourceSummary, TrendTopic } from '../domain/types';
 export const sourceSummary: SourceSummary[] = [
       { name: '뉴스/기사', count: 42, note: '커머스·유통·브랜드 기사' },
       { name: 'SNS 공개 신호', count: 51, note: '해시태그/UGC 샘플' },
-      { name: '검색 키워드', count: 18, note: '상승 검색어 샘플' },
+      { name: '커머스 혜택 검색', count: 18, note: '쿠폰·혜택·특가·프로모션 공개 근거' },
       { name: '경쟁사 프로모션', count: 17, note: '이벤트/기획전 페이지' }
     ];
 
