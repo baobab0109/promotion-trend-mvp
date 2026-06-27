@@ -2,6 +2,11 @@ import type { PeriodControlModel, PeriodPreset, PeriodSelection, PeriodWeeklyOpt
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
+export const DEFAULT_PERIOD_SELECTION: PeriodSelection = {
+  preset: 'weekly',
+  weeklyValue: 'latest'
+};
+
 const QUICK_OPTIONS: PeriodControlModel['quickOptions'] = [
   { value: 'recent-7', label: '최근 7일', description: '가장 최근 7일과 겹치는 주차 데이터' },
   { value: 'recent-14', label: '최근 14일', description: '전주 대비 흐름까지 보는 2주 창' },

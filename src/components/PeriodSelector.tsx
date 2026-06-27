@@ -25,7 +25,7 @@ export default function PeriodSelector({
         <div>
           <p className="filter-title">기간</p>
           <h2>분석 기간 선택</h2>
-          <p>기본은 최근 30일, 주간 모드에서는 최신 완료주와 최근 N주 합산을 선택합니다.</p>
+          <p>기본은 최신 완료주이며, 최근 7/14/30일이나 최근 N주 합산으로 전환할 수 있습니다.</p>
         </div>
         <span className="badge violet">현재 보기 · {activeLabel}{loading ? ' 로딩 중' : ''}</span>
       </div>

@@ -1,0 +1,67 @@
+{
+  "created_at": "2026-06-27T09:26:00+09:00",
+  "scope": "weekly filter default and daily crawl verification",
+  "target_project": "D:/OneDrive - CJWorld/CJ/1.Project/promotion-trend-mvp",
+  "backup": "D:/OneDrive - CJWorld/CJ/1.Project/promotion-trend-mvp/backup/20260627_091859_pre_weekly_default_filter",
+  "changes": {
+    "default_period_selection": {
+      "preset": "weekly",
+      "weeklyValue": "latest",
+      "visible_label": "최신 완료주 · 2026.06.17 - 2026.06.23"
+    }
+  },
+  "local_checks": {
+    "targeted_red_green_test": "tests/periods.test.ts first failed because DEFAULT_PERIOD_SELECTION was undefined, then passed after implementation",
+    "unit_tests": "npm run test:run -> 9 test files passed, 40 tests passed",
+    "production_build": "npm run build -> vite build success; dist/assets/index-Xtn0XaqQ.js generated",
+    "browser_url": "http://127.0.0.1:5173/",
+    "browser_default_state": {
+      "header": "NOTION CMS · 최신 완료주 · 2026.06.17 - 2026.06.23",
+      "active_badge": "현재 보기 · 최신 완료주 · 2026.06.17 - 2026.06.23",
+      "active_button": "주간",
+      "selected_week_value": "latest",
+      "options": [
+        "최신 완료주 · 2026.06.17 - 2026.06.23",
+        "최근 4주 합산 · 2026-06-17~2026-06-23",
+        "최근 8주 합산 · 2026-06-17~2026-06-23"
+      ],
+      "metrics": [
+        "수집 신호 19건",
+        "상승 트렌드 5개",
+        "경쟁사 프로모션 8건",
+        "추천 기획안 10개"
+      ],
+      "console_errors": 0
+    }
+  },
+  "daily_crawl_verification": {
+    "run_id": 28268982878,
+    "workflow": "Daily Trend Update",
+    "created_at_utc": "2026-06-26T22:32:51Z",
+    "completed_at_utc": "2026-06-26T22:34:41Z",
+    "status": "completed",
+    "conclusion": "success",
+    "steps_success": [
+      "Collect external trend signals",
+      "Curate trend content and promotion ideas",
+      "Sync Notion data to static JSON",
+      "Validate generated data and build",
+      "Upload GitHub Pages artifact",
+      "Deploy to GitHub Pages"
+    ],
+    "log_summary": {
+      "collected": 27,
+      "synced": "5 trends, 19 evidence items, 10 ideas from Notion week 2026-W25"
+    },
+    "static_json_integrity": {
+      "weekId": "2026-W25",
+      "source": "notion",
+      "trend_count": 5,
+      "evidence_total": 19,
+      "idea_total": 10,
+      "zero_evidence_trends": [],
+      "missing_idea_trends": [],
+      "sample_hits": []
+    }
+  }
+}

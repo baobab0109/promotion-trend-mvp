@@ -11,7 +11,7 @@ import { readBookmarks, removeBookmark, toggleBookmark, writeBookmarks } from '.
 import { loadTrendDataset, loadTrendDatasets, loadWeeksManifest } from './domain/dataLoader';
 import { filterTrends } from './domain/filters';
 import { getIdeaForMode } from './domain/ideas';
-import { buildPeriodControlModel, getPeriodLabel, resolvePeriodDataFiles } from './domain/periods';
+import { DEFAULT_PERIOD_SELECTION, buildPeriodControlModel, getPeriodLabel, resolvePeriodDataFiles } from './domain/periods';
 import { buildDevelopmentPrompt } from './domain/prompts';
 import { buildFilterOptions, createSampleTrendDataset } from './domain/trendData';
 import type { FilterState, IdeaMode, PeriodPreset, PeriodSelection, WeekManifestItem } from './domain/types';
@@ -26,10 +26,7 @@ const initialFilters: FilterState = {
 
 const fallbackDataset = createSampleTrendDataset();
 
-const initialPeriodSelection: PeriodSelection = {
-  preset: 'recent-30',
-  weeklyValue: 'latest'
-};
+const initialPeriodSelection: PeriodSelection = DEFAULT_PERIOD_SELECTION;
 
 export default function App() {
   const [dataset, setDataset] = useState(fallbackDataset);

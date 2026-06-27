@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildPeriodControlModel, resolvePeriodDataFiles } from '../src/domain/periods';
+import { DEFAULT_PERIOD_SELECTION, buildPeriodControlModel, resolvePeriodDataFiles } from '../src/domain/periods';
 import type { WeekManifestItem } from '../src/domain/types';
 
 const weeks: WeekManifestItem[] = [
@@ -33,6 +33,10 @@ const weeks: WeekManifestItem[] = [
 ];
 
 describe('period controls', () => {
+  it('uses weekly latest completed week as the default period selection', () => {
+    expect(DEFAULT_PERIOD_SELECTION).toEqual({ preset: 'weekly', weeklyValue: 'latest' });
+  });
+
   it('builds the recommended quick presets plus weekly choices with latest completed week first', () => {
     const model = buildPeriodControlModel(weeks, new Date('2026-06-27T00:00:00+09:00'));
 

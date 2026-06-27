@@ -48,7 +48,7 @@ npm run build
 - Vite + React + TypeScript 개발 환경
 - Vitest 테스트 환경
 - Notion CMS 데이터 로딩: `public/data/trends/latest.json`
-- 주간/최근 기간 선택: `public/data/weeks.json` 기반 최근 7/14/30일, 최신 완료주, 최근 4/8주 합산 선택
+- 주간/최근 기간 선택: `public/data/weeks.json` 기반 최신 완료주 기본값, 최근 7/14/30일, 최근 4/8주 합산 선택
 - 도메인 타입 분리: `src/domain/types.ts`
 - 검색/필터 로직: `src/domain/filters.ts`
 - 안정형/공격형/혼합형 기획안 선택 로직: `src/domain/ideas.ts`
@@ -67,7 +67,7 @@ npm run build
 ## MVP 포함 기능
 
 - 주간 트렌드 요약 카드
-- 기간 선택 패널: 최근 7일 / 최근 14일 / 최근 30일 / 주간, 주간 선택 시 최신 완료주·직전 주·최근 4/8주 합산 드롭다운
+- 기간 선택 패널: 기본값은 `주간 > 최신 완료주`, 필요 시 최근 7일 / 최근 14일 / 최근 30일 / 최신 완료주·직전 주·최근 4/8주 합산 드롭다운으로 전환
 - Top 트렌드 / 급상승 키워드 / 채널 믹스 / 프로모션 유형 믹스
 - 검색 및 필터 가능한 Trend Explorer
 - 트렌드별 근거 데이터와 AI 해석 구분
