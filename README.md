@@ -71,6 +71,7 @@ npm run build
 - Top 트렌드 / 급상승 키워드 / 채널 믹스 / 프로모션 유형 믹스
 - 검색 및 필터 가능한 Trend Explorer
 - 트렌드별 근거 데이터와 AI 해석 구분
+- 근거 데이터 원문 링크 새 탭 열기
 - 안정형 vs 공격형 프로모션 기획안 비교
 - 혼합형 기획안 생성
 - 선택한 기획안 상세와 카피/체크리스트
@@ -95,6 +96,7 @@ npm test -- --run
 - `tests/dataLoader.test.ts`
 - `tests/periods.test.ts`
 - `tests/PeriodSelector.test.tsx`
+- `tests/TrendDetail.test.tsx`
 
 ## 중요한 전제
 

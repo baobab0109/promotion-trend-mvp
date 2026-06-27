@@ -34,7 +34,7 @@ export default function TrendDetail({ trend }: { trend: TrendTopic }) {
               <div className="evidence-top"><span className={`badge ${evidence.type === '경쟁사' ? 'orange' : evidence.type === '기사' ? 'green' : 'blue'}`}>{evidence.type}</span><span className="badge">{evidence.date}</span></div>
               <strong>{evidence.title}</strong>
               <p>{evidence.source} · {evidence.summary}</p>
-              <a className="evidence-link" href={evidence.url} onClick={(event) => event.preventDefault()}>근거 링크 보기</a>
+              <a className="evidence-link" href={evidence.url} target="_blank" rel="noreferrer">근거 링크 보기</a>
             </div>
           ))}
         </div>

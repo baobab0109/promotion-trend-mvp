@@ -1,0 +1,30 @@
+{
+  "created_at": "2026-06-27T09:36:00+09:00",
+  "scope": "Evidence 근거 링크 보기 click behavior fix",
+  "target_project": "D:/OneDrive - CJWorld/CJ/1.Project/promotion-trend-mvp",
+  "backup": "D:/OneDrive - CJWorld/CJ/1.Project/promotion-trend-mvp/backup/20260627_093303_pre_evidence_link_fix",
+  "root_cause": "TrendDetail evidence anchor had an onClick handler that called event.preventDefault(), so clicking 근거 링크 보기 never navigated to the evidence URL.",
+  "changes": {
+    "src/components/TrendDetail.tsx": "Removed preventDefault from evidence links and added target=_blank rel=noreferrer.",
+    "tests/TrendDetail.test.tsx": "Added regression test proving the evidence link keeps href and click default is not prevented.",
+    "README.md": "Documented evidence original-link behavior and new test file."
+  },
+  "tdd": {
+    "red": "npm run test:run -- tests/TrendDetail.test.tsx -> failed because clickEvent.defaultPrevented was true",
+    "green": "npm run test:run -- tests/TrendDetail.test.tsx -> 1 test passed"
+  },
+  "verification": {
+    "unit_tests": "npm run test:run -> 10 test files passed, 41 tests passed",
+    "production_build": "npm run build -> vite build success; dist/assets/index-BIkMJllw.js generated",
+    "browser_url": "http://127.0.0.1:5173/",
+    "browser_evidence_link_check": {
+      "link_count": 4,
+      "first_text": "근거 링크 보기",
+      "href": "https://www.hmall.com/md/dpl/index",
+      "target": "_blank",
+      "rel": "noreferrer",
+      "default_prevented_after_click_event": false
+    },
+    "console_errors": 0
+  }
+}
