@@ -1,6 +1,7 @@
 export type SourceType = '기사' | '검색' | 'SNS' | '경쟁사';
 export type IdeaMode = 'stable' | 'aggressive' | 'mixed';
 export type TrendModeBias = 'stable' | 'aggressive';
+export type PeriodPreset = 'recent-7' | 'recent-14' | 'recent-30' | 'weekly';
 
 export interface EvidenceItem {
   type: SourceType;
@@ -72,6 +73,40 @@ export interface TrendDataset {
   source: 'sample' | 'notion';
   sourceSummary: SourceSummary[];
   trends: TrendTopic[];
+}
+
+export interface WeekManifestItem {
+  weekId: string;
+  label: string;
+  status: 'Draft' | 'Published' | 'Archived' | string;
+  startDate: string;
+  endDate: string;
+  file: string;
+  isLatest: boolean;
+}
+
+export interface PeriodQuickOption {
+  value: PeriodPreset;
+  label: string;
+  description: string;
+}
+
+export interface PeriodWeeklyOption {
+  value: string;
+  label: string;
+  description: string;
+  files: string[];
+}
+
+export interface PeriodControlModel {
+  quickOptions: PeriodQuickOption[];
+  weeklyOptions: PeriodWeeklyOption[];
+  defaultWeeklyValue: string;
+}
+
+export interface PeriodSelection {
+  preset: PeriodPreset;
+  weeklyValue: string;
 }
 
 export interface FilterOptions {

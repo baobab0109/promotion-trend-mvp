@@ -1,18 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
 import Header from './components/Header';
 import IdeaCompare from './components/IdeaCompare';
+import PeriodSelector from './components/PeriodSelector';
 import SelectedIdeaDetail from './components/SelectedIdeaDetail';
 import SummaryCards from './components/SummaryCards';
 import TrendDetail from './components/TrendDetail';
 import TrendExplorer from './components/TrendExplorer';
 import WeeklyOverview from './components/WeeklyOverview';
 import { readBookmarks, removeBookmark, toggleBookmark, writeBookmarks } from './domain/bookmarks';
-import { loadTrendDataset } from './domain/dataLoader';
+import { loadTrendDataset, loadTrendDatasets, loadWeeksManifest } from './domain/dataLoader';
 import { filterTrends } from './domain/filters';
 import { getIdeaForMode } from './domain/ideas';
+import { buildPeriodControlModel, getPeriodLabel, resolvePeriodDataFiles } from './domain/periods';
 import { buildDevelopmentPrompt } from './domain/prompts';
 import { buildFilterOptions, createSampleTrendDataset } from './domain/trendData';
-import type { FilterState, IdeaMode } from './domain/types';
+import type { FilterState, IdeaMode, PeriodPreset, PeriodSelection, WeekManifestItem } from './domain/types';
 
 const initialFilters: FilterState = {
   query: '',
@@ -24,8 +26,17 @@ const initialFilters: FilterState = {
 
 const fallbackDataset = createSampleTrendDataset();
 
+const initialPeriodSelection: PeriodSelection = {
+  preset: 'recent-30',
+  weeklyValue: 'latest'
+};
+
 export default function App() {
   const [dataset, setDataset] = useState(fallbackDataset);
+  const [weeks, setWeeks] = useState<WeekManifestItem[]>([]);
+  const [periodSelection, setPeriodSelection] = useState<PeriodSelection>(initialPeriodSelection);
+  const [periodLoading, setPeriodLoading] = useState(false);
+  const [manifestLoaded, setManifestLoaded] = useState(false);
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [selectedId, setSelectedId] = useState(fallbackDataset.trends[0].id);
   const [selectedIdeaMode, setSelectedIdeaMode] = useState<IdeaMode>('stable');
@@ -36,6 +47,8 @@ export default function App() {
   const trends = dataset.trends;
   const sourceSummary = dataset.sourceSummary;
   const filterOptions = useMemo(() => buildFilterOptions(trends), [trends]);
+  const periodModel = useMemo(() => buildPeriodControlModel(weeks), [weeks]);
+  const activePeriodLabel = useMemo(() => getPeriodLabel(periodSelection, weeks), [periodSelection, weeks]);
   const dataSourceLabel = dataset.source === 'notion' ? 'NOTION CMS' : 'SAMPLE MVP';
   const statusLabel = loadState === 'loading' ? '데이터 로드 중' : dataSourceLabel;
 
@@ -50,7 +63,39 @@ export default function App() {
   useEffect(() => {
     let cancelled = false;
 
-    loadTrendDataset()
+    Promise.all([
+      loadTrendDataset(),
+      loadWeeksManifest().catch(() => [] as WeekManifestItem[])
+    ])
+      .then(([nextDataset, nextWeeks]) => {
+        if (cancelled) return;
+        setDataset(nextDataset);
+        setWeeks(nextWeeks);
+        setSelectedId(nextDataset.trends[0].id);
+        setSelectedIdeaMode(nextDataset.trends[0].modeBias);
+        setLoadState('notion');
+        setManifestLoaded(true);
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        setLoadState('fallback');
+        setManifestLoaded(true);
+        setToast(`Notion 데이터 로드 실패로 샘플 데이터를 표시합니다: ${error instanceof Error ? error.message : 'unknown error'}`);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!manifestLoaded) return;
+    let cancelled = false;
+    const files = resolvePeriodDataFiles(periodSelection, weeks);
+    const nextLabel = getPeriodLabel(periodSelection, weeks);
+    setPeriodLoading(true);
+
+    loadTrendDatasets(files, nextLabel)
       .then((nextDataset) => {
         if (cancelled) return;
         setDataset(nextDataset);
@@ -60,14 +105,16 @@ export default function App() {
       })
       .catch((error) => {
         if (cancelled) return;
-        setLoadState('fallback');
-        setToast(`Notion 데이터 로드 실패로 샘플 데이터를 표시합니다: ${error instanceof Error ? error.message : 'unknown error'}`);
+        setToast(`기간 데이터를 불러오지 못했습니다: ${error instanceof Error ? error.message : 'unknown error'}`);
+      })
+      .finally(() => {
+        if (!cancelled) setPeriodLoading(false);
       });
 
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [manifestLoaded, periodSelection, weeks]);
 
   useEffect(() => {
     if (filteredTrends.length > 0 && !filteredTrends.some((trend) => trend.id === selectedId)) {
@@ -96,6 +143,17 @@ export default function App() {
 
   function handleFilterChange(key: keyof FilterState, value: string) {
     setFilters((current) => ({ ...current, [key]: value }));
+  }
+
+  function handlePresetChange(preset: PeriodPreset) {
+    setPeriodSelection((current) => ({
+      preset,
+      weeklyValue: current.weeklyValue || periodModel.defaultWeeklyValue
+    }));
+  }
+
+  function handleWeeklyValueChange(weeklyValue: string) {
+    setPeriodSelection({ preset: 'weekly', weeklyValue });
   }
 
   function handleQueryChange(query: string) {
@@ -154,6 +212,15 @@ export default function App() {
     <>
       <div className="app">
         <Header sourceSummary={sourceSummary} weekLabel={dataset.label} dataSourceLabel={statusLabel} onReset={handleReset} />
+        <PeriodSelector
+          model={periodModel}
+          preset={periodSelection.preset}
+          weeklyValue={periodSelection.weeklyValue}
+          activeLabel={activePeriodLabel}
+          loading={periodLoading}
+          onPresetChange={handlePresetChange}
+          onWeeklyValueChange={handleWeeklyValueChange}
+        />
         <SummaryCards sourceSummary={sourceSummary} trends={trends} dataSourceLabel={dataSourceLabel} />
         <WeeklyOverview trends={trends} sourceSummary={sourceSummary} onSelectTrend={handleSelectTrend} onKeyword={handleKeyword} />
 
