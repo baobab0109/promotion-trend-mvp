@@ -2,7 +2,7 @@
   "weekId": "2026-W25",
   "label": "2026.06.17 - 2026.06.23",
   "status": "Published",
-  "generatedAt": "2026-06-27T03:19:00.000Z",
+  "generatedAt": "2026-06-27T03:26:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
@@ -12,7 +12,7 @@
     },
     {
       "name": "SNS 공개 신호",
-      "count": 1,
+      "count": 2,
       "note": "해시태그/UGC 공개 신호"
     },
     {
@@ -590,6 +590,14 @@
         "risk": 55
       },
       "evidence": [
+        {
+          "type": "SNS",
+          "title": "라이브커머스, SNS 판매자 비상... 베트남, 탈세와의 전쟁 선포 - 아세안데일리 뉴스",
+          "source": "아세안데일리 뉴스",
+          "date": "2026-06-22",
+          "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE5RQnVGT05ibXZkTkk1bElKQUN1ZmtaMlVCaWNsLXV5dnNmcGpoQlUtYm1ZYnZGeFdiRWxIVHhMS05zZnJCX212ZEdNeUtKaWxYOU44cEhrVGlwSlBuQ3kzdkIyeVNDT0VMaXlOaXJXeHVadw?oc=5",
+          "summary": "아세안데일리 뉴스 사례. 검색·공개 SNS·뉴스에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
         {
           "type": "기사",
           "title": "[유통가 상반기 돌아보니] ⑥TV 떠난 소비자, 홈쇼핑은 '라이브'로 - 스트레이트뉴스",
