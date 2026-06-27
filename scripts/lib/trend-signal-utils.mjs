@@ -142,10 +142,7 @@ export function matchTrendCandidate(item, trends = []) {
   const haystack = normalizeText([
     item.title,
     item.description,
-    item.source,
-    item.sourceHint,
-    ...(item.keywords || []),
-    ...(item.hints || [])
+    item.source
   ].filter(Boolean).join(' '));
 
   let best = null;
