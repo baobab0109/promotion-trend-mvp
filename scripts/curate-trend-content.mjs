@@ -183,10 +183,10 @@ function classifyEvidence(evidence, trendMap) {
 function summaryFor(trendId, evidence) {
   const source = evidence.source || '외부 신호';
   const map = {
-    'live-instant': `${source} 사례. 검색·공개 SNS·뉴스에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거.`,
-    'routine-benefit': `${source} 사례. 검색 관심과 공개 UGC에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거.`,
+    'live-instant': `${source} 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거.`,
+    'routine-benefit': `${source} 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거.`,
     'membership-preview': `${source} 사례. 멤버십/클럽/폐쇄형 채널에서 접근권·편의·추가혜택을 묶어 효용을 제시하는 근거.`,
-    'limited-goods': `${source} 사례. 검색/UGC 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거.`,
+    'limited-goods': `${source} 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거.`,
     'ai-curation': `${source} 사례. 데이터·랭킹·베스트 상품을 큐레이션 메시지로 전환해 탐색 피로를 줄이는 근거.`,
     'ugc-review': `${source} 사례. 공개 SNS/블로그/영상 신호를 통해 구매 후 리뷰·인증 참여를 다음 혜택과 연결하는 보조 CRM 근거.`
   };
@@ -202,7 +202,7 @@ function clusterKey(evidence, classification) {
 
 const trendContent = {
   'routine-benefit': {
-    summary: '혜택을 쿠폰함에만 두지 않고 고객 루틴·앱 방문·미션·혜택 허브로 묶는 흐름. Hmall/SSG/무신사/카카오 베네핏과 검색 키워드 신호에서 쿠폰·적립·참여형 혜택의 상시화가 관찰됨.',
+    summary: '혜택을 쿠폰함에만 두지 않고 고객 루틴·앱 방문·미션·혜택 허브로 묶는 흐름. Hmall/SSG/무신사/카카오 베네핏과 경쟁사 신호에서 쿠폰·적립·참여형 혜택의 상시화가 관찰됨.',
     consumer: '고객은 단발 할인보다 “내가 받을 수 있는 혜택이 어디에 있고, 오늘 무엇을 하면 더 받는지”를 쉽게 확인하려는 니즈가 커지고 있다.',
     opportunity: '온스타일은 혜택 탭을 개인화 루틴 허브로 재정의하고, 출석·찜·라이브 알림·리뷰 같은 행동을 소액 리워드와 연결해 재방문을 만든다.',
     caution: '미션형 리워드는 체리피커 유입과 비용 누수가 생길 수 있어 월 한도, 구매 연계 조건, 등급별 차등 지급이 필요하다.',
@@ -237,7 +237,7 @@ const trendContent = {
     scores: { momentum: 62, onstyleFit: 76, risk: 42 }
   },
   'live-instant': {
-    summary: '쇼킹딜·톡딜·쇼핑라이브·반값창고에 더해 검색/SNS 공개 신호에서도 시간 제한, 방송 현장감, 단독 딜을 결합한 즉시 구매형 프로모션 관심이 강하게 포착됨.',
+    summary: '쇼킹딜·톡딜·쇼핑라이브·반값창고와 공개 SNS 신호에서 시간 제한, 방송 현장감, 단독 딜을 결합한 즉시 구매형 프로모션 관심이 강하게 포착됨.',
     consumer: '고객은 “지금 사면 더 받는다”는 명확한 이유가 있을 때 라이브/딜 페이지에서 빠르게 전환한다.',
     opportunity: '온스타일은 방송 전 알림 신청, 방송 중 전용 쿠폰/사은품, 방송 후 미구매자 리마인드 쿠폰으로 라이브 전후 CRM 퍼널을 설계한다.',
     caution: '상시 타임딜화는 할인 피로와 마진 훼손을 만들 수 있어 단독 구성·콘텐츠·세그먼트별 혜택을 함께 설계해야 한다.',
