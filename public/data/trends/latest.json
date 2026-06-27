@@ -2,7 +2,7 @@
   "weekId": "2026-W25",
   "label": "2026.06.17 - 2026.06.23",
   "status": "Published",
-  "generatedAt": "2026-06-27T03:31:00.000Z",
+  "generatedAt": "2026-06-27T03:36:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
@@ -30,7 +30,7 @@
     {
       "id": "routine-benefit",
       "name": "초개인화 루틴 혜택",
-      "summary": "혜택을 쿠폰함에만 두지 않고 고객 루틴·앱 방문·미션·혜택 허브로 묶는 흐름. Hmall/SSG/무신사/카카오 베네핏과 검색 키워드 신호에서 쿠폰·적립·참여형 혜택의 상시화가 관찰됨.",
+      "summary": "혜택을 쿠폰함에만 두지 않고 고객 루틴·앱 방문·미션·혜택 허브로 묶는 흐름. Hmall/SSG/무신사/카카오 베네핏과 경쟁사 신호에서 쿠폰·적립·참여형 혜택의 상시화가 관찰됨.",
       "keywords": [
         "루틴",
         "개인화",
@@ -65,7 +65,7 @@
           "source": "현대Hmall 홈/혜택",
           "date": "2026-06-26",
           "url": "https://www.hmall.com/md/dpl/index",
-          "summary": "현대Hmall 홈/혜택 사례. 검색 관심과 공개 UGC에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
+          "summary": "현대Hmall 홈/혜택 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
         },
         {
           "type": "경쟁사",
@@ -73,7 +73,7 @@
           "source": "SSG 이벤트",
           "date": "2026-06-26",
           "url": "https://www.ssg.com/event/eventMain.ssg",
-          "summary": "SSG 이벤트 사례. 검색 관심과 공개 UGC에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
+          "summary": "SSG 이벤트 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
         },
         {
           "type": "경쟁사",
@@ -81,7 +81,7 @@
           "source": "무신사 이벤트",
           "date": "2026-06-26",
           "url": "https://www.musinsa.com/events",
-          "summary": "무신사 이벤트 사례. 검색 관심과 공개 UGC에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
+          "summary": "무신사 이벤트 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
         }
       ],
       "aiInterpretation": {
@@ -198,7 +198,7 @@
           "source": "글로벌이코노믹",
           "date": "2026-06-24",
           "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPM3lLMk81SGdocHN2OWxSczQ4YnN6S2hZWTJWRVpaMnRRNzFHNDY4T3hQSVEyNS01QjJLQ2NucHdrNzF1QVBVQ2JXN1UtbGRZRFdncVRuOGwxVWRvclJidUx3RWhVRVY1WjNPbm9XdDU2ZUVjZzFrbkVmNmpwUENoY2JHLWVNak03RjJj?oc=5",
-          "summary": "글로벌이코노믹 사례. 검색/UGC 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
+          "summary": "글로벌이코노믹 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
         },
         {
           "type": "기사",
@@ -206,7 +206,7 @@
           "source": "유스연합",
           "date": "2026-06-26",
           "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBtekVOZXBBaXRZSUE1VUplVHhHNVpPSEJONWhWd1JiNE4yV2diZGx5ZzdDcVFyZmRIWmIwdWFLVmpZSzJNSnAwV1l5MDJ3NUhoTkE?oc=5",
-          "summary": "유스연합 사례. 검색/UGC 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
+          "summary": "유스연합 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
         },
         {
           "type": "기사",
@@ -214,7 +214,7 @@
           "source": "이투데이",
           "date": "2026-06-26",
           "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFBTdXNsYVdUUFpyMmJJbWdLbzMzTWZzTXFSTDR6T1BmWElKc1pYRml3UU1LOVNZdm5QYTlUcFNhRXN1Q2FwSzFfVUhiX0lPZm5VVkFoMg?oc=5",
-          "summary": "이투데이 사례. 검색/UGC 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
+          "summary": "이투데이 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
         },
         {
           "type": "기사",
@@ -222,7 +222,7 @@
           "source": "knpp.co.kr",
           "date": "2026-06-26",
           "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE1nek4yVzc4WUJ2SXNDN0dPOHVsQzVuejVraFFUc01KRElrdFluUlp3VEgtSXVQcWdiNDNRd2I3eHlPNFk?oc=5",
-          "summary": "knpp.co.kr 사례. 검색/UGC 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
+          "summary": "knpp.co.kr 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
         }
       ],
       "aiInterpretation": {
@@ -561,7 +561,7 @@
     {
       "id": "live-instant",
       "name": "라이브 커머스 즉시 혜택",
-      "summary": "쇼킹딜·톡딜·쇼핑라이브·반값창고에 더해 검색/SNS 공개 신호에서도 시간 제한, 방송 현장감, 단독 딜을 결합한 즉시 구매형 프로모션 관심이 강하게 포착됨.",
+      "summary": "쇼킹딜·톡딜·쇼핑라이브·반값창고와 공개 SNS 신호에서 시간 제한, 방송 현장감, 단독 딜을 결합한 즉시 구매형 프로모션 관심이 강하게 포착됨.",
       "keywords": [
         "라이브",
         "즉시쿠폰",
@@ -596,7 +596,7 @@
           "source": "스트레이트뉴스",
           "date": "2026-06-26",
           "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5kd0RfRFhlRDhXNHRjaU5jVjN3NEZQNW9aanFiYTloQWtRVnRVVTZtc0ROZlp2ZHdhZDk5V3V2NDdJbkFDNlQzYkl5bUJSOHI3VjFZamk2VkloTGJSSlFZR3A4T0UwSndXczVhSWdwR2hHN2FCWTh30gF3QVVfeXFMTmR3RF9EWGVEOFc0dGNpTmNWM3c0RlA1b1pqcWJhOWhBa1FWdFVVNm1zRE5mWnZkd2FkOTlXdXY0N0luQUM2VDNiSXltQlI4cjdWMVlqaTZWSWhMYlJKUVlHcDhPRTBKd1dzNWFJZ3BHaEc3YUJZOHc?oc=5",
-          "summary": "스트레이트뉴스 사례. 검색·공개 SNS·뉴스에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+          "summary": "스트레이트뉴스 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
         },
         {
           "type": "기사",
@@ -604,7 +604,7 @@
           "source": "뉴스탭",
           "date": "2026-06-26",
           "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5Wa09Kdjlya0FxTjBiSDVheDFhR0tmWVdmaUxqbnhsNjhJLVhBYUU3S084SE5aM0c0bGpjdFN4bHo0em1NUVA2OGY0eURtZzhPWmhRNzloVnNtdHpwb0Y1SVUyZ1pDMjhzYXVjOQ?oc=5",
-          "summary": "뉴스탭 사례. 검색·공개 SNS·뉴스에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+          "summary": "뉴스탭 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
         },
         {
           "type": "기사",
@@ -612,7 +612,7 @@
           "source": "소년한국일보",
           "date": "2026-06-26",
           "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1xd3NhYmxHeHZYeTYxLWRCaWdLWVA5RVZoajh0QUx5bjMxWk9HYmhEN28xcTJnMk9wMTJIMkljSWV4eG5VbUNTUV9LaGFsdi1qcGZTa3VCRHRPWWJkOGpkaFlTOVFSRDNteDhmYdIBcEFVX3lxTE9KNjdkaVRlaUtOOXRuU011TTFGMGZxM2NfRFMzam5RTzhteklLVTlzN09ZMmc0OGMzQWM1bTVhalBWT3JMVW5leENXNEwzZE9fcjdCS2pXTUd1RzNuWVotbUxLMFUwaDh4LUlROEZrYlA?oc=5",
-          "summary": "소년한국일보 사례. 검색·공개 SNS·뉴스에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+          "summary": "소년한국일보 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
         },
         {
           "type": "기사",
@@ -620,7 +620,7 @@
           "source": "컨슈머타임스",
           "date": "2026-06-26",
           "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1wa3B3dFpGcmVodk5CVFhPYXNwdWROMk1hZmE1X1JGUUNnMDFSa0JzWFpKNmplQTBIcWNjSktiOHpvb2g4YUozc19nOEVadUtBRTQtbC1nQlREWFJNZEhDeF9HSERTVG5ITWc?oc=5",
-          "summary": "컨슈머타임스 사례. 검색·공개 SNS·뉴스에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+          "summary": "컨슈머타임스 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
         },
         {
           "type": "경쟁사",
@@ -628,7 +628,7 @@
           "source": "카카오쇼핑 톡딜",
           "date": "2026-06-26",
           "url": "https://store.kakao.com/home/hotdeal",
-          "summary": "카카오쇼핑 톡딜 사례. 검색·공개 SNS·뉴스에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+          "summary": "카카오쇼핑 톡딜 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
         },
         {
           "type": "경쟁사",
@@ -636,7 +636,7 @@
           "source": "11번가 쇼킹딜",
           "date": "2026-06-26",
           "url": "https://www.11st.co.kr/browsing/DealAction.tmall?method=getShockingDealMain",
-          "summary": "11번가 쇼킹딜 사례. 검색·공개 SNS·뉴스에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+          "summary": "11번가 쇼킹딜 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
         },
         {
           "type": "경쟁사",
@@ -644,7 +644,7 @@
           "source": "NS홈쇼핑 이벤트",
           "date": "2026-06-26",
           "url": "https://www.nsmall.com/customer/event/list",
-          "summary": "NS홈쇼핑 이벤트 사례. 검색·공개 SNS·뉴스에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+          "summary": "NS홈쇼핑 이벤트 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
         },
         {
           "type": "기사",
@@ -652,7 +652,7 @@
           "source": "아시아투데이",
           "date": "2026-06-26",
           "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFB4SmpqT2VzdktVMjV4dDNBTHJXbHU0ME9oaEZBMW41RHprM29CcnRuaEZ5a2F2UUFPbEZxQTRQX1ZZMFFDNXdTMnhJc3IzWWZ2NGxydjllMlhoV0sxanBfNjVJZ3h2T1hTNVJMd3pR?oc=5",
-          "summary": "아시아투데이 사례. 검색·공개 SNS·뉴스에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+          "summary": "아시아투데이 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
         }
       ],
       "aiInterpretation": {
