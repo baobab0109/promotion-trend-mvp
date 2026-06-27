@@ -2,12 +2,12 @@
   "weekId": "2026-W25",
   "label": "2026.06.17 - 2026.06.23",
   "status": "Published",
-  "generatedAt": "2026-06-27T04:20:00.000Z",
+  "generatedAt": "2026-06-27T22:30:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
       "name": "뉴스/기사",
-      "count": 10,
+      "count": 11,
       "note": "커머스·유통·브랜드 기사"
     },
     {
@@ -17,7 +17,7 @@
     },
     {
       "name": "커머스 혜택 검색",
-      "count": 1,
+      "count": 2,
       "note": "쿠폰·혜택·특가·프로모션 공개 근거"
     },
     {
@@ -192,6 +192,14 @@
         "risk": 50
       },
       "evidence": [
+        {
+          "type": "검색",
+          "title": "[유통업계] 쿠팡·이마트24·GS리테일, 할인전·협업 상품 출시 - 위클리오늘",
+          "source": "위클리오늘",
+          "date": "2026-06-15",
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1yMDI1aWlGRkdzeC0xal9iUEMxREZMT2VsZlVpaFo5UU54bDN5cWwyY1hUVlhPeDJBVjVFUWtuQnhYNGliNTZMUUpWU25jQ01KREw2amhHZnlVemY5YVdIc0VGa3JCM1RSVDBZdE9n?oc=5",
+          "summary": "위클리오늘 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
+        },
         {
           "type": "SNS",
           "title": "유튜브 스타 된 '페포'…플랫폼·굿즈로 외연 넓히는 삼양 - 글로벌이코노믹",
@@ -598,6 +606,14 @@
         "risk": 55
       },
       "evidence": [
+        {
+          "type": "기사",
+          "title": "레노버, 인기 AI PC 파격 할인의 네이버 쇼핑라이브 진행 - 인벤",
+          "source": "인벤",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1pWnJWeUJuTXlaaWJ5WFpLSmdLVU9rX0RFZWtuZENvRnNFSzRqaE5TdEp5MDNqZDA5UzNhWWkzM2xaaTl6QUVjbC1ub1AzU3RhOTV6ZWZ2RGVYMWdHVnFjcWlOS0NmeDBn?oc=5",
+          "summary": "인벤 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
         {
           "type": "기사",
           "title": "[유통가 상반기 돌아보니] ⑥TV 떠난 소비자, 홈쇼핑은 '라이브'로 - 스트레이트뉴스",
