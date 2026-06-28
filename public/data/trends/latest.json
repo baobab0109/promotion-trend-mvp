@@ -2,7 +2,7 @@
   "weekId": "2026-W25",
   "label": "2026.06.17 - 2026.06.23",
   "status": "Published",
-  "generatedAt": "2026-06-27T22:30:00.000Z",
+  "generatedAt": "2026-06-28T22:30:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
@@ -345,6 +345,14 @@
       },
       "evidence": [
         {
+          "type": "기사",
+          "title": "[오늘 뭐했니?] 더현대·현대홈쇼핑·한섬 EQL·현대이지웰 - 파이낸셜리뷰",
+          "source": "파이낸셜리뷰",
+          "date": "2026-06-28",
+          "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1KSnIyeXo5V3Q4RDZybDE1Sm5iZ3JhSFpBVkZCNnFCdHZZSzRUOE9ScmZHLTA0LXhHMExpWk1yQ2F0dXI5cWxNZnpsN3JHN0Y0NEY0Zk5Hc0xGMjI4aE9MdWI5VzNVU0l2bU81Wm5GUzNjN1Nn?oc=5",
+          "summary": "파이낸셜리뷰 사례. 멤버십/클럽/폐쇄형 채널에서 접근권·편의·추가혜택을 묶어 효용을 제시하는 근거."
+        },
+        {
           "type": "경쟁사",
           "title": "로켓배송으로 빠르게, 로켓와우 멤버십으로 할인과 무료 반품까지 | 쿠팡",
           "source": "쿠팡 기획전",
@@ -621,14 +629,6 @@
           "date": "2026-06-26",
           "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5kd0RfRFhlRDhXNHRjaU5jVjN3NEZQNW9aanFiYTloQWtRVnRVVTZtc0ROZlp2ZHdhZDk5V3V2NDdJbkFDNlQzYkl5bUJSOHI3VjFZamk2VkloTGJSSlFZR3A4T0UwSndXczVhSWdwR2hHN2FCWTh30gF3QVVfeXFMTmR3RF9EWGVEOFc0dGNpTmNWM3c0RlA1b1pqcWJhOWhBa1FWdFVVNm1zRE5mWnZkd2FkOTlXdXY0N0luQUM2VDNiSXltQlI4cjdWMVlqaTZWSWhMYlJKUVlHcDhPRTBKd1dzNWFJZ3BHaEc3YUJZOHc?oc=5",
           "summary": "스트레이트뉴스 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
-        },
-        {
-          "type": "기사",
-          "title": "레노버 AI PC, 오늘 저녁 네이버 쇼핑라이브서 최대 22.6% 혜택 - 뉴스탭",
-          "source": "뉴스탭",
-          "date": "2026-06-26",
-          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5Wa09Kdjlya0FxTjBiSDVheDFhR0tmWVdmaUxqbnhsNjhJLVhBYUU3S084SE5aM0c0bGpjdFN4bHo0em1NUVA2OGY0eURtZzhPWmhRNzloVnNtdHpwb0Y1SVUyZ1pDMjhzYXVjOQ?oc=5",
-          "summary": "뉴스탭 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
         },
         {
           "type": "기사",
