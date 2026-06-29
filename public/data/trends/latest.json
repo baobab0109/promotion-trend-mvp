@@ -2,12 +2,12 @@
   "weekId": "2026-W25",
   "label": "2026.06.17 - 2026.06.23",
   "status": "Published",
-  "generatedAt": "2026-06-28T22:30:00.000Z",
+  "generatedAt": "2026-06-29T22:31:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
       "name": "뉴스/기사",
-      "count": 11,
+      "count": 13,
       "note": "커머스·유통·브랜드 기사"
     },
     {
@@ -614,6 +614,22 @@
         "risk": 55
       },
       "evidence": [
+        {
+          "type": "기사",
+          "title": "린클, 30일 네이버 쇼핑라이브 진행 - 핸드메이커",
+          "source": "핸드메이커",
+          "date": "2026-06-28",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE4xTW1kTlVOWVlLN1J2TmxucFpPMFFrRUZhV2JOam1xTEoxa3NYTzdmNVk4YWFFSEVDVDJEemVNbU5jUnZlWUVCTDN5NlZXZFIteHkwMTRjZkVCbEZ4SUkxeDEzYU9yLTTSAWtBVV95cUxPQVZGUUxNQTJsUXdFbjZmSVBkOUpMMUw2cWVOOUlZalBlcldhb2JjOTg2MThKZm1IWmRzRzd5dHF4MTM4TEdsd0p3YlI4eGNnTDRxSU5SNW9ZZkpCUGY5NzZrSUVVdENpcjN3SQ?oc=5",
+          "summary": "핸드메이커 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "기사",
+          "title": "노랑풍선, '다낭·호이안' 라이브커머스 진행 - 청년일보",
+          "source": "청년일보",
+          "date": "2026-06-29",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE8xZDI0VEFDVWJIYWhvMFk4cWRTU1hhY1g2a2JXUzNDYkdWRTJSbHZnZGtBWTBUM0o1ekZwU0ZZMHlWSFB4YW1pcVdEWVFjWmdBcjlFY2xWU2dhQ1dObFBpY1BB?oc=5",
+          "summary": "청년일보 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
         {
           "type": "기사",
           "title": "레노버, 인기 AI PC 파격 할인의 네이버 쇼핑라이브 진행 - 인벤",
