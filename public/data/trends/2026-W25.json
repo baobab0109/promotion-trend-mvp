@@ -2,12 +2,12 @@
   "weekId": "2026-W25",
   "label": "2026.06.17 - 2026.06.23",
   "status": "Published",
-  "generatedAt": "2026-06-29T22:31:00.000Z",
+  "generatedAt": "2026-06-30T22:35:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
       "name": "뉴스/기사",
-      "count": 13,
+      "count": 15,
       "note": "커머스·유통·브랜드 기사"
     },
     {
@@ -614,6 +614,22 @@
         "risk": 55
       },
       "evidence": [
+        {
+          "type": "기사",
+          "title": "위닉스, AI 라이브커머스 도입…D2C 고객 접점 확대 - 데일리안",
+          "source": "데일리안",
+          "date": "2026-06-30",
+          "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxOU3hsZ3BPb1BTOEx0Z2tUcC1OUTJUZ083clBhTDlJV2ZsR1F2RDQ2enZsYk00NWdEZmVLMDducUpmcVpIdzlzS1ROQllhQ29ZbWQ1YUhYak9hZXc4d21XczNsSk5jQnJMbDVXc3h5NmZVZFBJWnZaWkJvSmZuN3E5YTlIdl9lR3RPX1BudDRnaXpzWk44dEdQNzFHLWgtRHFnVEFJdGNCRml6MkRzSFpBa19sRUlNcWhaelFnRzZzamNkc0s1QVhrMEg0aE1oUjJwMzE2NW5UdUZMcnlNUkhqNmNtMVkweDh3UU5iLdIB7wFBVV95cUxQUEVjNVNmd2tQX2Ftd2RBLWQtN1Z3Q2o3REU2Qmd0SmxqdUZiVFE4N01HSGFUSURwQ1U2M2RTV0JGam5Ocy1QQVVnd3dSTFNGVG0tdHg3cTFGd3NLUUFPaWtvcFlXSjFvRWF2Rl9IaFZrODhjMXBOTlRZeVhabVZBemNKd3RtakpWT1dVbXFNaVVZMExfMHM3cXdHdThkZnNoZEVoNUdwV0kyWExsTmN1Zko2QTFobjRnZ3dyX3NRNEdCcl9kWl9ncGJuaFVFS3ExWTJCZy1yaGRBcmxiSEcyNlhHSDZUQzJlelZRd3k1bw?oc=5",
+          "summary": "데일리안 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "기사",
+          "title": "위닉스, AI 라이브커머스 본격 도입…D2C 고객 접점 넓힌다 - 뉴스탭",
+          "source": "뉴스탭",
+          "date": "2026-06-30",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9wVXFGQUVmWlg5Zy1SUGdLSFd1SHo4dzk1NkE4c1Qzd1VaM3FPZWIyaXZBV1R2cEUyREtDZXZDdEx0alJCVWRIRTQ5bWN4LW5TOFZVMVFnWXV5QjZvVW5UQjIwOGR1SnZaRjY2ZQ?oc=5",
+          "summary": "뉴스탭 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
         {
           "type": "기사",
           "title": "린클, 30일 네이버 쇼핑라이브 진행 - 핸드메이커",
