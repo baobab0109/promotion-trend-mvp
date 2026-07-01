@@ -2,12 +2,12 @@
   "weekId": "2026-W25",
   "label": "2026.06.17 - 2026.06.23",
   "status": "Published",
-  "generatedAt": "2026-06-30T22:35:00.000Z",
+  "generatedAt": "2026-07-01T22:37:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
       "name": "뉴스/기사",
-      "count": 15,
+      "count": 20,
       "note": "커머스·유통·브랜드 기사"
     },
     {
@@ -59,6 +59,14 @@
         "risk": 35
       },
       "evidence": [
+        {
+          "type": "기사",
+          "title": "\"'역시즌 특가전' 최대 80% 할인\"…SSG닷컴, '패션 쓱세일' 개최 - 파이낸셜포스트",
+          "source": "파이낸셜포스트",
+          "date": "2026-07-01",
+          "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE12VkYxb194QVFNOG1FYWNHck5SOTVvRTV3OWE4bEptY3VfR0JWSWc3M0d2MjlXbVFhZ3ZMWlFjWWw4TkNqdzY0WFEwQ09EVkM4Yzd1Qi1YWDltcWZKQm5uaV9qd01WYmN5MXdqV3FFRFVmeWJa?oc=5",
+          "summary": "파이낸셜포스트 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
+        },
         {
           "type": "경쟁사",
           "title": "현대Hmall 홈/혜택 프로모션",
@@ -192,6 +200,14 @@
         "risk": 50
       },
       "evidence": [
+        {
+          "type": "기사",
+          "title": "[유통레이더] 무신사, 걸그룹 ‘하츠투하츠’ 새 앨범 협업 컬렉션 선봬 - 마이데일리",
+          "source": "마이데일리",
+          "date": "2026-07-01",
+          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBsYmttRDlYVlc0aTY3STFncE1WQm0tT09LQmFYUFdmUm9DSGRVWHNDUmw3QmV4TFFIR2ZBaFVabzh5RURtNDJsN3F1Q3VtZGN2NHF4OFZCYmZDLXRJUlB1RQ?oc=5",
+          "summary": "마이데일리 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
+        },
         {
           "type": "검색",
           "title": "[유통업계] 쿠팡·이마트24·GS리테일, 할인전·협업 상품 출시 - 위클리오늘",
@@ -346,6 +362,14 @@
       "evidence": [
         {
           "type": "기사",
+          "title": "7월 T 멤버십 혜택 총정리: SUMMER LUCKY WEEK·Young Week·신규 제휴사·서울랜드 할인 - SK텔레콤 뉴스룸",
+          "source": "SK텔레콤 뉴스룸",
+          "date": "2026-06-30",
+          "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE80RDdGQWlnVzVObHJucTVyc1ZWZGxDSVVWajdURWtaSTBGa2ExOWMxc2Q1anp6cTA5OUhaY25PczRPNGkwdGJFTw?oc=5",
+          "summary": "SK텔레콤 뉴스룸 사례. 멤버십/클럽/폐쇄형 채널에서 접근권·편의·추가혜택을 묶어 효용을 제시하는 근거."
+        },
+        {
+          "type": "기사",
           "title": "[오늘 뭐했니?] 더현대·현대홈쇼핑·한섬 EQL·현대이지웰 - 파이낸셜리뷰",
           "source": "파이낸셜리뷰",
           "date": "2026-06-28",
@@ -488,6 +512,14 @@
       },
       "evidence": [
         {
+          "type": "기사",
+          "title": "\"웰니스 큐레이션 전문성에 구매 데이터 결합\"…CJ올리브영, '모두의 잘 먹기 프로젝트' 실시 - 파이낸셜포스트",
+          "source": "파이낸셜포스트",
+          "date": "2026-07-01",
+          "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBLOGxUem53MzRZXy1jcXhXTGhTVExpbHV5OFJncjRxdnhpN2hGWVMyZGVGVDRxQkZ1Wm9xNmRJUG5CREx0V2dLUmttMUNSaDNZSldQWkw0SUVobWVmelRLZ3AtbG0zaksyRFY3ZW9QZnRLbVpm?oc=5",
+          "summary": "파이낸셜포스트 사례. 데이터·랭킹·베스트 상품을 큐레이션 메시지로 전환해 탐색 피로를 줄이는 근거."
+        },
+        {
           "type": "검색",
           "title": "알리익스프레스, 상반기 베스트 상품 최대 60% 할인 - 핀포인트뉴스",
           "source": "핀포인트뉴스",
@@ -614,6 +646,14 @@
         "risk": 55
       },
       "evidence": [
+        {
+          "type": "기사",
+          "title": "ABC디자인, 휴대용 유모차 '루프트' 국내 출시… 런칭 기념 쇼핑라이브 진행 - 더쎈뉴스",
+          "source": "더쎈뉴스",
+          "date": "2026-07-01",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5yQUphWkFsVC12Z0dWa0ozZGVDS1hjSm1SRUNvRzdha0pfeXRVNkt4czlUVVlBSkVOS1NxVHp0WFhLcldtamdRb2ZsTnJna2NuLW5ZcnlueHBsUDh2MFdITm5NT1pxbFpQ?oc=5",
+          "summary": "더쎈뉴스 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
         {
           "type": "기사",
           "title": "위닉스, AI 라이브커머스 도입…D2C 고객 접점 확대 - 데일리안",
