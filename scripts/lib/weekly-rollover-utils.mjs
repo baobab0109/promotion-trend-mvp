@@ -61,7 +61,7 @@ export function latestCompletedDate(now = new Date()) {
   return addDays(kstDateString(now), -1);
 }
 
-export function planMissingCompletedWeeks(existingWeeks, now = new Date()) {
+export function planMissingWeeksThroughCurrent(existingWeeks, now = new Date()) {
   const normalized = [...(existingWeeks || [])]
     .filter((week) => week?.weekId && week?.startDate && week?.endDate && (week.status || 'Published') === 'Published')
     .sort((a, b) => a.endDate.localeCompare(b.endDate));
@@ -69,13 +69,13 @@ export function planMissingCompletedWeeks(existingWeeks, now = new Date()) {
   if (!normalized.length) return [];
 
   const existingPublishedIds = new Set(normalized.map((week) => week.weekId));
-  const completedThrough = latestCompletedDate(now);
+  const currentDate = kstDateString(now);
   const planned = [];
   let cursor = normalized.at(-1);
 
   for (let guard = 0; guard < 60; guard += 1) {
     const next = buildNextWeek(cursor);
-    if (next.endDate > completedThrough) break;
+    if (next.startDate > currentDate) break;
 
     if (!existingPublishedIds.has(next.weekId)) {
       planned.push(next);
@@ -85,4 +85,8 @@ export function planMissingCompletedWeeks(existingWeeks, now = new Date()) {
   }
 
   return planned;
+}
+
+export function planMissingCompletedWeeks(existingWeeks, now = new Date()) {
+  return planMissingWeeksThroughCurrent(existingWeeks, now);
 }

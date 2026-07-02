@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { partitionEvidenceBySelectedWeekTrend } from './lib/notion-trend-sync-utils.mjs';
 
 const ROOT = process.cwd();
 const CONFIG_PATH = path.join(ROOT, 'config', 'notion-data-sources.json');
@@ -153,17 +154,6 @@ function ideaFromPage(page) {
   };
 }
 
-function evidenceFromPage(page) {
-  return {
-    type: select(page, 'Type'),
-    title: title(page),
-    source: richText(page, 'Source'),
-    date: dateStart(page, 'Evidence Date'),
-    url: url(page, 'URL'),
-    summary: richText(page, 'Summary')
-  };
-}
-
 function buildSourceSummary(trends) {
   const counts = Object.fromEntries(SOURCE_ORDER.map((type) => [type, 0]));
   for (const trend of trends) {
@@ -220,26 +210,30 @@ async function main() {
     : publishedWeeks[0];
   if (!selectedWeek) throw new Error(`Published week not found: ${requestedWeekId}`);
 
-  const allTrendPages = (await queryDatabase(db.trends, {
+  const publishedTrendPages = (await queryDatabase(db.trends, {
     filter: { property: 'Status', select: { equals: STATUS_PUBLISHED } },
     sorts: [{ property: 'Sort Order', direction: 'ascending' }]
-  })).filter((page) => isPublished(page) && relationIds(page, 'Week').includes(selectedWeek.id));
+  })).filter(isPublished);
+
+  const allTrendPages = publishedTrendPages.filter((page) => relationIds(page, 'Week').includes(selectedWeek.id));
 
   const trendIds = new Set(allTrendPages.map((page) => page.id));
-  const evidencePages = (await queryDatabase(db.evidence, {
+  const allPublishedEvidencePages = (await queryDatabase(db.evidence, {
     filter: { property: 'Status', select: { equals: STATUS_PUBLISHED } }
-  })).filter((page) => isPublished(page) && relationIds(page, 'Trend').some((id) => trendIds.has(id)));
+  })).filter(isPublished);
   const ideaPages = (await queryDatabase(db.ideas, {
     filter: { property: 'Status', select: { equals: STATUS_PUBLISHED } }
   })).filter((page) => isPublished(page) && relationIds(page, 'Trend').some((id) => trendIds.has(id)));
 
-  const evidenceByTrend = new Map();
-  for (const page of evidencePages) {
-    for (const trendId of relationIds(page, 'Trend')) {
-      if (!evidenceByTrend.has(trendId)) evidenceByTrend.set(trendId, []);
-      evidenceByTrend.get(trendId).push(evidenceFromPage(page));
+  const { evidenceByTrend, attachedEvidencePages: evidencePages } = partitionEvidenceBySelectedWeekTrend({
+    evidencePages: allPublishedEvidencePages,
+    allTrendPages: publishedTrendPages,
+    selectedTrendPages: allTrendPages,
+    selectedWeek: {
+      startDate: dateStart(selectedWeek, 'Start Date'),
+      endDate: dateStart(selectedWeek, 'End Date')
     }
-  }
+  });
 
   const ideasByTrend = new Map();
   for (const page of ideaPages) {

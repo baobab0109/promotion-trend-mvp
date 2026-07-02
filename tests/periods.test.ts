@@ -33,15 +33,15 @@ const weeks: WeekManifestItem[] = [
 ];
 
 describe('period controls', () => {
-  it('uses weekly latest completed week as the default period selection', () => {
+  it('uses weekly latest week as the default period selection', () => {
     expect(DEFAULT_PERIOD_SELECTION).toEqual({ preset: 'weekly', weeklyValue: 'latest' });
   });
 
-  it('builds the recommended quick presets plus weekly choices with latest completed week first', () => {
+  it('builds the recommended quick presets plus weekly choices with latest week first', () => {
     const model = buildPeriodControlModel(weeks, new Date('2026-06-27T00:00:00+09:00'));
 
     expect(model.quickOptions.map((option) => option.value)).toEqual(['recent-7', 'recent-14', 'recent-30', 'weekly']);
-    expect(model.weeklyOptions[0]).toMatchObject({ value: 'latest', label: '최신 완료주 · 2026.06.17 - 2026.06.23' });
+    expect(model.weeklyOptions[0]).toMatchObject({ value: 'latest', label: '최신 주차 · 2026.06.17 - 2026.06.23' });
     expect(model.weeklyOptions[1]).toMatchObject({ value: 'week:2026-W24', label: '직전 주 · 2026.06.10 - 2026.06.16' });
     expect(model.weeklyOptions.some((option) => option.value === 'recent-4w' && option.label.includes('최근 4주 합산'))).toBe(true);
     expect(model.defaultWeeklyValue).toBe('latest');

@@ -1,12 +1,21 @@
 [
   {
+    "weekId": "2026-W27",
+    "label": "2026.07.01 - 2026.07.07",
+    "status": "Published",
+    "startDate": "2026-07-01",
+    "endDate": "2026-07-07",
+    "file": "./data/trends/2026-W27.json",
+    "isLatest": true
+  },
+  {
     "weekId": "2026-W26",
     "label": "2026.06.24 - 2026.06.30",
     "status": "Published",
     "startDate": "2026-06-24",
     "endDate": "2026-06-30",
     "file": "./data/trends/2026-W26.json",
-    "isLatest": true
+    "isLatest": false
   },
   {
     "weekId": "2026-W25",

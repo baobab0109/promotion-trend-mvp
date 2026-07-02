@@ -7,12 +7,12 @@
   "sourceSummary": [
     {
       "name": "뉴스/기사",
-      "count": 3,
+      "count": 16,
       "note": "커머스·유통·브랜드 기사"
     },
     {
       "name": "SNS 공개 신호",
-      "count": 0,
+      "count": 1,
       "note": "해시태그/UGC 공개 신호"
     },
     {
@@ -22,7 +22,7 @@
     },
     {
       "name": "경쟁사 프로모션",
-      "count": 0,
+      "count": 8,
       "note": "이벤트/기획전 페이지"
     }
   ],
@@ -60,20 +60,28 @@
       },
       "evidence": [
         {
-          "type": "기사",
-          "title": "SSG닷컴, ‘쓱7클럽’ 7월 프로모션 확대…매일 쿠폰·먹거리 반값 - BBS불교방송",
-          "source": "BBS불교방송",
-          "date": "2026-07-02",
-          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFA4ZUdwdHN3dVZTQUFZMGJQTkR0dFBjMjhfRWJFaWFGampCcEd3eWkzOWsxUW1KSjZQb1RHZEFQLWlIOFRSV1JscWQ4ZTk2TlNZb21jOU8zZXhtNWZ3THVRZC12MmZ5Tkx6d2tj?oc=5",
-          "summary": "BBS불교방송 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
+          "type": "경쟁사",
+          "title": "현대Hmall 홈/혜택 프로모션",
+          "source": "현대Hmall 홈/혜택",
+          "date": "2026-06-26",
+          "url": "https://www.hmall.com/md/dpl/index",
+          "summary": "현대Hmall 홈/혜택 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
         },
         {
-          "type": "기사",
-          "title": "SSG닷컴, '쓱7클럽' 7월 혜택 확대...매일 오전 7시 쿠폰 지급 - 우먼타임스",
-          "source": "우먼타임스",
-          "date": "2026-07-02",
-          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE02dWNEbnpIWW1BQ3VGTDdIUkstc0R0TzhfcFI3dzhqSVRCSW9SaXMxZ1FkcWZQMC1LMmd1QmdFdGswSmNFODNMbnQtMTFQTjNxc0lQS2RhbTFPVVlUSkpIa010UFF4V3NZVF9JZnplWmXSAXRBVV95cUxOQzdfc1pCNGdFRkN2emlCeEJkZXhzSzhoN2ZlMTB6Ym93eTJ0R280TkNDNTFJeDRBSUpNX3RQTEoxRTQzbjRxOWI5dDdrMk54NUpZUENmSW0yMFI2TTdtbjl3Q1hkQnllQkVEMEZpdTlCOWowNg?oc=5",
-          "summary": "우먼타임스 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
+          "type": "경쟁사",
+          "title": "이벤트/쿠폰, 믿고 사는 즐거움 SSG.COM",
+          "source": "SSG 이벤트",
+          "date": "2026-06-26",
+          "url": "https://www.ssg.com/event/eventMain.ssg",
+          "summary": "SSG 이벤트 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
+        },
+        {
+          "type": "경쟁사",
+          "title": "매일매일 돈 되는 무신사 혜택 쌓기!",
+          "source": "무신사 이벤트",
+          "date": "2026-06-26",
+          "url": "https://www.musinsa.com/events",
+          "summary": "무신사 이벤트 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
         }
       ],
       "aiInterpretation": {
@@ -185,12 +193,36 @@
       },
       "evidence": [
         {
-          "type": "검색",
-          "title": "오늘의집, 삼성전자 브랜드위크 개최…온누리상품권·추가 할인 제공 - 전자신문",
-          "source": "전자신문",
-          "date": "2026-07-01",
-          "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE03aEloa2lOYzBFZnFhNncyS3R5ajBCUUkzeVFmZ0xYd1lCNjZXaEZjenVrak9JTmNONk9UT2tKdTRURnZ6Z1M3ZVd5enNWZw?oc=5",
-          "summary": "전자신문 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
+          "type": "SNS",
+          "title": "유튜브 스타 된 '페포'…플랫폼·굿즈로 외연 넓히는 삼양 - 글로벌이코노믹",
+          "source": "글로벌이코노믹",
+          "date": "2026-06-24",
+          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPM3lLMk81SGdocHN2OWxSczQ4YnN6S2hZWTJWRVpaMnRRNzFHNDY4T3hQSVEyNS01QjJLQ2NucHdrNzF1QVBVQ2JXN1UtbGRZRFdncVRuOGwxVWRvclJidUx3RWhVRVY1WjNPbm9XdDU2ZUVjZzFrbkVmNmpwUENoY2JHLWVNak03RjJj?oc=5",
+          "summary": "글로벌이코노믹 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
+        },
+        {
+          "type": "기사",
+          "title": "에이내추럴, W컨셉 신규 브랜드 하이라이트 참여… 온라인 고객 접점 확대 본격화 - 유스연합",
+          "source": "유스연합",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBtekVOZXBBaXRZSUE1VUplVHhHNVpPSEJONWhWd1JiNE4yV2diZGx5ZzdDcVFyZmRIWmIwdWFLVmpZSzJNSnAwV1l5MDJ3NUhoTkE?oc=5",
+          "summary": "유스연합 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
+        },
+        {
+          "type": "기사",
+          "title": "무신사, 육군본부와 협업해 로카(ROKA) 에디션 선봬 - 이투데이",
+          "source": "이투데이",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFBTdXNsYVdUUFpyMmJJbWdLbzMzTWZzTXFSTDR6T1BmWElKc1pYRml3UU1LOVNZdm5QYTlUcFNhRXN1Q2FwSzFfVUhiX0lPZm5VVkFoMg?oc=5",
+          "summary": "이투데이 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
+        },
+        {
+          "type": "기사",
+          "title": "에이내추럴, W컨셉 신규 브랜드 하이라이트 참여… 온라인 고객 접점 확대 본격화 - knpp.co.kr",
+          "source": "knpp.co.kr",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE1nek4yVzc4WUJ2SXNDN0dPOHVsQzVuejVraFFUc01KRElrdFluUlp3VEgtSXVQcWdiNDNRd2I3eHlPNFk?oc=5",
+          "summary": "knpp.co.kr 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
         }
       ],
       "aiInterpretation": {
@@ -303,7 +335,48 @@
         "onstyleFit": 82,
         "risk": 45
       },
-      "evidence": [],
+      "evidence": [
+        {
+          "type": "기사",
+          "title": "7월 T 멤버십 혜택 총정리: SUMMER LUCKY WEEK·Young Week·신규 제휴사·서울랜드 할인 - SK텔레콤 뉴스룸",
+          "source": "SK텔레콤 뉴스룸",
+          "date": "2026-06-30",
+          "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE80RDdGQWlnVzVObHJucTVyc1ZWZGxDSVVWajdURWtaSTBGa2ExOWMxc2Q1anp6cTA5OUhaY25PczRPNGkwdGJFTw?oc=5",
+          "summary": "SK텔레콤 뉴스룸 사례. 멤버십/클럽/폐쇄형 채널에서 접근권·편의·추가혜택을 묶어 효용을 제시하는 근거."
+        },
+        {
+          "type": "기사",
+          "title": "[오늘 뭐했니?] 더현대·현대홈쇼핑·한섬 EQL·현대이지웰 - 파이낸셜리뷰",
+          "source": "파이낸셜리뷰",
+          "date": "2026-06-28",
+          "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1KSnIyeXo5V3Q4RDZybDE1Sm5iZ3JhSFpBVkZCNnFCdHZZSzRUOE9ScmZHLTA0LXhHMExpWk1yQ2F0dXI5cWxNZnpsN3JHN0Y0NEY0Zk5Hc0xGMjI4aE9MdWI5VzNVU0l2bU81Wm5GUzNjN1Nn?oc=5",
+          "summary": "파이낸셜리뷰 사례. 멤버십/클럽/폐쇄형 채널에서 접근권·편의·추가혜택을 묶어 효용을 제시하는 근거."
+        },
+        {
+          "type": "경쟁사",
+          "title": "로켓배송으로 빠르게, 로켓와우 멤버십으로 할인과 무료 반품까지 | 쿠팡",
+          "source": "쿠팡 기획전",
+          "date": "2026-06-26",
+          "url": "https://www.coupang.com/",
+          "summary": "쿠팡 기획전 사례. 멤버십/클럽/폐쇄형 채널에서 접근권·편의·추가혜택을 묶어 효용을 제시하는 근거."
+        },
+        {
+          "type": "경쟁사",
+          "title": "홈앤쇼핑",
+          "source": "홈앤쇼핑 이벤트",
+          "date": "2026-06-26",
+          "url": "https://www.hnsmall.com/",
+          "summary": "홈앤쇼핑 이벤트 사례. 멤버십/클럽/폐쇄형 채널에서 접근권·편의·추가혜택을 묶어 효용을 제시하는 근거."
+        },
+        {
+          "type": "기사",
+          "title": "현대이지웰 복지몰 최대 할인전…‘이지 세일 페스타’로 쇼핑 혜택 강화 - 스마트경제",
+          "source": "스마트경제",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBvZmRWb0lEdm81bWcxeURzNXBISkg3d1pPOTNqdnV2UThHSVpWZHdTWkZOd1hDcVBqN3BYNHFWLXRCckRxb0VzWGdURlhqemZKTDlfU3dRMXJQQ0EyRTJraFk3QV9hUFFPX1p3UU1idDg?oc=5",
+          "summary": "스마트경제 사례. 멤버십/클럽/폐쇄형 채널에서 접근권·편의·추가혜택을 묶어 효용을 제시하는 근거."
+        }
+      ],
       "aiInterpretation": {
         "consumerInsight": "회원은 단순 쿠폰팩보다 “먼저 보고, 더 받고, 놓치지 않는” 접근권과 편의 혜택을 멤버십 가치로 인식한다.",
         "opportunity": "온스타일은 VIP/멤버십 고객에게 방송 전 선공개, 단독 구성, 라이브 전용 사은품, 추가 적립을 묶은 선공개 프로그램을 테스트한다.",
@@ -413,7 +486,24 @@
         "onstyleFit": 76,
         "risk": 42
       },
-      "evidence": [],
+      "evidence": [
+        {
+          "type": "검색",
+          "title": "알리익스프레스, 상반기 베스트 상품 최대 60% 할인 - 핀포인트뉴스",
+          "source": "핀포인트뉴스",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5DSllic0pkaGJOTGhoMkE2bkl2Y0NYVXQwVjBQWDBwTEFzVFl6SVdLX1FHZmthNUUxLWVDVkFFVVlBNkludVNUUWt3R3gtclhUWnpSd1VKSkJfcExCTk5zTnM5dThyTUFJM2Fwd25CeFJBZFFPTklV0gF3QVVfeXFMTkNKWWJzSmRoYk5MaGgyQTZuSXZjQ1hVdDBWMFBYMHBMQXNUWXpJV0tfUUdma2E1RTEtZUNWQUVVWUE2SW51U1RRa3dHeC1yWFRaelJ3VUpKQl9wTEJOTnNOczl1OHJNQUkzYXB3bkJ4UkFkUU9OSVU?oc=5",
+          "summary": "핀포인트뉴스 사례. 데이터·랭킹·베스트 상품을 큐레이션 메시지로 전환해 탐색 피로를 줄이는 근거."
+        },
+        {
+          "type": "기사",
+          "title": "알리익스프레스, 빅데이터 기반 ‘알급날 2026 상반기 어워즈’ 개최…최대 60% 할인 - 데일리포스트",
+          "source": "데일리포스트",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFB5UlhZeWk1YnVtdXc0YjUyWjVDaG5EWTRORnd5bXNrN0QzbGxZYTk5THJFUF9vNWpPOHRCUndkM09Ma1RPa1ZfSXo3a3Y4eEtxXzVhaXI5UVU2QlAxMU5xZksydHdBWVZEYU1WN1JDUdIBc0FVX3lxTFBiSlNralBKUTRKQlluanZFMW04bWd2ZGstSlhHRzUtanR3aHY2bFZzWjBSUnpRSEpiYUVUbGdEMUVtd0JJVS11bkNSM2VqQVpQYy01Uy1xU3gta1p6aDVHTE5BdlFNVWpYd1BtOTR0dVZRWXc?oc=5",
+          "summary": "데일리포스트 사례. 데이터·랭킹·베스트 상품을 큐레이션 메시지로 전환해 탐색 피로를 줄이는 근거."
+        }
+      ],
       "aiInterpretation": {
         "consumerInsight": "고객은 많은 상품을 직접 비교하기보다 검증된 랭킹/취향 기반 추천을 통해 빠르게 선택하려는 경향이 있다.",
         "opportunity": "온스타일은 카테고리별 베스트, 재구매 주기, 최근 관심 상품을 결합해 “데이터로 고른 오늘의 딜” 형태의 큐레이션을 제공한다.",
@@ -526,11 +616,99 @@
       "evidence": [
         {
           "type": "기사",
-          "title": "린클, 7월 3일 네이버 넾다세일 쇼핑라이브 진행 - 시선뉴스",
-          "source": "시선뉴스",
-          "date": "2026-07-01",
-          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9PVmxTY09sSFVrVDJUa0MxamQ5cjJNNjNQQzRvTi1OQlRnbHpWUENjSUV0dzk1bldvVHRQb05ySEc4Vl9vTVlXTkh2aUw4ZUpVMk1EWG4zdnpndTY5b1Vuam1wQmRzaThOeWtvMndB0gFyQVVfeXFMTjhkYUNpZ01ObjJQbEdjczhFbEVtY0hvd2dFVlNKY3c0VHRtMnprNHpsQVVnWWFHcTFGQU1lRnBXbHFTSFo0WXJicURWX1EwYk41bnJ5em9NWGxuN3ByM2k3U2xTY1VDLW5leWlZOWJKQWJ3?oc=5",
-          "summary": "시선뉴스 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+          "title": "위닉스, AI 라이브커머스 도입…D2C 고객 접점 확대 - 데일리안",
+          "source": "데일리안",
+          "date": "2026-06-30",
+          "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxOU3hsZ3BPb1BTOEx0Z2tUcC1OUTJUZ083clBhTDlJV2ZsR1F2RDQ2enZsYk00NWdEZmVLMDducUpmcVpIdzlzS1ROQllhQ29ZbWQ1YUhYak9hZXc4d21XczNsSk5jQnJMbDVXc3h5NmZVZFBJWnZaWkJvSmZuN3E5YTlIdl9lR3RPX1BudDRnaXpzWk44dEdQNzFHLWgtRHFnVEFJdGNCRml6MkRzSFpBa19sRUlNcWhaelFnRzZzamNkc0s1QVhrMEg0aE1oUjJwMzE2NW5UdUZMcnlNUkhqNmNtMVkweDh3UU5iLdIB7wFBVV95cUxQUEVjNVNmd2tQX2Ftd2RBLWQtN1Z3Q2o3REU2Qmd0SmxqdUZiVFE4N01HSGFUSURwQ1U2M2RTV0JGam5Ocy1QQVVnd3dSTFNGVG0tdHg3cTFGd3NLUUFPaWtvcFlXSjFvRWF2Rl9IaFZrODhjMXBOTlRZeVhabVZBemNKd3RtakpWT1dVbXFNaVVZMExfMHM3cXdHdThkZnNoZEVoNUdwV0kyWExsTmN1Zko2QTFobjRnZ3dyX3NRNEdCcl9kWl9ncGJuaFVFS3ExWTJCZy1yaGRBcmxiSEcyNlhHSDZUQzJlelZRd3k1bw?oc=5",
+          "summary": "데일리안 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "기사",
+          "title": "위닉스, AI 라이브커머스 본격 도입…D2C 고객 접점 넓힌다 - 뉴스탭",
+          "source": "뉴스탭",
+          "date": "2026-06-30",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9wVXFGQUVmWlg5Zy1SUGdLSFd1SHo4dzk1NkE4c1Qzd1VaM3FPZWIyaXZBV1R2cEUyREtDZXZDdEx0alJCVWRIRTQ5bWN4LW5TOFZVMVFnWXV5QjZvVW5UQjIwOGR1SnZaRjY2ZQ?oc=5",
+          "summary": "뉴스탭 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "기사",
+          "title": "린클, 30일 네이버 쇼핑라이브 진행 - 핸드메이커",
+          "source": "핸드메이커",
+          "date": "2026-06-28",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE4xTW1kTlVOWVlLN1J2TmxucFpPMFFrRUZhV2JOam1xTEoxa3NYTzdmNVk4YWFFSEVDVDJEemVNbU5jUnZlWUVCTDN5NlZXZFIteHkwMTRjZkVCbEZ4SUkxeDEzYU9yLTTSAWtBVV95cUxPQVZGUUxNQTJsUXdFbjZmSVBkOUpMMUw2cWVOOUlZalBlcldhb2JjOTg2MThKZm1IWmRzRzd5dHF4MTM4TEdsd0p3YlI4eGNnTDRxSU5SNW9ZZkpCUGY5NzZrSUVVdENpcjN3SQ?oc=5",
+          "summary": "핸드메이커 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "기사",
+          "title": "노랑풍선, '다낭·호이안' 라이브커머스 진행 - 청년일보",
+          "source": "청년일보",
+          "date": "2026-06-29",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE8xZDI0VEFDVWJIYWhvMFk4cWRTU1hhY1g2a2JXUzNDYkdWRTJSbHZnZGtBWTBUM0o1ekZwU0ZZMHlWSFB4YW1pcVdEWVFjWmdBcjlFY2xWU2dhQ1dObFBpY1BB?oc=5",
+          "summary": "청년일보 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "기사",
+          "title": "레노버, 인기 AI PC 파격 할인의 네이버 쇼핑라이브 진행 - 인벤",
+          "source": "인벤",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1pWnJWeUJuTXlaaWJ5WFpLSmdLVU9rX0RFZWtuZENvRnNFSzRqaE5TdEp5MDNqZDA5UzNhWWkzM2xaaTl6QUVjbC1ub1AzU3RhOTV6ZWZ2RGVYMWdHVnFjcWlOS0NmeDBn?oc=5",
+          "summary": "인벤 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "기사",
+          "title": "[유통가 상반기 돌아보니] ⑥TV 떠난 소비자, 홈쇼핑은 '라이브'로 - 스트레이트뉴스",
+          "source": "스트레이트뉴스",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5kd0RfRFhlRDhXNHRjaU5jVjN3NEZQNW9aanFiYTloQWtRVnRVVTZtc0ROZlp2ZHdhZDk5V3V2NDdJbkFDNlQzYkl5bUJSOHI3VjFZamk2VkloTGJSSlFZR3A4T0UwSndXczVhSWdwR2hHN2FCWTh30gF3QVVfeXFMTmR3RF9EWGVEOFc0dGNpTmNWM3c0RlA1b1pqcWJhOWhBa1FWdFVVNm1zRE5mWnZkd2FkOTlXdXY0N0luQUM2VDNiSXltQlI4cjdWMVlqaTZWSWhMYlJKUVlHcDhPRTBKd1dzNWFJZ3BHaEc3YUJZOHc?oc=5",
+          "summary": "스트레이트뉴스 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "기사",
+          "title": "NS홈쇼핑, ‘반값창고’ 라이브 커머스… “도매가로 산다” - 소년한국일보",
+          "source": "소년한국일보",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1xd3NhYmxHeHZYeTYxLWRCaWdLWVA5RVZoajh0QUx5bjMxWk9HYmhEN28xcTJnMk9wMTJIMkljSWV4eG5VbUNTUV9LaGFsdi1qcGZTa3VCRHRPWWJkOGpkaFlTOVFSRDNteDhmYdIBcEFVX3lxTE9KNjdkaVRlaUtOOXRuU011TTFGMGZxM2NfRFMzam5RTzhteklLVTlzN09ZMmc0OGMzQWM1bTVhalBWT3JMVW5leENXNEwzZE9fcjdCS2pXTUd1RzNuWVotbUxLMFUwaDh4LUlROEZrYlA?oc=5",
+          "summary": "소년한국일보 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "기사",
+          "title": "NS홈쇼핑 '반값창고', 도매가 혜택·현장 중계로 소비자 사로잡았다 - 컨슈머타임스",
+          "source": "컨슈머타임스",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1wa3B3dFpGcmVodk5CVFhPYXNwdWROMk1hZmE1X1JGUUNnMDFSa0JzWFpKNmplQTBIcWNjSktiOHpvb2g4YUozc19nOEVadUtBRTQtbC1nQlREWFJNZEhDeF9HSERTVG5ITWc?oc=5",
+          "summary": "컨슈머타임스 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "경쟁사",
+          "title": "톡딜",
+          "source": "카카오쇼핑 톡딜",
+          "date": "2026-06-26",
+          "url": "https://store.kakao.com/home/hotdeal",
+          "summary": "카카오쇼핑 톡딜 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "경쟁사",
+          "title": "쇼킹딜 | 11번가",
+          "source": "11번가 쇼킹딜",
+          "date": "2026-06-26",
+          "url": "https://www.11st.co.kr/browsing/DealAction.tmall?method=getShockingDealMain",
+          "summary": "11번가 쇼킹딜 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "경쟁사",
+          "title": "NS홈쇼핑- 건강한 아이디어",
+          "source": "NS홈쇼핑 이벤트",
+          "date": "2026-06-26",
+          "url": "https://www.nsmall.com/customer/event/list",
+          "summary": "NS홈쇼핑 이벤트 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "기사",
+          "title": "글라스락, ‘카카오쎈딜’ 단독 기획전…대규모 프로모션 돌입 - 아시아투데이",
+          "source": "아시아투데이",
+          "date": "2026-06-26",
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFB4SmpqT2VzdktVMjV4dDNBTHJXbHU0ME9oaEZBMW41RHprM29CcnRuaEZ5a2F2UUFPbEZxQTRQX1ZZMFFDNXdTMnhJc3IzWWZ2NGxydjllMlhoV0sxanBfNjVJZ3h2T1hTNVJMd3pR?oc=5",
+          "summary": "아시아투데이 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
         }
       ],
       "aiInterpretation": {

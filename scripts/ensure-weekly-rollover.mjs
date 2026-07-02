@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
-import { planMissingCompletedWeeks } from './lib/weekly-rollover-utils.mjs';
+import { planMissingWeeksThroughCurrent } from './lib/weekly-rollover-utils.mjs';
 
 const ROOT = process.cwd();
 const CONFIG_PATH = path.join(ROOT, 'config', 'notion-data-sources.json');
@@ -301,7 +301,7 @@ async function main() {
 
   const existingByWeekId = new Map(allWeekPages.map((page) => [richText(page, 'Week ID'), page]).filter(([weekId]) => weekId));
   const pageByWeekId = new Map(allWeekPages.map((page) => [richText(page, 'Week ID'), page]).filter(([weekId]) => weekId));
-  const plannedWeeks = planMissingCompletedWeeks(publishedWeekSummaries, now);
+  const plannedWeeks = planMissingWeeksThroughCurrent(publishedWeekSummaries, now);
   let sourceWeekSummary = publishedWeekSummaries.sort((a, b) => a.endDate.localeCompare(b.endDate)).at(-1);
   const results = [];
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildNextWeek, planMissingCompletedWeeks } from '../scripts/lib/weekly-rollover-utils.mjs';
+import { buildNextWeek, planMissingWeeksThroughCurrent } from '../scripts/lib/weekly-rollover-utils.mjs';
 
 const week25 = {
   weekId: '2026-W25',
@@ -20,30 +20,37 @@ describe('weekly rollover utilities', () => {
     });
   });
 
-  it('plans only fully completed missing weeks as of KST yesterday', () => {
-    expect(planMissingCompletedWeeks([week25], new Date('2026-07-02T07:00:00+09:00'))).toEqual([
+  it('plans missing weeks through the current in-progress KST week', () => {
+    expect(planMissingWeeksThroughCurrent([week25], new Date('2026-07-02T07:00:00+09:00'))).toEqual([
       {
         weekId: '2026-W26',
         label: '2026.06.24 - 2026.06.30',
         status: 'Published',
         startDate: '2026-06-24',
         endDate: '2026-06-30'
+      },
+      {
+        weekId: '2026-W27',
+        label: '2026.07.01 - 2026.07.07',
+        status: 'Published',
+        startDate: '2026-07-01',
+        endDate: '2026-07-07'
       }
     ]);
 
-    expect(planMissingCompletedWeeks([week25], new Date('2026-07-07T07:00:00+09:00')).map((week) => week.weekId)).toEqual(['2026-W26']);
-    expect(planMissingCompletedWeeks([week25], new Date('2026-07-08T07:00:00+09:00')).map((week) => week.weekId)).toEqual(['2026-W26', '2026-W27']);
+    expect(planMissingWeeksThroughCurrent([week25], new Date('2026-07-07T07:00:00+09:00')).map((week) => week.weekId)).toEqual(['2026-W26', '2026-W27']);
+    expect(planMissingWeeksThroughCurrent([week25], new Date('2026-07-08T07:00:00+09:00')).map((week) => week.weekId)).toEqual(['2026-W26', '2026-W27', '2026-W28']);
   });
 
-  it('does not plan a Published week that already exists or overlaps the current in-progress window', () => {
+  it('does not plan a Published week that already exists but still ensures the current window', () => {
     const week26 = buildNextWeek(week25);
 
-    expect(planMissingCompletedWeeks([week25, week26], new Date('2026-07-02T07:00:00+09:00'))).toEqual([]);
+    expect(planMissingWeeksThroughCurrent([week25, week26], new Date('2026-07-02T07:00:00+09:00')).map((week) => week.weekId)).toEqual(['2026-W27']);
   });
 
   it('still plans a completed week when only a non-Published page exists so the repair path can publish it', () => {
     const draftWeek26 = { ...buildNextWeek(week25), status: 'Draft' };
 
-    expect(planMissingCompletedWeeks([week25, draftWeek26], new Date('2026-07-02T07:00:00+09:00')).map((week) => week.weekId)).toEqual(['2026-W26']);
+    expect(planMissingWeeksThroughCurrent([week25, draftWeek26], new Date('2026-07-02T07:00:00+09:00')).map((week) => week.weekId)).toEqual(['2026-W26', '2026-W27']);
   });
 });

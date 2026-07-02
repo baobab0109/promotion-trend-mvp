@@ -11,7 +11,7 @@ const QUICK_OPTIONS: PeriodControlModel['quickOptions'] = [
   { value: 'recent-7', label: '최근 7일', description: '가장 최근 7일과 겹치는 주차 데이터' },
   { value: 'recent-14', label: '최근 14일', description: '전주 대비 흐름까지 보는 2주 창' },
   { value: 'recent-30', label: '최근 30일', description: '기본 모니터링용 30일 창' },
-  { value: 'weekly', label: '주간', description: '완료 주차와 최근 N주 합산 선택' }
+  { value: 'weekly', label: '주간', description: '최신 주차와 최근 N주 합산 선택' }
 ];
 
 function dateOnly(value: string | Date): Date {
@@ -26,7 +26,7 @@ function sortWeeks(weeks: WeekManifestItem[]): WeekManifestItem[] {
 }
 
 function labelForWeek(index: number, week: WeekManifestItem): string {
-  if (index === 0) return `최신 완료주 · ${week.label}`;
+  if (index === 0) return `최신 주차 · ${week.label}`;
   if (index === 1) return `직전 주 · ${week.label}`;
   return `${index}주 전 · ${week.label}`;
 }
@@ -56,7 +56,7 @@ export function buildPeriodControlModel(weeks: WeekManifestItem[], today: Date =
       weekOptions.push({
         value: `recent-${count}w`,
         label: aggregateLabel(count, selected),
-        description: `${selected.length}개 완료 주차를 합산`,
+        description: `${selected.length}개 주차를 합산`,
         files: selected.map((week) => week.file)
       });
     }
