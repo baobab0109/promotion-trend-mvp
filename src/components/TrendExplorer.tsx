@@ -49,7 +49,7 @@ export default function TrendExplorer({ filters, filterOptions, trends, selected
       </div>
       <div className="trend-list">
         {trends.length === 0 ? (
-          <div className="empty">조건에 맞는 트렌드가 없습니다. 필터를 초기화해보세요.</div>
+          <div className="empty">해당 기간에 근거가 충분한 트렌드가 없습니다. 다른 기간을 선택하거나 근거 데이터를 보강해보세요.</div>
         ) : trends.map((trend) => (
           <button className={`trend-card ${selectedId === trend.id ? 'selected' : ''}`} type="button" key={trend.id} onClick={() => onSelectTrend(trend.id)}>
             <div className="label-row" style={{ marginBottom: 0 }}>

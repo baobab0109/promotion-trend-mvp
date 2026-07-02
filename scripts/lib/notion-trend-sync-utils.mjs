@@ -59,6 +59,10 @@ export function buildTrendIdIndexes({ allTrendPages = [], selectedTrendPages = [
   return { trendKeyByPageId, selectedPageIdByTrendKey };
 }
 
+export function filterTrendPagesWithEvidence(selectedTrendPages = [], evidenceByTrend = new Map()) {
+  return selectedTrendPages.filter((page) => (evidenceByTrend.get(page.id) || []).length > 0);
+}
+
 export function partitionEvidenceBySelectedWeekTrend({
   evidencePages = [],
   allTrendPages = [],

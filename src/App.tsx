@@ -54,8 +54,8 @@ export default function App() {
     ?? trends.find((trend) => trend.id === selectedId)
     ?? filteredTrends[0]
     ?? trends[0];
-  const selectedIdea = getIdeaForMode(selectedTrend, selectedIdeaMode);
-  const selectedPrompt = buildDevelopmentPrompt(selectedTrend, selectedIdea, selectedIdeaMode);
+  const selectedIdea = selectedTrend ? getIdeaForMode(selectedTrend, selectedIdeaMode) : undefined;
+  const selectedPrompt = selectedTrend && selectedIdea ? buildDevelopmentPrompt(selectedTrend, selectedIdea, selectedIdeaMode) : '';
 
   useEffect(() => {
     let cancelled = false;
@@ -68,8 +68,8 @@ export default function App() {
         if (cancelled) return;
         setDataset(nextDataset);
         setWeeks(nextWeeks);
-        setSelectedId(nextDataset.trends[0].id);
-        setSelectedIdeaMode(nextDataset.trends[0].modeBias);
+        setSelectedId(nextDataset.trends[0]?.id ?? '');
+        setSelectedIdeaMode(nextDataset.trends[0]?.modeBias ?? 'stable');
         setLoadState('notion');
         setManifestLoaded(true);
       })
@@ -96,8 +96,8 @@ export default function App() {
       .then((nextDataset) => {
         if (cancelled) return;
         setDataset(nextDataset);
-        setSelectedId(nextDataset.trends[0].id);
-        setSelectedIdeaMode(nextDataset.trends[0].modeBias);
+        setSelectedId(nextDataset.trends[0]?.id ?? '');
+        setSelectedIdeaMode(nextDataset.trends[0]?.modeBias ?? 'stable');
         setLoadState('notion');
       })
       .catch((error) => {
@@ -118,8 +118,11 @@ export default function App() {
       const nextTrend = filteredTrends[0];
       setSelectedId(nextTrend.id);
       setSelectedIdeaMode(nextTrend.modeBias);
+    } else if (trends.length === 0 && selectedId) {
+      setSelectedId('');
+      setSelectedIdeaMode('stable');
     }
-  }, [filteredTrends, selectedId]);
+  }, [filteredTrends, selectedId, trends.length]);
 
   useEffect(() => {
     if (!toast) return;
@@ -133,8 +136,8 @@ export default function App() {
 
   function handleReset() {
     setFilters(initialFilters);
-    setSelectedId(trends[0].id);
-    setSelectedIdeaMode(trends[0].modeBias);
+    setSelectedId(trends[0]?.id ?? '');
+    setSelectedIdeaMode(trends[0]?.modeBias ?? 'stable');
     showToast('필터를 초기화했습니다.');
   }
 
@@ -177,6 +180,10 @@ export default function App() {
 
   async function handleCopyPrompt() {
     try {
+      if (!selectedPrompt) {
+        showToast('복사할 기획안이 없습니다.');
+        return;
+      }
       if (!navigator.clipboard) {
         throw new Error('Clipboard API is unavailable');
       }
@@ -188,6 +195,10 @@ export default function App() {
   }
 
   function handleToggleBookmark() {
+    if (!selectedTrend || !selectedIdea) {
+      showToast('찜할 기획안이 없습니다.');
+      return;
+    }
     const result = toggleBookmark(selectedTrend, selectedIdea, selectedIdeaMode, selectedPrompt);
     setBookmarks(readBookmarks());
     showToast(result === 'added' ? '찜한 기획안에 저장했습니다.' : '찜한 기획안에서 제거했습니다.');
@@ -226,26 +237,36 @@ export default function App() {
             filters={filters}
             filterOptions={filterOptions}
             trends={filteredTrends}
-            selectedId={selectedTrend.id}
+            selectedId={selectedTrend?.id ?? ''}
             onFilterChange={handleFilterChange}
             onQueryChange={handleQueryChange}
             onSelectTrend={handleSelectTrend}
           />
 
-          <section className="detail-stack">
-            <TrendDetail trend={selectedTrend} />
-            <IdeaCompare trend={selectedTrend} selectedMode={selectedIdeaMode} onSelectMode={handleSelectIdeaMode} />
-            <SelectedIdeaDetail
-              trend={selectedTrend}
-              idea={selectedIdea}
-              mode={selectedIdeaMode}
-              bookmarks={bookmarks}
-              onCopyPrompt={handleCopyPrompt}
-              onToggleBookmark={handleToggleBookmark}
-              onOpenBookmark={handleOpenBookmark}
-              onRemoveBookmark={handleRemoveBookmark}
-            />
-          </section>
+          {selectedTrend && selectedIdea ? (
+            <section className="detail-stack">
+              <TrendDetail trend={selectedTrend} />
+              <IdeaCompare trend={selectedTrend} selectedMode={selectedIdeaMode} onSelectMode={handleSelectIdeaMode} />
+              <SelectedIdeaDetail
+                trend={selectedTrend}
+                idea={selectedIdea}
+                mode={selectedIdeaMode}
+                bookmarks={bookmarks}
+                onCopyPrompt={handleCopyPrompt}
+                onToggleBookmark={handleToggleBookmark}
+                onOpenBookmark={handleOpenBookmark}
+                onRemoveBookmark={handleRemoveBookmark}
+              />
+            </section>
+          ) : (
+            <section className="detail-stack">
+              <div className="detail-card empty-state" role="status">
+                <span className="badge violet">No evidence-backed trends</span>
+                <h3>해당 기간에 근거가 충분한 트렌드가 없습니다.</h3>
+                <p className="muted">Published 근거가 1건 이상 연결된 트렌드만 대시보드에 표시합니다. 다른 기간을 선택하거나 Notion 근거 데이터를 보강해 주세요.</p>
+              </div>
+            </section>
+          )}
         </main>
       </div>
       <div className={`toast ${toast ? 'show' : ''}`} role="status" aria-live="polite">{toast}</div>

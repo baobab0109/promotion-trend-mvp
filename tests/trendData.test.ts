@@ -58,6 +58,15 @@ describe('trend data helpers', () => {
     expect(options.modes).toEqual(['전체', '안정형 추천 강함', '공격형 추천 강함']);
   });
 
+  it('does not show sample-derived filter options for a zero-trend evidence-backed week', () => {
+    expect(buildFilterOptions([])).toEqual({
+      channels: ['전체'],
+      categories: ['전체'],
+      types: ['전체'],
+      modes: ['전체']
+    });
+  });
+
   it('summarizes evidence counts into the source labels used by the dashboard', () => {
     const summary = buildSourceSummaryFromEvidence([trend()]);
 
@@ -84,6 +93,25 @@ describe('trend data helpers', () => {
     expect(validateTrendDataset({ ...dataset, trends: [trend({ scores: { momentum: 101, onstyleFit: 90, risk: 30 } })] })).toContain(
       'trend-a.scores.momentum must be between 0 and 100'
     );
+  });
+
+  it('allows a published week with zero evidence-backed trends while keeping sourceSummary count validation', () => {
+    const emptySummary = buildSourceSummaryFromEvidence([]);
+    const dataset: TrendDataset = {
+      weekId: '2026-W25',
+      label: '2026.06.17 - 2026.06.23',
+      status: 'Published',
+      generatedAt: '2026-06-26T00:00:00.000Z',
+      source: 'notion',
+      sourceSummary: emptySummary,
+      trends: []
+    };
+
+    expect(validateTrendDataset(dataset)).toEqual([]);
+    expect(validateTrendDataset({
+      ...dataset,
+      sourceSummary: emptySummary.map((item) => item.name === '뉴스/기사' ? { ...item, count: 1 } : item)
+    })).toContain('sourceSummary.뉴스/기사 count must equal evidence count 0');
   });
 
   it('requires publish-ready evidence type, fields, URL, and sourceSummary counts', () => {

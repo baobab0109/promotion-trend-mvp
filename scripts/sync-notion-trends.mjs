@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
-import { partitionEvidenceBySelectedWeekTrend } from './lib/notion-trend-sync-utils.mjs';
+import { filterTrendPagesWithEvidence, partitionEvidenceBySelectedWeekTrend } from './lib/notion-trend-sync-utils.mjs';
 
 const ROOT = process.cwd();
 const CONFIG_PATH = path.join(ROOT, 'config', 'notion-data-sources.json');
@@ -172,10 +172,11 @@ function validateDataset(dataset) {
   const errors = [];
   if (!dataset.weekId) errors.push('weekId is required');
   if (!dataset.label) errors.push('label is required');
-  if (!dataset.trends.length) errors.push('at least one Published trend is required');
+  if (!Array.isArray(dataset.trends)) errors.push('trends must be an array');
   const ids = new Set();
-  for (const trend of dataset.trends) {
+  for (const trend of dataset.trends || []) {
     if (!trend.id) errors.push('trend.id is required');
+    if (!Array.isArray(trend.evidence) || trend.evidence.length === 0) errors.push(`${trend.id || '(missing trend id)'}.evidence must include at least one item`);
     if (ids.has(trend.id)) errors.push(`${trend.id} is duplicated`);
     ids.add(trend.id);
     for (const key of ['stable', 'aggressive']) {
@@ -235,6 +236,8 @@ async function main() {
     }
   });
 
+  const exportedTrendPages = filterTrendPagesWithEvidence(allTrendPages, evidenceByTrend);
+
   const ideasByTrend = new Map();
   for (const page of ideaPages) {
     const mode = select(page, 'Mode');
@@ -245,7 +248,7 @@ async function main() {
     }
   }
 
-  const trends = allTrendPages.map((page) => ({
+  const trends = exportedTrendPages.map((page) => ({
     id: richText(page, 'Trend ID'),
     name: title(page),
     summary: richText(page, 'Summary'),

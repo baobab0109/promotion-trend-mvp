@@ -1,4 +1,4 @@
-import { filterOptions as sampleFilterOptions, sampleTrends, sourceSummary as sampleSourceSummary } from '../data/sampleTrends';
+import { sampleTrends, sourceSummary as sampleSourceSummary } from '../data/sampleTrends';
 import type { EvidenceItem, FilterOptions, SourceSummary, TrendDataset, TrendTopic } from './types';
 
 const SOURCE_SUMMARY_META: Record<EvidenceItem['type'], { name: string; note: string }> = {
@@ -15,7 +15,14 @@ function uniqueInOrder(values: string[]): string[] {
 }
 
 export function buildFilterOptions(trends: TrendTopic[]): FilterOptions {
-  if (trends.length === 0) return sampleFilterOptions;
+  if (trends.length === 0) {
+    return {
+      channels: ['전체'],
+      categories: ['전체'],
+      types: ['전체'],
+      modes: ['전체']
+    };
+  }
 
   return {
     channels: ['전체', ...uniqueInOrder(trends.flatMap((trend) => trend.channels))],
@@ -79,8 +86,8 @@ export function validateTrendDataset(dataset: TrendDataset): string[] {
       errors.push(`sourceSummary order must be ${expectedSourceNames.join(', ')}`);
     }
   }
-  if (!Array.isArray(dataset.trends) || dataset.trends.length === 0) {
-    errors.push('trends must include at least one item');
+  if (!Array.isArray(dataset.trends)) {
+    errors.push('trends must be an array');
     return errors;
   }
 
@@ -96,6 +103,8 @@ export function validateTrendDataset(dataset: TrendDataset): string[] {
     if (!Array.isArray(trend.keywords) || trend.keywords.length === 0) errors.push(`${label}.keywords must include at least one item`);
     if (!Array.isArray(trend.evidence)) {
       errors.push(`${label}.evidence must be an array`);
+    } else if (trend.evidence.length === 0) {
+      errors.push(`${label}.evidence must include at least one item`);
     } else {
       trend.evidence.forEach((evidence, index) => {
         const evidenceLabel = `${label}.evidence[${index}]`;

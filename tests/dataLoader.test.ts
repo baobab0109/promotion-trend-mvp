@@ -105,8 +105,25 @@ describe('loadTrendDataset', () => {
     expect(dataset.sourceSummary.find((source) => source.name === 'SNS 공개 신호')?.count).toBe(1);
   });
 
-  it('throws a readable error when the generated dataset is invalid', async () => {
-    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ ...validDataset, trends: [] }) });
+  it('loads a valid zero-trend weekly dataset without falling back', async () => {
+    const emptyDataset: TrendDataset = {
+      ...validDataset,
+      weekId: '2026-W25',
+      sourceSummary: validDataset.sourceSummary.map((source) => ({ ...source, count: 0 })),
+      trends: []
+    };
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => emptyDataset });
+
+    const dataset = await loadTrendDataset(fetchMock as unknown as typeof fetch);
+
+    expect(dataset.trends).toEqual([]);
+  });
+
+  it('throws a readable error when the generated dataset has invalid sourceSummary counts', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => ({
+      ...validDataset,
+      sourceSummary: validDataset.sourceSummary.map((source) => source.name === '뉴스/기사' ? { ...source, count: 0 } : source)
+    }) });
 
     await expect(loadTrendDataset(fetchMock as unknown as typeof fetch)).rejects.toThrow('트렌드 데이터 검증 실패');
   });

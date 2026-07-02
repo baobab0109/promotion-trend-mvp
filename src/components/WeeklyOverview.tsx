@@ -10,12 +10,13 @@ interface WeeklyOverviewProps {
 
 function MixBars({ rows, orange = false }: { rows: { name: string; value: number }[]; orange?: boolean }) {
   const max = Math.max(...rows.map((row) => row.value));
+  const denominator = max > 0 ? max : 1;
   return (
     <div className="bar-list">
       {rows.map((row) => (
         <div className="bar-row" key={row.name}>
           <span>{row.name}</span>
-          <div className="bar-track"><div className={`bar-fill ${orange ? 'orange' : ''}`} style={{ width: `${Math.round(row.value / max * 100)}%` }} /></div>
+          <div className="bar-track"><div className={`bar-fill ${orange ? 'orange' : ''}`} style={{ width: `${Math.round(row.value / denominator * 100)}%` }} /></div>
           <strong>{row.value}</strong>
         </div>
       ))}
@@ -54,7 +55,9 @@ export default function WeeklyOverview({ trends, sourceSummary, onSelectTrend, o
             </div>
           </div>
           <div className="top-trend-grid">
-            {top.map((trend) => (
+            {top.length === 0 ? (
+              <div className="empty">해당 기간에 근거가 충분한 트렌드가 없습니다.</div>
+            ) : top.map((trend) => (
               <button className="mini-trend" type="button" key={trend.id} onClick={() => onSelectTrend(trend.id, true)}>
                 <strong>{trend.name}</strong>
                 <p>{trend.summary}</p>
@@ -66,12 +69,12 @@ export default function WeeklyOverview({ trends, sourceSummary, onSelectTrend, o
         <div className="panel">
           <h3 style={{ margin: '0 0 14px' }}>Rising Keywords</h3>
           <div className="chips">
-            {keywords.map((keyword) => <button className="chip" type="button" key={keyword} onClick={() => onKeyword(keyword)}>{keyword}</button>)}
+            {keywords.length === 0 ? <span className="empty">표시할 키워드가 없습니다.</span> : keywords.map((keyword) => <button className="chip" type="button" key={keyword} onClick={() => onKeyword(keyword)}>{keyword}</button>)}
           </div>
           <h3 style={{ margin: '24px 0 10px' }}>Channel Mix</h3>
           <MixBars rows={sourceSummary.map((source) => ({ name: source.name.replace('/기사', ''), value: source.count }))} />
           <h3 style={{ margin: '24px 0 10px' }}>Promotion Type Mix</h3>
-          <MixBars rows={typeRows} orange />
+          {typeRows.length === 0 ? <div className="empty">표시할 프로모션 유형이 없습니다.</div> : <MixBars rows={typeRows} orange />}
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { partitionEvidenceBySelectedWeekTrend } from '../scripts/lib/notion-trend-sync-utils.mjs';
+import { filterTrendPagesWithEvidence, partitionEvidenceBySelectedWeekTrend } from '../scripts/lib/notion-trend-sync-utils.mjs';
 
 function richText(value) {
   return { rich_text: [{ plain_text: value }] };
@@ -74,5 +74,19 @@ describe('Notion trend sync evidence partitioning', () => {
     expect(evidenceByTrend.get('trend-w26-routine')?.map((evidence) => evidence.title)).toEqual(['W26 evidence linked to W25 trend']);
     expect(attachedEvidencePages.map((page) => page.id)).toEqual(['ev-w26-linked-to-w25']);
     expect(evidenceByTrend.has('trend-w25-routine')).toBe(false);
+  });
+
+  it('excludes selected-week trend pages that have no in-range evidence', () => {
+    const selectedTrendPages = [
+      trendPage('trend-w27-with-evidence', 'coupon-evidence-backed', 'week-27'),
+      trendPage('trend-w27-template-only', 'membership-preview', 'week-27')
+    ];
+    const evidenceByTrend = new Map([
+      ['trend-w27-with-evidence', [{ title: '근거 있음' }]]
+    ]);
+
+    expect(filterTrendPagesWithEvidence(selectedTrendPages, evidenceByTrend).map((page) => page.id)).toEqual([
+      'trend-w27-with-evidence'
+    ]);
   });
 });

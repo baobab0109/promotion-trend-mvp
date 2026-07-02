@@ -40,4 +40,23 @@ describe('published weekly trend JSON partitions', () => {
 
     expect(violations).toEqual([]);
   });
+
+  it('publishes only evidence-backed trends in weekly JSON and permits zero-trend weeks', () => {
+    const files = fs.readdirSync(TRENDS_DIR).filter((file) => /^\d{4}-W\d{2}\.json$/.test(file));
+    const violations = [];
+
+    for (const file of files) {
+      const dataset = JSON.parse(fs.readFileSync(path.join(TRENDS_DIR, file), 'utf8'));
+      expect(Array.isArray(dataset.trends)).toBe(true);
+      for (const trend of dataset.trends) {
+        if (!Array.isArray(trend.evidence) || trend.evidence.length === 0) {
+          violations.push(`${file}:${trend.id}`);
+        }
+      }
+    }
+
+    const week25 = JSON.parse(fs.readFileSync(path.join(TRENDS_DIR, '2026-W25.json'), 'utf8'));
+    expect(week25.trends).toEqual([]);
+    expect(violations).toEqual([]);
+  });
 });
