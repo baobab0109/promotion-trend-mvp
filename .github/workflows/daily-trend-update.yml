@@ -56,6 +56,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Ensure weekly rollover
+        env:
+          INPUT_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: |
+          ARGS="--json"
+          if [ "${INPUT_DRY_RUN}" = "true" ]; then
+            ARGS="--dry-run ${ARGS}"
+          fi
+          npm run ensure:weekly-rollover -- ${ARGS}
+
       - name: Collect external trend signals
         env:
           INPUT_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}

@@ -6,6 +6,7 @@
     "test": "vitest",
     "test:run": "vitest --run",
     "sync:notion": "node scripts/sync-notion-trends.mjs",
+    "ensure:weekly-rollover": "node scripts/ensure-weekly-rollover.mjs",
     "collect:signals": "node scripts/collect-trend-signals.mjs",
     "curate:trends": "node scripts/curate-trend-content.mjs"
   },

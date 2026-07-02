@@ -7,6 +7,8 @@
 ```text
 07:00 KST daily-trend-update.yml
   ↓
+완료된 주차가 있으면 ensure:weekly-rollover가 새 Week/Trend/Idea 템플릿 생성
+  ↓
 외부 공개 신호 수집
   ↓
 collect:signals가 Evidence Items DB에 Status=Draft로 upsert
@@ -86,7 +88,8 @@ URL canonicalization 결과를 중복 key로 사용합니다.
 `.github/workflows/daily-trend-update.yml`
 
 - schedule: `0 22 * * *` (매일 07:00 KST)
-- 단계: `collect:signals` → `curate:trends` → `sync:notion` → test/build → `public/data` commit → GitHub Pages deploy
+- 단계: `ensure:weekly-rollover` → `collect:signals` → `curate:trends` → `sync:notion` → test/build → `public/data` commit → Pages 배포
+- `ensure:weekly-rollover`: 최신 Published 주차의 종료일 다음날부터 7일 단위로, KST 기준 전일까지 완전히 종료된 주차가 있으면 새 Week를 만들고 이전 주차의 Published Trend/Idea 템플릿을 복제합니다.
 - `workflow_dispatch` inputs: `collect_limit`, `dry_run`
 - Notion secrets: `NOTION_API_KEY`, `NOTION_HUB_PAGE_ID`, `NOTION_WEEKS_DATABASE_ID`, `NOTION_TRENDS_DATABASE_ID`, `NOTION_EVIDENCE_DATABASE_ID`, `NOTION_IDEAS_DATABASE_ID`
 - `collect-trend-signals.yml`, `sync-notion-data.yml`은 수동 진단/복구용 workflow로 유지합니다.
