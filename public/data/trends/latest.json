@@ -2,12 +2,12 @@
   "weekId": "2026-W27",
   "label": "2026.07.01 - 2026.07.07",
   "status": "Published",
-  "generatedAt": "2026-07-02T00:40:00.000Z",
+  "generatedAt": "2026-07-02T01:32:00.000Z",
   "source": "notion",
   "sourceSummary": [
     {
       "name": "뉴스/기사",
-      "count": 7,
+      "count": 10,
       "note": "커머스·유통·브랜드 기사"
     },
     {
@@ -61,11 +61,19 @@
       "evidence": [
         {
           "type": "기사",
-          "title": "\"'역시즌 특가전' 최대 80% 할인\"…SSG닷컴, '패션 쓱세일' 개최 - 파이낸셜포스트",
-          "source": "파이낸셜포스트",
-          "date": "2026-07-01",
-          "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE12VkYxb194QVFNOG1FYWNHck5SOTVvRTV3OWE4bEptY3VfR0JWSWc3M0d2MjlXbVFhZ3ZMWlFjWWw4TkNqdzY0WFEwQ09EVkM4Yzd1Qi1YWDltcWZKQm5uaV9qd01WYmN5MXdqV3FFRFVmeWJa?oc=5",
-          "summary": "파이낸셜포스트 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
+          "title": "SSG닷컴, 7월 ‘쓱7클럽’ 프로모션 확대 운영…매일 7000원 할인 쿠폰 지급 - 인더뉴스",
+          "source": "인더뉴스",
+          "date": "2026-07-02",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1TaGFLX2JOVlBGTnVpM01RNDRDM2lsODNiX2lrV2VsSzVMSDlhRkV4bGRXNTdPZnczSldvYUF1ekZJMEhMZi15V210YWRVdzR5cGZCTFVob2R2NnZKWUZPS254eHg?oc=5",
+          "summary": "인더뉴스 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
+        },
+        {
+          "type": "기사",
+          "title": "SSG닷컴, 7월 '쓱7클럽' 전용 할인 혜택 확대 - 전자신문",
+          "source": "전자신문",
+          "date": "2026-07-02",
+          "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE95anFQVG9zWG5xeldveWtxVDFJZzVmVENpbHczN3FnZ1AzclFxSG05Nng1M0I5ek9uRzA2b3JGNmtZUE1QbE55NWx5VWZXdw?oc=5",
+          "summary": "전자신문 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
         },
         {
           "type": "기사",
@@ -82,6 +90,14 @@
           "date": "2026-07-02",
           "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE02dWNEbnpIWW1BQ3VGTDdIUkstc0R0TzhfcFI3dzhqSVRCSW9SaXMxZ1FkcWZQMC1LMmd1QmdFdGswSmNFODNMbnQtMTFQTjNxc0lQS2RhbTFPVVlUSkpIa010UFF4V3NZVF9JZnplWmXSAXRBVV95cUxOQzdfc1pCNGdFRkN2emlCeEJkZXhzSzhoN2ZlMTB6Ym93eTJ0R280TkNDNTFJeDRBSUpNX3RQTEoxRTQzbjRxOWI5dDdrMk54NUpZUENmSW0yMFI2TTdtbjl3Q1hkQnllQkVEMEZpdTlCOWowNg?oc=5",
           "summary": "우먼타임스 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
+        },
+        {
+          "type": "기사",
+          "title": "\"'역시즌 특가전' 최대 80% 할인\"…SSG닷컴, '패션 쓱세일' 개최 - 파이낸셜포스트",
+          "source": "파이낸셜포스트",
+          "date": "2026-07-01",
+          "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE12VkYxb194QVFNOG1FYWNHck5SOTVvRTV3OWE4bEptY3VfR0JWSWc3M0d2MjlXbVFhZ3ZMWlFjWWw4TkNqdzY0WFEwQ09EVkM4Yzd1Qi1YWDltcWZKQm5uaV9qd01WYmN5MXdqV3FFRFVmeWJa?oc=5",
+          "summary": "파이낸셜포스트 사례. 경쟁사와 공개 콘텐츠에서 쿠폰·적립·참여형 미션을 혜택 허브/고객 루틴으로 묶는 CRM 운영 근거."
         }
       ],
       "aiInterpretation": {
@@ -193,20 +209,20 @@
       },
       "evidence": [
         {
-          "type": "기사",
-          "title": "[유통레이더] 무신사, 걸그룹 ‘하츠투하츠’ 새 앨범 협업 컬렉션 선봬 - 마이데일리",
-          "source": "마이데일리",
-          "date": "2026-07-01",
-          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBsYmttRDlYVlc0aTY3STFncE1WQm0tT09LQmFYUFdmUm9DSGRVWHNDUmw3QmV4TFFIR2ZBaFVabzh5RURtNDJsN3F1Q3VtZGN2NHF4OFZCYmZDLXRJUlB1RQ?oc=5",
-          "summary": "마이데일리 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
-        },
-        {
           "type": "검색",
           "title": "오늘의집, 삼성전자 브랜드위크 개최…온누리상품권·추가 할인 제공 - 전자신문",
           "source": "전자신문",
           "date": "2026-07-01",
           "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE03aEloa2lOYzBFZnFhNncyS3R5ajBCUUkzeVFmZ0xYd1lCNjZXaEZjenVrak9JTmNONk9UT2tKdTRURnZ6Z1M3ZVd5enNWZw?oc=5",
           "summary": "전자신문 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
+        },
+        {
+          "type": "기사",
+          "title": "[유통레이더] 무신사, 걸그룹 ‘하츠투하츠’ 새 앨범 협업 컬렉션 선봬 - 마이데일리",
+          "source": "마이데일리",
+          "date": "2026-07-01",
+          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBsYmttRDlYVlc0aTY3STFncE1WQm0tT09LQmFYUFdmUm9DSGRVWHNDUmw3QmV4TFFIR2ZBaFVabzh5RURtNDJsN3F1Q3VtZGN2NHF4OFZCYmZDLXRJUlB1RQ?oc=5",
+          "summary": "마이데일리 사례. 공개 UGC/뉴스 신호에서 할인율보다 콜라보·브랜드 스토리·한정성을 구매 명분으로 만드는 근거."
         }
       ],
       "aiInterpretation": {
@@ -432,6 +448,14 @@
       "evidence": [
         {
           "type": "기사",
+          "title": "쿠팡 MAU 소폭 감소…알리익스프레스 11% 늘며 2위 도약 - 중앙이코노미뉴스",
+          "source": "중앙이코노미뉴스",
+          "date": "2026-07-02",
+          "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE5pY1JxbU42T3dFU2hvZGlPM044VVdhZU9INDN4bVNGWms2cFZjbVIwd3NiRlpNZFJVNzN3Ympxa25SNkNBZ1psRzR4UG5IMzBOcXhrNm1jNDZIalBjN0VvY182YW1PYkhCVzNySTkzSXdoUQ?oc=5",
+          "summary": "중앙이코노미뉴스 사례. 데이터·랭킹·베스트 상품을 큐레이션 메시지로 전환해 탐색 피로를 줄이는 근거."
+        },
+        {
+          "type": "기사",
           "title": "\"웰니스 큐레이션 전문성에 구매 데이터 결합\"…CJ올리브영, '모두의 잘 먹기 프로젝트' 실시 - 파이낸셜포스트",
           "source": "파이낸셜포스트",
           "date": "2026-07-01",
@@ -551,19 +575,19 @@
       "evidence": [
         {
           "type": "기사",
-          "title": "ABC디자인, 휴대용 유모차 '루프트' 국내 출시… 런칭 기념 쇼핑라이브 진행 - 더쎈뉴스",
-          "source": "더쎈뉴스",
-          "date": "2026-07-01",
-          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5yQUphWkFsVC12Z0dWa0ozZGVDS1hjSm1SRUNvRzdha0pfeXRVNkt4czlUVVlBSkVOS1NxVHp0WFhLcldtamdRb2ZsTnJna2NuLW5ZcnlueHBsUDh2MFdITm5NT1pxbFpQ?oc=5",
-          "summary": "더쎈뉴스 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
-        },
-        {
-          "type": "기사",
           "title": "린클, 7월 3일 네이버 넾다세일 쇼핑라이브 진행 - 시선뉴스",
           "source": "시선뉴스",
           "date": "2026-07-01",
           "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9PVmxTY09sSFVrVDJUa0MxamQ5cjJNNjNQQzRvTi1OQlRnbHpWUENjSUV0dzk1bldvVHRQb05ySEc4Vl9vTVlXTkh2aUw4ZUpVMk1EWG4zdnpndTY5b1Vuam1wQmRzaThOeWtvMndB0gFyQVVfeXFMTjhkYUNpZ01ObjJQbEdjczhFbEVtY0hvd2dFVlNKY3c0VHRtMnprNHpsQVVnWWFHcTFGQU1lRnBXbHFTSFo0WXJicURWX1EwYk41bnJ5em9NWGxuN3ByM2k3U2xTY1VDLW5leWlZOWJKQWJ3?oc=5",
           "summary": "시선뉴스 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
+        },
+        {
+          "type": "기사",
+          "title": "ABC디자인, 휴대용 유모차 '루프트' 국내 출시… 런칭 기념 쇼핑라이브 진행 - 더쎈뉴스",
+          "source": "더쎈뉴스",
+          "date": "2026-07-01",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5yQUphWkFsVC12Z0dWa0ozZGVDS1hjSm1SRUNvRzdha0pfeXRVNkt4czlUVVlBSkVOS1NxVHp0WFhLcldtamdRb2ZsTnJna2NuLW5ZcnlueHBsUDh2MFdITm5NT1pxbFpQ?oc=5",
+          "summary": "더쎈뉴스 사례. 뉴스·경쟁사·공개 SNS에서 시간 제한, 라이브/현장감, 단독 딜 신호가 반복되어 즉시 구매를 유도하는 프로모션 근거."
         }
       ],
       "aiInterpretation": {
