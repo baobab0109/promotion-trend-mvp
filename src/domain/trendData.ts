@@ -32,9 +32,11 @@ export function buildFilterOptions(trends: TrendTopic[]): FilterOptions {
   };
 }
 
-export function buildSourceSummaryFromEvidence(trends: TrendTopic[]): SourceSummary[] {
-  const counts = trends
-    .flatMap((trend) => trend.evidence)
+export function buildSourceSummaryFromEvidence(trends: TrendTopic[], evidenceItems?: EvidenceItem[]): SourceSummary[] {
+  const evidenceSource = Array.isArray(evidenceItems) && evidenceItems.length > 0
+    ? evidenceItems
+    : trends.flatMap((trend) => trend.evidence);
+  const counts = evidenceSource
     .reduce<Record<EvidenceItem['type'], number>>((acc, evidence) => {
       acc[evidence.type] = (acc[evidence.type] ?? 0) + 1;
       return acc;
@@ -70,6 +72,20 @@ function sourceSummaryNameForType(type: EvidenceItem['type']): string {
   return SOURCE_SUMMARY_META[type].name;
 }
 
+function validateEvidenceItem(evidence: EvidenceItem, evidenceLabel: string, errors: string[], evidenceCounts: Record<EvidenceItem['type'], number>) {
+  if (!VALID_EVIDENCE_TYPES.has(evidence.type)) {
+    errors.push(`${evidenceLabel}.type must be one of 기사, SNS, 검색, 경쟁사`);
+  } else {
+    evidenceCounts[evidence.type] = (evidenceCounts[evidence.type] ?? 0) + 1;
+  }
+  if (!hasText(evidence.title)) errors.push(`${evidenceLabel}.title is required`);
+  if (!hasText(evidence.source)) errors.push(`${evidenceLabel}.source is required`);
+  if (!hasText(evidence.date)) errors.push(`${evidenceLabel}.date is required`);
+  if (!hasText(evidence.summary)) errors.push(`${evidenceLabel}.summary is required`);
+  if (!hasText(evidence.url)) errors.push(`${evidenceLabel}.url is required`);
+  else if (!isHttpUrl(evidence.url)) errors.push(`${evidenceLabel}.url must be http(s)`);
+}
+
 export function validateTrendDataset(dataset: TrendDataset): string[] {
   const errors: string[] = [];
 
@@ -93,6 +109,17 @@ export function validateTrendDataset(dataset: TrendDataset): string[] {
 
   const ids = new Set<string>();
   const evidenceCounts: Record<EvidenceItem['type'], number> = { 기사: 0, SNS: 0, 검색: 0, 경쟁사: 0 };
+  const hasTopLevelEvidence = Array.isArray(dataset.evidenceItems) && dataset.evidenceItems.length > 0;
+  const topLevelEvidenceIds = new Set<string>();
+
+  if (hasTopLevelEvidence) {
+    dataset.evidenceItems?.forEach((evidence, index) => {
+      const evidenceLabel = `evidenceItems[${index}]`;
+      if (hasText(evidence.id)) topLevelEvidenceIds.add(evidence.id);
+      validateEvidenceItem(evidence, evidenceLabel, errors, evidenceCounts);
+    });
+  }
+
   dataset.trends.forEach((trend) => {
     const label = trend.id || '(missing trend id)';
     if (!hasText(trend.id)) errors.push('trend.id is required');
@@ -103,23 +130,20 @@ export function validateTrendDataset(dataset: TrendDataset): string[] {
     if (!Array.isArray(trend.keywords) || trend.keywords.length === 0) errors.push(`${label}.keywords must include at least one item`);
     if (!Array.isArray(trend.evidence)) {
       errors.push(`${label}.evidence must be an array`);
-    } else if (trend.evidence.length === 0) {
+    } else if (!hasTopLevelEvidence && trend.evidence.length === 0) {
       errors.push(`${label}.evidence must include at least one item`);
+    } else if (hasTopLevelEvidence && trend.evidence.length === 0 && (!Array.isArray(trend.evidenceIds) || trend.evidenceIds.length === 0)) {
+      errors.push(`${label}.evidenceIds must include at least one item when evidenceItems is used`);
     } else {
-      trend.evidence.forEach((evidence, index) => {
+      if (!hasTopLevelEvidence) trend.evidence.forEach((evidence, index) => {
         const evidenceLabel = `${label}.evidence[${index}]`;
-        if (!VALID_EVIDENCE_TYPES.has(evidence.type)) {
-          errors.push(`${evidenceLabel}.type must be one of 기사, SNS, 검색, 경쟁사`);
-        } else {
-          evidenceCounts[evidence.type] = (evidenceCounts[evidence.type] ?? 0) + 1;
-        }
-        if (!hasText(evidence.title)) errors.push(`${evidenceLabel}.title is required`);
-        if (!hasText(evidence.source)) errors.push(`${evidenceLabel}.source is required`);
-        if (!hasText(evidence.date)) errors.push(`${evidenceLabel}.date is required`);
-        if (!hasText(evidence.summary)) errors.push(`${evidenceLabel}.summary is required`);
-        if (!hasText(evidence.url)) errors.push(`${evidenceLabel}.url is required`);
-        else if (!isHttpUrl(evidence.url)) errors.push(`${evidenceLabel}.url must be http(s)`);
+        validateEvidenceItem(evidence, evidenceLabel, errors, evidenceCounts);
       });
+      if (hasTopLevelEvidence && Array.isArray(trend.evidenceIds)) {
+        trend.evidenceIds.forEach((evidenceId) => {
+          if (!topLevelEvidenceIds.has(evidenceId)) errors.push(`${label}.evidenceIds.${evidenceId} is missing from evidenceItems`);
+        });
+      }
     }
     if (!trend.ideas?.stable) errors.push(`${label}.ideas.stable is required`);
     if (!trend.ideas?.aggressive) errors.push(`${label}.ideas.aggressive is required`);

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { filterTrendPagesWithEvidence, partitionEvidenceBySelectedWeekTrend } from '../scripts/lib/notion-trend-sync-utils.mjs';
+import { evidenceFromPage, filterTrendPagesWithEvidence, partitionEvidenceBySelectedWeekTrend } from '../scripts/lib/notion-trend-sync-utils.mjs';
 
 function richText(value) {
   return { rich_text: [{ plain_text: value }] };
@@ -88,5 +88,18 @@ describe('Notion trend sync evidence partitioning', () => {
     expect(filterTrendPagesWithEvidence(selectedTrendPages, evidenceByTrend).map((page) => page.id)).toEqual([
       'trend-w27-with-evidence'
     ]);
+  });
+
+  it('generates public evidence ids instead of exposing Notion page ids', () => {
+    const page = evidencePage('notion-page-internal-id-123', '2026-07-02', ['trend-w27-with-evidence'], 'Public evidence title');
+    const evidence = evidenceFromPage(page);
+
+    expect(evidence.id).toMatch(/^ev_[a-z0-9]+$/);
+    expect(evidence.id).not.toBe(page.id);
+    expect(evidence).toMatchObject({
+      title: 'Public evidence title',
+      date: '2026-07-02',
+      url: 'https://example.com/notion-page-internal-id-123'
+    });
   });
 });

@@ -61,10 +61,37 @@ export async function loadTrendDatasets(dataPaths: string[], label: string, fetc
   }
 
   const datasets = await Promise.all(uniquePaths.map((path) => loadTrendDataset(path, fetcher)));
-  const trends = datasets.flatMap((dataset) => dataset.trends.map((trend) => ({
-    ...trend,
-    id: `${dataset.weekId}__${trend.id}`
-  })));
+  const trends = datasets.flatMap((dataset) => dataset.trends.map((trend) => {
+    const prefixedTrendId = `${dataset.weekId}__${trend.id}`;
+    const nestedEvidence = (trend.evidence || []).map((evidence) => ({
+      ...evidence,
+      id: evidence.id ? `${dataset.weekId}__${evidence.id}` : evidence.id,
+      trendIds: [prefixedTrendId]
+    }));
+    const evidenceIds = Array.isArray(trend.evidenceIds) && trend.evidenceIds.length > 0
+      ? trend.evidenceIds.map((evidenceId) => `${dataset.weekId}__${evidenceId}`)
+      : nestedEvidence.map((evidence, index) => evidence.id || `${prefixedTrendId}::${index}`);
+    return {
+      ...trend,
+      id: prefixedTrendId,
+      evidence: nestedEvidence,
+      evidenceIds
+    };
+  }));
+  const evidenceItems = datasets.flatMap((dataset) => {
+    if (Array.isArray(dataset.evidenceItems) && dataset.evidenceItems.length > 0) {
+      return dataset.evidenceItems.map((evidence, index) => ({
+        ...evidence,
+        id: `${dataset.weekId}__${evidence.id || `evidence::${index}`}`,
+        trendIds: (evidence.trendIds || []).map((trendId) => `${dataset.weekId}__${trendId}`)
+      }));
+    }
+    return dataset.trends.flatMap((trend) => (trend.evidence || []).map((evidence, index) => ({
+      ...evidence,
+      id: evidence.id ? `${dataset.weekId}__${evidence.id}` : `${dataset.weekId}__${trend.id}::${index}`,
+      trendIds: [`${dataset.weekId}__${trend.id}`]
+    })));
+  });
   const generatedAt = datasets
     .map((dataset) => dataset.generatedAt)
     .filter(Boolean)
@@ -77,7 +104,8 @@ export async function loadTrendDatasets(dataPaths: string[], label: string, fetc
     status: 'Published',
     generatedAt,
     source: datasets.some((dataset) => dataset.source === 'notion') ? 'notion' : 'sample',
-    sourceSummary: buildSourceSummaryFromEvidence(trends),
-    trends
+    sourceSummary: buildSourceSummaryFromEvidence(trends, evidenceItems),
+    trends,
+    evidenceItems
   };
 }

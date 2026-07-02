@@ -105,6 +105,26 @@ describe('loadTrendDataset', () => {
     expect(dataset.sourceSummary.find((source) => source.name === 'SNS 공개 신호')?.count).toBe(1);
   });
 
+  it('preserves top-level evidenceItems when aggregating future pure V2 weekly datasets', async () => {
+    const pureV2: TrendDataset = {
+      ...validDataset,
+      weekId: '2026-W28',
+      sourceSummary: validDataset.sourceSummary,
+      evidenceItems: [{ ...validDataset.trends[0].evidence[0], id: 'ev_public_1', trendIds: ['trend-a'] }],
+      trends: [{ ...validDataset.trends[0], evidence: [], evidenceIds: ['ev_public_1'] }]
+    };
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce({ ok: true, json: async () => pureV2 })
+      .mockResolvedValueOnce({ ok: true, json: async () => validDataset });
+
+    const dataset = await loadTrendDatasets(['./data/trends/2026-W28.json', './data/trends/2026-W26.json'], '최근 14일', fetchMock as unknown as typeof fetch);
+
+    expect(dataset.evidenceItems?.map((item) => item.id)).toContain('2026-W28__ev_public_1');
+    expect(dataset.evidenceItems?.find((item) => item.id === '2026-W28__ev_public_1')?.trendIds).toEqual(['2026-W28__trend-a']);
+    expect(dataset.trends.find((trend) => trend.id === '2026-W28__trend-a')?.evidenceIds).toEqual(['2026-W28__ev_public_1']);
+    expect(dataset.sourceSummary.find((source) => source.name === '뉴스/기사')?.count).toBe(2);
+  });
+
   it('loads a valid zero-trend weekly dataset without falling back', async () => {
     const emptyDataset: TrendDataset = {
       ...validDataset,

@@ -72,6 +72,11 @@ npm run build
 - 검색 및 필터 가능한 Trend Explorer
 - 트렌드별 근거 데이터와 AI 해석 구분
 - 근거 데이터 원문 링크 새 탭 열기
+- Evidence Workspace: 주차별 evidence board, source/trend/search 필터, 원문 링크, 연결 트렌드 이동
+- Action Queue: Published/Archive/Trend 연결/Review 요청 의도를 localStorage에 저장하고 수동 적용용 JSON으로 복사·다운로드
+- Meeting Pack: 선택 evidence와 top trend/idea/next action을 회의용 Markdown으로 복사·다운로드
+- Idea Backlog: 선택 트렌드 아이디어를 업무형 백로그로 저장하고 priority/status/CRM tag와 함께 JSON export
+- Competitor Archive: 경쟁사 직접 evidence 및 경쟁사명 추정 evidence를 별도 모니터링 뷰로 확인
 - 안정형 vs 공격형 프로모션 기획안 비교
 - 혼합형 기획안 생성
 - 선택한 기획안 상세와 카피/체크리스트

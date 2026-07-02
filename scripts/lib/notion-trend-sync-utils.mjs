@@ -30,8 +30,26 @@ export function isDateWithinInclusiveRange(date, startDate, endDate) {
   return date >= startDate && date <= endDate;
 }
 
+function publicEvidenceId(page) {
+  const seed = [
+    prop(page, 'Type')?.select?.name || '',
+    title(page),
+    richText(page, 'Source'),
+    dateStart(page, 'Evidence Date'),
+    prop(page, 'URL')?.url || '',
+    richText(page, 'Summary')
+  ].join('|');
+  let hash = 2166136261;
+  for (let index = 0; index < seed.length; index += 1) {
+    hash ^= seed.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return `ev_${(hash >>> 0).toString(36)}`;
+}
+
 export function evidenceFromPage(page) {
   return {
+    id: publicEvidenceId(page),
     type: prop(page, 'Type')?.select?.name || '',
     title: title(page),
     source: richText(page, 'Source'),

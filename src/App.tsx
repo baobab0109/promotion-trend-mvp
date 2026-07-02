@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import Header from './components/Header';
+import EvidenceWorkspace from './components/EvidenceWorkspace';
 import IdeaCompare from './components/IdeaCompare';
 import PeriodSelector from './components/PeriodSelector';
 import SelectedIdeaDetail from './components/SelectedIdeaDetail';
@@ -231,6 +232,7 @@ export default function App() {
         />
         <SummaryCards sourceSummary={sourceSummary} trends={trends} dataSourceLabel={dataSourceLabel} />
         <WeeklyOverview trends={trends} sourceSummary={sourceSummary} onSelectTrend={handleSelectTrend} onKeyword={handleKeyword} />
+        <EvidenceWorkspace dataset={dataset} selectedTrendId={selectedTrend?.id ?? ''} onSelectTrend={handleSelectTrend} />
 
         <main className="workspace">
           <TrendExplorer

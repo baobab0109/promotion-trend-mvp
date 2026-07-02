@@ -146,6 +146,29 @@ describe('trend data helpers', () => {
     );
   });
 
+  it('validates V2 top-level evidenceItems with trend.evidenceIds while keeping nested evidence compatible', () => {
+    const dataset: TrendDataset = {
+      weekId: '2026-W27',
+      label: '2026.07.01 - 2026.07.07',
+      status: 'Published',
+      generatedAt: '2026-07-02T00:00:00.000Z',
+      source: 'notion',
+      sourceSummary: [
+        { name: '뉴스/기사', count: 1, note: '커머스·유통·브랜드 기사' },
+        { name: 'SNS 공개 신호', count: 0, note: '해시태그/UGC 공개 신호' },
+        { name: '커머스 혜택 검색', count: 0, note: '쿠폰·혜택·특가·프로모션 공개 근거' },
+        { name: '경쟁사 프로모션', count: 0, note: '이벤트/기획전 페이지' }
+      ],
+      trends: [trend({ evidence: [], evidenceIds: ['ev-v2'] })],
+      evidenceItems: [{ ...trend().evidence[0], id: 'ev-v2', trendIds: ['trend-a'] }]
+    };
+
+    expect(validateTrendDataset(dataset)).toEqual([]);
+    expect(validateTrendDataset({ ...dataset, trends: [trend({ evidence: [], evidenceIds: ['missing'] })] })).toContain(
+      'trend-a.evidenceIds.missing is missing from evidenceItems'
+    );
+  });
+
   it('wraps the existing sample data in a dataset object for fallback rendering', () => {
     const dataset = createSampleTrendDataset();
 

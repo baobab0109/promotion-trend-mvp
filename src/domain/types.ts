@@ -4,12 +4,16 @@ export type TrendModeBias = 'stable' | 'aggressive';
 export type PeriodPreset = 'recent-7' | 'recent-14' | 'recent-30' | 'weekly';
 
 export interface EvidenceItem {
+  id?: string;
   type: SourceType;
   title: string;
   source: string;
   date: string;
   url: string;
   summary: string;
+  trendIds?: string[];
+  crmTags?: string[];
+  tags?: string[];
 }
 
 export interface Idea {
@@ -48,6 +52,7 @@ export interface TrendTopic {
     risk: number;
   };
   evidence: EvidenceItem[];
+  evidenceIds?: string[];
   aiInterpretation: {
     consumerInsight: string;
     opportunity: string;
@@ -73,6 +78,7 @@ export interface TrendDataset {
   source: 'sample' | 'notion';
   sourceSummary: SourceSummary[];
   trends: TrendTopic[];
+  evidenceItems?: EvidenceItem[];
 }
 
 export interface WeekManifestItem {

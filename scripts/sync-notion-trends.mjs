@@ -154,12 +154,11 @@ function ideaFromPage(page) {
   };
 }
 
-function buildSourceSummary(trends) {
+function buildSourceSummary(trends, evidenceItems) {
   const counts = Object.fromEntries(SOURCE_ORDER.map((type) => [type, 0]));
-  for (const trend of trends) {
-    for (const evidence of trend.evidence) {
-      if (evidence.type in counts) counts[evidence.type] += 1;
-    }
+  const items = Array.isArray(evidenceItems) ? evidenceItems : trends.flatMap((trend) => trend.evidence || []);
+  for (const evidence of items) {
+    if (evidence.type in counts) counts[evidence.type] += 1;
   }
   return SOURCE_ORDER.map((type) => ({
     name: SOURCE_META[type].name,
@@ -248,28 +247,45 @@ async function main() {
     }
   }
 
-  const trends = exportedTrendPages.map((page) => ({
-    id: richText(page, 'Trend ID'),
-    name: title(page),
-    summary: richText(page, 'Summary'),
-    keywords: multiSelect(page, 'Keywords'),
-    channels: multiSelect(page, 'Channels'),
-    categories: multiSelect(page, 'Categories'),
-    promotionTypes: multiSelect(page, 'Promotion Types'),
-    modeBias: select(page, 'Mode Bias') === 'aggressive' ? 'aggressive' : 'stable',
-    scores: {
-      momentum: clampScore(number(page, 'Momentum')),
-      onstyleFit: clampScore(number(page, 'OnStyle Fit')),
-      risk: clampScore(number(page, 'Risk'))
-    },
-    evidence: evidenceByTrend.get(page.id) || [],
-    aiInterpretation: {
-      consumerInsight: richText(page, 'AI Consumer Insight') || 'Notion DB에 고객 인사이트를 입력하면 웹에 표시됩니다.',
-      opportunity: richText(page, 'AI Opportunity') || 'Notion DB에 적용 기회를 입력하면 웹에 표시됩니다.',
-      caution: richText(page, 'AI Caution') || 'Notion DB에 주의사항을 입력하면 웹에 표시됩니다.'
-    },
-    ideas: ideasByTrend.get(page.id) || {}
-  }));
+  const trends = exportedTrendPages.map((page) => {
+    const trendEvidence = evidenceByTrend.get(page.id) || [];
+    return {
+      id: richText(page, 'Trend ID'),
+      name: title(page),
+      summary: richText(page, 'Summary'),
+      keywords: multiSelect(page, 'Keywords'),
+      channels: multiSelect(page, 'Channels'),
+      categories: multiSelect(page, 'Categories'),
+      promotionTypes: multiSelect(page, 'Promotion Types'),
+      modeBias: select(page, 'Mode Bias') === 'aggressive' ? 'aggressive' : 'stable',
+      scores: {
+        momentum: clampScore(number(page, 'Momentum')),
+        onstyleFit: clampScore(number(page, 'OnStyle Fit')),
+        risk: clampScore(number(page, 'Risk'))
+      },
+      evidence: trendEvidence,
+      evidenceIds: trendEvidence.map((evidence) => evidence.id).filter(Boolean),
+      aiInterpretation: {
+        consumerInsight: richText(page, 'AI Consumer Insight') || 'Notion DB에 고객 인사이트를 입력하면 웹에 표시됩니다.',
+        opportunity: richText(page, 'AI Opportunity') || 'Notion DB에 적용 기회를 입력하면 웹에 표시됩니다.',
+        caution: richText(page, 'AI Caution') || 'Notion DB에 주의사항을 입력하면 웹에 표시됩니다.'
+      },
+      ideas: ideasByTrend.get(page.id) || {}
+    };
+  });
+
+  const evidenceItemsById = new Map();
+  for (const trend of trends) {
+    for (const evidence of trend.evidence) {
+      const evidenceId = evidence.id || `${trend.id}:${evidence.title}:${evidence.url}`;
+      const existing = evidenceItemsById.get(evidenceId);
+      if (existing) {
+        existing.trendIds = [...new Set([...(existing.trendIds || []), trend.id])];
+      } else {
+        evidenceItemsById.set(evidenceId, { ...evidence, id: evidenceId, trendIds: [trend.id] });
+      }
+    }
+  }
 
   const weekId = richText(selectedWeek, 'Week ID');
   const dataset = {
@@ -278,8 +294,9 @@ async function main() {
     status: select(selectedWeek, 'Status'),
     generatedAt: latestEditedAt([selectedWeek, ...allTrendPages, ...evidencePages, ...ideaPages]),
     source: 'notion',
-    sourceSummary: buildSourceSummary(trends),
-    trends
+    sourceSummary: buildSourceSummary(trends, [...evidenceItemsById.values()]),
+    trends,
+    evidenceItems: [...evidenceItemsById.values()]
   };
 
   const errors = validateDataset(dataset);
